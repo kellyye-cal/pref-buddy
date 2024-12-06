@@ -1,0 +1,47 @@
+body {
+  font-family: "Montserrat", serif;
+  color: #333333;
+  background-color: #F7F9FF;
+}
+
+h1 {
+  font-size: 32pt;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 28pt;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 22pt;
+  font-weight: 700;
+}
+
+h4 {
+  font-size: 22pt;
+  color: #717171;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: 18pt;
+  font-weight: 600;
+}
+
+.main {
+  margin: 60px;
+}
+
+.container {
+  border-radius: 12px;
+  background: #fff;
+}
+
+.h-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}

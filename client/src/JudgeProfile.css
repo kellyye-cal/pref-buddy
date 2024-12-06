@@ -1,0 +1,19 @@
+.container-spacing {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-text {
+    font-size: 16pt;
+    font-weight: 500;
+    color: #6A6A6A;
+}
+
+.stat-instance > * {
+    margin: 0;
+}
