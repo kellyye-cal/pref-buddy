@@ -37,14 +37,18 @@ const db = mysql.createConnection({
 // })
 
 
-app.get('/api/judge', (req, res) => {
-    const sql = "SELECT * FROM users";
-    db.query(sql, (err, result) => {
+app.get('/api/judge/:id', (req, res) => {
+    //in the query, want to join users with judge info
+    const id = req.params.id;
+    const sql = "SELECT *, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id";
+    db.query(sql, [id], (err, result) => {
         if (err) {
             console.error('Database error: ', err);
             return res.status(500).json({error: 'Failed to fetch data'});
         }
+        
         console.log("Query results: ", result);
+        
         return res.json(result);
     });
 });

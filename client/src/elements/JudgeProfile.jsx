@@ -6,7 +6,7 @@ import '../JudgeProfile.css';
 function JudgeProfile() {
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     useEffect(()=>{
-        axios.get('http://localhost:4000/api/judge/').then((res) => {
+        axios.get('http://localhost:4000/api/judge/:0').then((res) => {
             console.log("successfully posted get request");
             setJudgeData(res.data);
         })
@@ -28,12 +28,12 @@ function JudgeProfile() {
                                 <div class="h-between" style={{marginTop: 8, marginBottom: 8}}>
                                     <div class="stat-instance">
                                         <h5> Years Judging </h5>
-                                        <p class="stat-text"> -- </p>
+                                        <p class="stat-text"> {judge.yrs_judge} </p>
                                     </div>
 
                                     <div class="stat-instance">
                                         <h5> Years in Debate </h5>
-                                        <p class="stat-text"> -- </p>
+                                        <p class="stat-text"> {judge.yrs_dbt} </p>
                                     </div>
 
                                     <div class="stat-instance">
