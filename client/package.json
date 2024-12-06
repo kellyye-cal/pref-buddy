@@ -7,7 +7,7 @@
       "localhost",
       ".localhost"
     ],
-    "proxy": "https://localhost:3000/"
+    "proxy": "https://localhost:4000/"
   },
   "dependencies": {
     "cra-template": "1.2.0",
