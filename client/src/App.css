@@ -1,5 +1,5 @@
 body {
-  font-family: "Montserrat", serif;
+  font-family: "Raleway", serif;
   color: #333333;
   background-color: #F7F9FF;
 }
@@ -83,4 +83,59 @@ h5 {
 #navbar *.active {
   color: blue;
   font-weight: 700;
+}
+
+.rating {
+  font-size: 40pt;
+  font-weight: 800;
+
+  height: 80px;
+  width: 80px;
+
+  
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 100px;
+}
+
+.oneRate {
+  background-color: #148943;
+  color: #fff;
+}
+
+.twoRate {
+  background-color: #9DE06E;
+}
+
+.threeRate {
+  background-color: #FFD900;
+}
+
+.fourRate {
+  background-color: #F3A72D;
+  color: #fff;
+}
+
+.fiveRate {
+  background-color: #FF7D38;
+  color: #fff;
+}
+
+.strikeRate {
+  background-color: #FF2A2A;
+  color: #fff;
+}
+
+.noRate {
+  background-color: #6A6A6A;
+  color: #fff;
+}
+
+.judgeProfTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

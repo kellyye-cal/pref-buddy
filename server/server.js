@@ -46,11 +46,26 @@ app.get('/api/judge/:id', (req, res) => {
             console.error('Database error: ', err);
             return res.status(500).json({error: 'Failed to fetch data'});
         }
-        
-        console.log("Query results: ", result);
-        
+                
         return res.json(result);
     });
+});
+
+app.get('/api/ratings/', (req, res) => {
+    const u_id = req.query.u_id;
+    const j_id = req.query.j_id;
+    
+    const sql = "SELECT rating FROM ranks WHERE `judge_id` = ? AND `ranker_id` = ? LIMIT 1"
+    db.query(sql, [j_id, u_id], (err, result) => {
+        if (err) {
+            console.error('Database error: ', err);
+            return res.status(500).json({error: 'Failed to fetch data'});
+        }
+        
+        console.log("Query results: ", result, req);
+        return res.json(result);
+    })
+
 });
 
 // Start server to respond to incoming requests

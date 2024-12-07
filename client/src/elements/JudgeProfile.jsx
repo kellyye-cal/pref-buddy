@@ -5,6 +5,7 @@ import '../App.css';
 import '../JudgeProfile.css';
 
 import NavBar from './NavBar'
+import Rating from './Rating'
 
 function JudgeProfile() {
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
@@ -12,7 +13,6 @@ function JudgeProfile() {
 
     useEffect(()=>{
         axios.get(`http://localhost:4000/api/judge/${id}`).then((res) => {
-            console.log("successfully posted get request");
             setJudgeData(res.data);
         })
         .catch((err)=>console.log(err))
@@ -26,8 +26,13 @@ function JudgeProfile() {
                     {judgeData && judgeData.length > 0 ? (
                         judgeData.map((judge, index) => (
                             <div>
-                                <h1> {judge.name} </h1>
-                                <h4> {judge.affiliation}</h4>
+                                <div class="judgeProfTitle">
+                                    <div>
+                                        <h1> {judge.name} </h1>
+                                        <h4> {judge.affiliation}</h4>
+                                    </div>
+                                    <Rating userID={0} judgeID={id}/>
+                                </div>
 
                                 <div class="container-spacing container">
                                     <h3 style={{margin: 0}}> Stats </h3>
