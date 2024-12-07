@@ -32,6 +32,12 @@ h5 {
 
 .main {
   margin: 60px;
+  flex-grow: 1;
+}
+
+.page {
+  display: flex;
+  width: 100%;
 }
 
 .container {
@@ -44,4 +50,37 @@ h5 {
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+}
+
+#navbar {
+  background-color: #fff;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 160px;
+  height: 100vh;
+
+  padding: 20px;
+}
+
+#navbar * {
+  color: #333;
+
+  font-size: 12pt;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#navbar *:hover {
+  font-weight: 600;
+}
+
+#navbar *.active {
+  color: blue;
+  font-weight: 700;
 }
