@@ -45,7 +45,7 @@ function Rating({userID, judgeID}) {
                     <div> {display} </div>
                 ))
             ) : (
-                <div> -- </div>
+                <div class="noRate rating"> - </div>
             )}
         </div>
     )

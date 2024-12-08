@@ -86,11 +86,11 @@ h5 {
 }
 
 .rating {
-  font-size: 40pt;
+  font-size: 36pt;
   font-weight: 800;
 
-  height: 80px;
-  width: 80px;
+  height: 60px;
+  width: 60px;
 
   
   text-align: center;
@@ -138,4 +138,32 @@ h5 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.judgePreview {
+  text-decoration: none;
+  color: #333;
+
+  background-color: white;
+  padding: 20px;
+
+  border-radius: 8px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.judgePrevName {
+  font-size: 16pt;
+  font-weight: 600;
+  text-decoration: none;
+  color: #333;
+
+}
+
+.judgePrevName:hover {
+  text-decoration: underline;
+}
+
+.hover:hover {
+  text-decoration: underline;
 }

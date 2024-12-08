@@ -11,6 +11,8 @@ function JudgeProfile() {
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     const { id } = useParams();
 
+    console.log(id)
+
     useEffect(()=>{
         axios.get(`http://localhost:4000/api/judge/${id}`).then((res) => {
             setJudgeData(res.data);

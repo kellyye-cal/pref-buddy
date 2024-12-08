@@ -51,6 +51,22 @@ app.get('/api/judge/:id', (req, res) => {
     });
 });
 
+app.get('/api/alljudges', (req, res) => {
+    const u_id = req.query.u_id;
+
+    
+    const sql = "SELECT * FROM users as u LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON u.id = r.judge_id WHERE u.judge = 1 ORDER BY r.rating ASC"
+    db.query(sql, [u_id], (err, result) => {
+        if (err) {
+            console.error('Database error: ', err);
+            return res.status(500).json({error: 'Failed to fetch data'});
+        }
+        
+        return res.json(result);
+    })
+})
+
+
 app.get('/api/ratings/', (req, res) => {
     const u_id = req.query.u_id;
     const j_id = req.query.j_id;
@@ -62,7 +78,6 @@ app.get('/api/ratings/', (req, res) => {
             return res.status(500).json({error: 'Failed to fetch data'});
         }
         
-        console.log("Query results: ", result, req);
         return res.json(result);
     })
 

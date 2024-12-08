@@ -7,7 +7,9 @@ function NavBar() {
     return (
         <div id="navbar">
             <NavLink activeClassName='active' to="/"> Home </NavLink>
-            <NavLink activeClassName='active' to="/JudgeProfile/0"> Kelly Ye</NavLink>
+            {/* <NavLink activeClassName='active'> Settings </NavLink> */}
+
+            <NavLink activeClassName='active' to="/judges"> Judges </NavLink>
         </div>
     )
 }
