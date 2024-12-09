@@ -16,7 +16,7 @@ function JudgePreview({judge, userID, updateFunc}) {
                         <div class="ratingContainer">
                             <Rating rating={judge.rating}/>
 
-                            <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateFunc}/>
+                            <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateFunc} currRating={judge.rating}/>
 
                         </div>
                         <div style={{marginLeft: 20}}>

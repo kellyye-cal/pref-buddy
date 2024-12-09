@@ -3,8 +3,39 @@ import {Navigate, useNavigate, useParams} from "react-router-dom";
 import axios from 'axios'
 import '../App.css';
 
+const styles = {
+    unselected: {
+        backgroundColor: "#d9d9d9"
+    },
+    noRating: {
+        backgroundColor: "#6a6a6a"
+    },
+    one: {
+        backgroundColor: "#148943"
+    },
+    two: {
+        backgroundColor: "#9DE06E",
+        color: '#333'
+    },
+    three: {
+        backgroundColor: "#FFD900",
+        color: '#333'
+    },
+    four: {
+        backgroundColor: "#F3A72D",
+        color: '#333'
+    },
+    five: {
+        backgroundColor: "#FF7D38",
+        color: '#333'
+    },
+    strike: {
+        backgroundColor: "#FF2A2A"
+    }
+}
 
-function EditRating({userID, judgeID, updateFunc}) {
+
+function EditRating({userID, judgeID, currRating, updateFunc}) {
     const [isEditing, setIsEditing] = useState(false);
 
     const openModal = () => setIsEditing(true);
@@ -15,32 +46,41 @@ function EditRating({userID, judgeID, updateFunc}) {
     function clickRating(event) {
         const newRatingID = event.target.id;
 
-
-        if (newRatingID === 'unselectOption') {
-            rating = null;
-            event.target.style.backgroundColor = "#6a6a6a"
-        } else if (newRatingID === "optionOne") {
-            rating = 1;
-            event.target.style.backgroundColor = "#148943"
-        }  else if (newRatingID === "optionTwo") {
-            rating = 2;
-            event.target.style.backgroundColor = "#9DE06E"
-            event.target.style.color = "#333"
-        }  else if (newRatingID === "optionThree") {
-            rating = 3;
-            event.target.style.backgroundColor = "#FFD900"
-            event.target.style.color = "#333"
-        }  else if (newRatingID === "optionFour") {
-            rating = 4;
-            event.target.style.backgroundColor = "#F3A72D"
-            event.target.style.color = "#333"
-        }  else if (newRatingID === "optionFive") {
-            rating = 5;
-            event.target.style.backgroundColor = "#FF7D38"
-            event.target.style.color = "#333"
-        }  else {
-            rating = 6;
-            event.target.style.backgroundColor = "#FF2A2A"
+        switch (newRatingID) {
+            case 'unselectOption':
+                event.target.style.backgroundColor = styles.noRating.backgroundColor;
+                rating = 0
+                break;
+            case 'optionOne':
+                event.target.style.backgroundColor = styles.one.backgroundColor;
+                rating = 1
+                break;
+            case 'optionTwo':
+                event.target.style.backgroundColor = styles.two.backgroundColor;
+                event.target.style.color = styles.two.color;
+                rating = 2
+                break;
+            case 'optionThree':
+                event.target.style.backgroundColor = styles.three.backgroundColor;
+                event.target.style.color = styles.three.color;
+                rating = 3
+                break;
+            case 'optionFour':
+                event.target.style.backgroundColor = styles.four.backgroundColor;
+                event.target.style.color = styles.four.color;
+                rating = 4
+                break;
+            case 'optionFive':
+                event.target.style.backgroundColor = styles.five.backgroundColor;
+                event.target.style.color = styles.five.color;
+                rating = 5
+                break;
+            case 'optionStrike':
+                event.target.style.backgroundColor = styles.strike.backgroundColor;
+                rating = 6
+                break;
+            default:
+                break;
         }
 
         const allButtons = Array.from(document.querySelector('.ratingButtons').children)
@@ -67,7 +107,28 @@ function EditRating({userID, judgeID, updateFunc}) {
         })
     }
 
-    // need to add logic for currently selected color, before changes have even been made
+    const getButtonStyle = (buttonValue, activeValue) => {
+        if (buttonValue !=activeValue) {
+            return styles.unselected;
+        }
+
+        switch (buttonValue) {
+            case 1:
+                return styles.one;
+            case 2:
+                return styles.two;
+            case 3:
+                return styles.three;
+            case 4:
+                return styles.four;
+            case 5:
+                return styles.five;
+            case 6:
+                return styles.strike;
+            default:
+                return styles.noRating;
+        }
+    }
 
     return (
         <div>
@@ -83,13 +144,13 @@ function EditRating({userID, judgeID, updateFunc}) {
                     <div class="editRatingModal">
                         <h3> Edit Judge Rating </h3>
                         <div class="ratingButtons">
-                            <button id="unselectOption" onClick={clickRating}> - </button>
-                            <button id="optionOne" onClick={clickRating}> 1 </button>
-                            <button id="optionTwo" onClick={clickRating}> 2 </button>
-                            <button id="optionThree" onClick={clickRating}> 3 </button>
-                            <button id="optionFour" onClick={clickRating}> 4 </button>
-                            <button id="optionFive" onClick={clickRating}> 5 </button>
-                            <button id="optionStrike" onClick={clickRating}> S </button>
+                            <button id="unselectOption" onClick={clickRating} style={getButtonStyle(0, currRating)}> - </button>
+                            <button id="optionOne" onClick={clickRating} style={getButtonStyle(1, currRating)}> 1 </button>
+                            <button id="optionTwo" onClick={clickRating} style={getButtonStyle(2, currRating)}> 2 </button>
+                            <button id="optionThree" onClick={clickRating} style={getButtonStyle(3, currRating)}> 3 </button>
+                            <button id="optionFour" onClick={clickRating} style={getButtonStyle(4, currRating)}> 4 </button>
+                            <button id="optionFive" onClick={clickRating} style={getButtonStyle(5, currRating)}> 5 </button>
+                            <button id="optionStrike" onClick={clickRating} style={getButtonStyle(6, currRating)}> S </button>
                         </div>
                         <div style={
                             {width: "100%", display: "flex", justifyContent: "center"}}>

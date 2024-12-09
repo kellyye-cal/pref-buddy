@@ -6,6 +6,7 @@ import '../JudgeProfile.css';
 
 import NavBar from './NavBar'
 import Rating from './Rating'
+import EditRating from './EditRating';
 
 function JudgeProfile() {
     let userID = 0;
@@ -21,6 +22,19 @@ function JudgeProfile() {
         .catch((err)=>console.log(err))
     }, []);
 
+    function updateRating(judgeID, newRating) {
+        axios.post(`http://localhost:4000/api/set_rating/`, {
+            u_id: userID,
+            j_id: judgeID,
+            rating: newRating
+        }).then(() => {
+            setJudgeData(prevJudges => prevJudges.map(judge => 
+                judge.id === judgeID ? {...judge, rating: newRating} : judge
+            ));
+        }).catch((err) => console.error("Error saving rating:", err));
+        console.log(judgeData)
+    }
+
     return (
         <div class="page">
             <NavBar />
@@ -34,7 +48,13 @@ function JudgeProfile() {
                                         <h1> {judge.name} </h1>
                                         <h4> {judge.affiliation}</h4>
                                     </div>
-                                    <Rating rating={judge.rating}/>
+
+                                                                        <div class="ratingContainer">
+                                        <Rating rating={judge.rating}/>
+
+                                        <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateRating} currRating={judge.rating}/>
+
+                                    </div>
                                 </div>
 
                                 <div class="container-spacing container">
