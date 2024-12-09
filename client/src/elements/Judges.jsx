@@ -5,6 +5,7 @@ import '../App.css';
 
 import NavBar from './NavBar'
 import JudgePreview from './JudgePreview'
+import Toggle from './Toggle'
 
 function Judges({userID}) {
     const [allJudges, setData] = useState([]); //to store fetched data
@@ -22,21 +23,22 @@ function Judges({userID}) {
     }, [userID]);
 
     return (
-        <div class="page">
-            <NavBar />
-            <div class="main">
-                <h1> Judges </h1>
-                <div>
-                    {allJudges && allJudges.length > 0 ? (
-                        allJudges.map((judge, index) => (
-                            <div key={index}><JudgePreview judge={judge} userID={userID} /> </div>
-                        ))
-                    ) : (
-                        <div></div>
-                    )}
+            <div class="page">
+                <NavBar />
+                <div class="main">
+                    <h1> Judges </h1>
+                    <Toggle leftText="My Ratings" rightText="All Judges"/>
+                    <div>
+                        {allJudges && allJudges.length > 0 ? (
+                            allJudges.map((judge, index) => (
+                                <div key={index}><JudgePreview judge={judge} userID={userID} /> </div>
+                            ))
+                        ) : (
+                            <div></div>
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
     )
 }
 

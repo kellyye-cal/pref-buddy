@@ -6,6 +6,9 @@ import Home from './elements/Home'
 import JudgeProfile from './elements/JudgeProfile'
 import Judges from './elements/Judges'
 
+import Rating from './elements/Rating'
+
+
 function App() {
   return (
     <BrowserRouter>

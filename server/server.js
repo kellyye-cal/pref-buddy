@@ -83,6 +83,20 @@ app.get('/api/ratings/', (req, res) => {
 
 });
 
+app.post('/api/set_rating/', (req, res) => {
+    const {u_id, j_id, rating} = req.body;
+    console.log(rating)
+
+    const sql = "UPDATE ranks SET `rating` = ? WHERE `ranker_id` = ? AND `judge_id` = ?"
+    db.query(sql, [rating, u_id, j_id], (err, result) => {
+        if (err) {
+            console.log("Database error: ", err)
+            return res.status(500).json({error: 'Failed to fetch data'});
+        }
+        return res.status(200).json({success: true, result})
+    })
+})
+
 // Start server to respond to incoming requests
 app.listen(port, ()=>{
     console.log('listening')

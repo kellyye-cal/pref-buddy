@@ -24,7 +24,7 @@ function Rating({userID, judgeID}) {
         const numRating = ratingData[0].rating
         var display = String(numRating);
 
-        if (numRating === 0) {
+        if (numRating === 0 || !numRating) {
             display = "-";
         } else if (numRating === 6) {
             display = "S";
