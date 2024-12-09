@@ -4,17 +4,17 @@ import axios from 'axios'
 import '../App.css';
 
 
-function EditRating({userID, judgeID}) {
+function EditRating({userID, judgeID, updateFunc}) {
     const [isEditing, setIsEditing] = useState(false);
-    const [newRating, setNewRating] = useState(null)
 
     const openModal = () => setIsEditing(true);
     const closeModal = () => setIsEditing(false);
 
+    let rating = null;
+
     function clickRating(event) {
         const newRatingID = event.target.id;
 
-        let rating = null;
 
         if (newRatingID === 'unselectOption') {
             rating = null;
@@ -31,7 +31,7 @@ function EditRating({userID, judgeID}) {
             event.target.style.backgroundColor = "#FFD900"
             event.target.style.color = "#333"
         }  else if (newRatingID === "optionFour") {
-            newRating = 4;
+            rating = 4;
             event.target.style.backgroundColor = "#F3A72D"
             event.target.style.color = "#333"
         }  else if (newRatingID === "optionFive") {
@@ -42,8 +42,6 @@ function EditRating({userID, judgeID}) {
             rating = 6;
             event.target.style.backgroundColor = "#FF2A2A"
         }
-
-        setNewRating(rating);
 
         const allButtons = Array.from(document.querySelector('.ratingButtons').children)
         
@@ -57,14 +55,16 @@ function EditRating({userID, judgeID}) {
 
     function saveRating() {
         //send new post request to server
-
-        axios.post(`http://localhost:4000/api/set_rating/`, {
+        axios.post('http://localhost:4000/api/set_rating/', {
             u_id: userID,
             j_id: judgeID,
-            rating: newRating
-        }).then((res) => {
+            rating: rating
+        }).then(() => {
+            updateFunc(judgeID, rating);
             closeModal();
-        }).catch((err) => console.log(err));
+        }).catch((err) => {
+            console.error("Error saving rating", err)
+        })
     }
 
     // need to add logic for currently selected color, before changes have even been made

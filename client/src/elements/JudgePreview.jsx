@@ -7,16 +7,16 @@ import Rating from './Rating'
 import EditRating from './EditRating'
 
 
-function JudgePreview({judge, userID}) {
+function JudgePreview({judge, userID, updateFunc}) {
     return (
         <div>
             {judge ? (
                 <div class="judgePreview">
                     <div style={{display:'flex'}}>
                         <div class="ratingContainer">
-                            <Rating userID={userID} judgeID={judge.judge_id}/>
+                            <Rating rating={judge.rating}/>
 
-                            <EditRating userID={userID} judgeID={judge.judge_id} />
+                            <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateFunc}/>
 
                         </div>
                         <div style={{marginLeft: 20}}>

@@ -66,23 +66,6 @@ app.get('/api/alljudges', (req, res) => {
     })
 })
 
-
-app.get('/api/ratings/', (req, res) => {
-    const u_id = req.query.u_id;
-    const j_id = req.query.j_id;
-    
-    const sql = "SELECT rating FROM ranks WHERE `judge_id` = ? AND `ranker_id` = ? LIMIT 1"
-    db.query(sql, [j_id, u_id], (err, result) => {
-        if (err) {
-            console.error('Database error: ', err);
-            return res.status(500).json({error: 'Failed to fetch data'});
-        }
-        
-        return res.json(result);
-    })
-
-});
-
 app.post('/api/set_rating/', (req, res) => {
     const {u_id, j_id, rating} = req.body;
     console.log(rating)

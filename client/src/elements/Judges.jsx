@@ -9,6 +9,7 @@ import Toggle from './Toggle'
 
 function Judges({userID}) {
     const [allJudges, setData] = useState([]); //to store fetched data
+
     userID = 0
 
     useEffect(()=>{
@@ -19,8 +20,20 @@ function Judges({userID}) {
         ).then((res) => {
             setData(res.data);
         })
-        .catch((err)=>console.log("rating get request error : ", err))
+        .catch((err)=>console.log("Error getting all judges: ", err))
     }, [userID]);
+
+    const updateRating = (judgeID, newRating) => {
+        axios.post(`http://localhost:4000/api/set_rating/`, {
+            u_id: userID,
+            j_id: judgeID,
+            rating: newRating
+        }).then(() => {
+            setData(prevJudges => prevJudges.map(judge => 
+                judge.id === judgeID ? {...judge, rating: newRating} : judge
+            ));
+        }).catch((err) => console.error("Error saving rating:", err));
+    }
 
     return (
             <div class="page">
@@ -31,7 +44,7 @@ function Judges({userID}) {
                     <div>
                         {allJudges && allJudges.length > 0 ? (
                             allJudges.map((judge, index) => (
-                                <div key={index}><JudgePreview judge={judge} userID={userID} /> </div>
+                                <div key={index}><JudgePreview judge={judge} userID={userID} updateFunc={updateRating}/> </div>
                             ))
                         ) : (
                             <div></div>

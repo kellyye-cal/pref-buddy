@@ -4,32 +4,16 @@ import axios from 'axios'
 import '../App.css';
 
 
-function Rating({userID, judgeID}) {
-    const [ratingData, setRating] = useState([]); //to store fetched data
-
-    useEffect(()=>{
-        axios.get(`http://localhost:4000/api/ratings`,
-            {params: {
-                u_id: userID,
-                j_id: judgeID
-            }}
-        ).then((res) => {
-            setRating(res.data);
-        })
-        .catch((err)=>console.log("rating get request error : ", err))
-    }, [userID, judgeID]);
-
+function Rating({rating}) {
     
-    if (ratingData && ratingData.length > 0) {
-        const numRating = ratingData[0].rating
-        var display = String(numRating);
+    var display = String(rating);
 
-        if (numRating === 0 || !numRating) {
-            display = "-";
-        } else if (numRating === 6) {
-            display = "S";
-        }
+    if (rating === 0 || !rating) {
+        display = "-";
+    } else if (rating === 6) {
+        display = "S";
     }
+
     return (
         <div class={
             display === "1" ? "rating oneRate" :
@@ -40,13 +24,7 @@ function Rating({userID, judgeID}) {
             display === "S" ? "rating strikeRate" :
             "rating noRate"
         }>
-            {ratingData && ratingData.length > 0 ? (
-                ratingData.map((rate, index) => (
-                    <div> {display} </div>
-                ))
-            ) : (
-                <div class="noRate rating"> - </div>
-            )}
+            {display}
         </div>
     )
 }
