@@ -8,13 +8,14 @@ import NavBar from './NavBar'
 import Rating from './Rating'
 
 function JudgeProfile() {
+    let userID = 0;
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     const { id } = useParams();
 
     console.log(id)
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/judge/${id}`).then((res) => {
+        axios.get(`http://localhost:4000/api/judge/${id}`, {params:{u_id: userID}}).then((res) => {
             setJudgeData(res.data);
         })
         .catch((err)=>console.log(err))
@@ -33,7 +34,7 @@ function JudgeProfile() {
                                         <h1> {judge.name} </h1>
                                         <h4> {judge.affiliation}</h4>
                                     </div>
-                                    <Rating userID={0} judgeID={id}/>
+                                    <Rating rating={judge.rating}/>
                                 </div>
 
                                 <div class="container-spacing container">
