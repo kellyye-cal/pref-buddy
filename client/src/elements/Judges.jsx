@@ -5,7 +5,7 @@ import '../App.css';
 
 import NavBar from './NavBar'
 import JudgePreview from './JudgePreview'
-import Toggle from './Toggle'
+import Search from './Search'
 
 function Judges({userID}) {
     const [allJudges, setData] = useState([]); //to store fetched data
@@ -35,15 +35,17 @@ function Judges({userID}) {
         }).catch((err) => console.error("Error saving rating:", err));
     }
 
+    const [filteredRecords, setFilteredRecords] = useState(allJudges);
+
     return (
             <div class="page">
                 <NavBar />
                 <div class="main">
                     <h1> Judges </h1>
-                    <Toggle leftText="My Ratings" rightText="All Judges"/>
+                    <Search data={allJudges} keys={['name', 'affiliation']} onFilteredRecordChange={setFilteredRecords}> </Search>
                     <div>
                         {allJudges && allJudges.length > 0 ? (
-                            allJudges.map((judge, index) => (
+                            filteredRecords.map((judge, index) => (
                                 <div key={index}><JudgePreview judge={judge} userID={userID} updateFunc={updateRating}/> </div>
                             ))
                         ) : (
