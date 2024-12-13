@@ -1,6 +1,6 @@
 // import dependencies 
 const express = require('express')
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const cors = require('cors')
 const path = require('path')
 
@@ -94,6 +94,40 @@ app.get('/api/tournaments/', (req, res) => {
         }
         return res.json(result)
     })
+})
+
+app.get('/api/tournaments/:id', async (req, res) => {
+    const t_id = req.params.id;
+    const u_id = req.query.u_id
+
+    try {
+        var numRated;
+        var numJudges;
+
+        const numRatedQuery = "SELECT COUNT(*) FROM judging_at INNER JOIN ranks on judging_at.user_id = ranks.judge_id WHERE `tournament_id` = ? AND `ranker_id` = ? AND `rating` IS NOT NULL AND `rating` > 0"
+        const [ratedResult] = await db.promise().query(numRatedQuery, [t_id, u_id]);
+        // db.query(num_rated_query, [t_id, u_id], (err, result) => {
+        //     if (err) {
+        //         console.log("Database error: ", err);
+        //         return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
+        //     }
+        //     numRated = result
+        // })
+
+        const numJudgesQuery = "SELECT COUNT(*) from judging_at WHERE `tournament_id` = ?"
+        const [judgesResult] = await db.promise().query(numJudgesQuery, [t_id]);
+        // db.query(num_judges_query, [t_id], (err, result) => {
+        //     if (err) {
+        //         console.log("Database error: ", err);
+        //         return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
+        //     }
+        //     numJudges = result
+        // })
+        return res.json([ratedResult[0]['COUNT(*)'], judgesResult[0]['COUNT(*)']])
+    } catch (err) {
+        console.log("Database error: ", err);
+        return res.status(500).json({ error: 'Failed to fetch data from tournaments table' });
+    }
 })
 
 // Start server to respond to incoming requests

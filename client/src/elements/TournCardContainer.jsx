@@ -19,11 +19,12 @@ function TournCardContainer({userID}) {
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);
 
+
     return (
         <div class="h-between">
             {allTournaments && allTournaments.length > 0 ? (
                 allTournaments.map((tourn, index) => (
-                    <TournamentCard tourn={tourn}/>
+                    <TournamentCard userID={userID} tourn={tourn}/>
                 ))
 
             ) : (

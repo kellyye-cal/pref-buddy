@@ -3,6 +3,8 @@ import {Link, useParams} from "react-router-dom";
 import axios from 'axios'
 import '../App.css';
 
+import ProgressRing from './ProgressRing';
+
 const styles = {
     tournName: {
         fontSize: 16,
@@ -31,11 +33,26 @@ const styles = {
 }
 
 
-function TournamentCard({tourn}) {
+function TournamentCard({userID, tourn}) {
     const startDate = new Date(tourn.start_date)
     const endDate = new Date(tourn.end_date)
+    
+    const [prefData, setData] = useState([])
+
+    useEffect(()=>{
+        axios.get(`http://localhost:4000/api/tournaments/${tourn.tournament_id}`,
+            {params: {u_id:userID}}).then((res) => {
+            setData(res.data);
+        })
+        .catch((err)=>console.log("Error getting all judges: ", err))
+    }, []);
+
+    // for each tournament, get number of judges attending and number of judges ranked using tourn.i
+
     return (
         <div style={styles.container}>
+            <ProgressRing progress={prefData[0]} full={prefData[1]}/>
+            <p style={{fontSize: 14, paddingTop: 4}}> judges rated</p>
             <p style={styles.tournName}> {tourn.name} </p>
             <p style={styles.tournDate}> {startDate.getMonth() + 1}/{startDate.getDate()}/{startDate.getFullYear().toString().slice(-2)}
                 -{endDate.getMonth() + 1}/{endDate.getDate()}/{endDate.getFullYear().toString().slice(-2)}</p>

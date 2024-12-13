@@ -7,7 +7,6 @@ import NavBar from './NavBar'
 import TournCardContainer from './TournCardContainer';
 
 function Home() {
-    // Get the list of tournaments we are attending
     
     return (
         <div class="page">
