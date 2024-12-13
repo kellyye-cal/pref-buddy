@@ -8,6 +8,7 @@ import EditRating from './EditRating'
 
 
 function JudgePreview({judge, userID, updateFunc}) {
+    console.log(judge)
     return (
         <div>
             {judge ? (
@@ -16,7 +17,7 @@ function JudgePreview({judge, userID, updateFunc}) {
                         <div class="ratingContainer">
                             <Rating rating={judge.rating}/>
 
-                            <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateFunc} currRating={judge.rating}/>
+                            <EditRating userID={userID} judgeID={judge.id} updateFunc={updateFunc} currRating={judge.rating}/>
 
                         </div>
                         <div style={{marginLeft: 20}}>

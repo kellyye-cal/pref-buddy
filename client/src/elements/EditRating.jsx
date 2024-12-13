@@ -35,7 +35,7 @@ const styles = {
 }
 
 
-function EditRating({userID, judgeID, currRating, updateFunc}) {
+function EditRating({userID, judgeID, currRating, updateFunc}) {    
     const [isEditing, setIsEditing] = useState(false);
 
     const openModal = () => setIsEditing(true);

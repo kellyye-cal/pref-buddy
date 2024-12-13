@@ -35,6 +35,16 @@ function Judges({userID}) {
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
         }).catch((err) => console.error("Error saving rating:", err));
+
+        axios.get(`http://localhost:4000/api/alljudges`,
+            {params:{
+                u_id: userID
+            }}
+            ).then((res) => {
+                setData(res.data);
+                setFilteredRecords(res.data)
+            })
+            .catch((err)=>console.log("Error getting all judges: ", err))
     }
 
 
