@@ -42,7 +42,7 @@ app.get('/api/judge/:id', (req, res) => {
     const j_id = req.params.id;
     const u_id = req.query.u_id;
 
-    const sql = "SELECT *, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id INNER JOIN ranks on ranks.judge_id = j.id WHERE `ranker_id` = ?";
+    const sql = "SELECT *,  (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id INNER JOIN ranks on ranks.judge_id = j.id WHERE `ranker_id` = ?";
     db.query(sql, [j_id, u_id], (err, result) => {
         if (err) {
             console.error('Database error: ', err);
@@ -78,6 +78,19 @@ app.post('/api/set_rating/', (req, res) => {
             return res.status(500).json({error: 'Failed to fetch data'});
         }
         return res.status(200).json({success: true, result})
+    })
+})
+
+app.get('/api/tournaments/', (req, res) => {
+    const u_id = req.query.u_id
+
+    const sql = "SELECT * FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
+    db.query(sql, [u_id], (err, result) => {
+        if (err) {
+            console.log("Database error: ", err);
+            return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
+        }
+        return res.json(result)
     })
 })
 

@@ -8,7 +8,8 @@ import JudgePreview from './JudgePreview'
 import Search from './Search'
 
 function Judges({userID}) {
-    const [allJudges, setData] = useState([]); //to store fetched data
+    const [allJudges, setData] = useState([]);
+    const [filteredRecords, setFilteredRecords] = useState([]);
 
     userID = 0
 
@@ -19,6 +20,7 @@ function Judges({userID}) {
         }}
         ).then((res) => {
             setData(res.data);
+            setFilteredRecords(res.data)
         })
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, [userID]);
@@ -35,7 +37,6 @@ function Judges({userID}) {
         }).catch((err) => console.error("Error saving rating:", err));
     }
 
-    const [filteredRecords, setFilteredRecords] = useState(allJudges);
 
     return (
             <div class="page">
