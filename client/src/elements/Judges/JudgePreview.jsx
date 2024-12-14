@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useNavigate } from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from 'axios'
-import '../App.css';
+import '../../App.css';
 
 import Rating from './Rating'
 import EditRating from './EditRating'

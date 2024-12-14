@@ -282,3 +282,14 @@ button {
 
   border-radius: 4px;
 }
+
+.cta {
+  background-color: #2680FF;
+
+  color: #fff;
+  font-weight: bold;
+
+  padding: 8px 16px;
+
+  border-radius: 20px;
+}

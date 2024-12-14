@@ -1,0 +1,96 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+label {
+    font-size: 12pt;
+    font-weight: 600;
+
+    margin-bottom: 2px;
+    margin-right: 0px;
+}
+
+label span {
+    color: #FF2A2A;
+    font-size: 16pt;
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+input {
+    height: 32px;
+    margin-top: 2px;
+
+    background-color: #F5F5F5;
+    border-color: #d9d9d9;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+
+    padding: 16px 12px;
+}
+
+.form-valid {
+    border-color: #148943;
+    background-color: rgba(130, 245, 177, 0.2);
+}
+
+.form-valid:focus {
+    outline-color: #148943;
+}
+
+.form-error {
+    border-color: #FF3737;
+    background-color: rgba(255, 196, 196, 0.5);
+}
+
+.form-error:focus{
+    outline-color: #FF3737;
+}
+
+.instructions {
+    padding: 4px;
+    margin: 0;
+    font-weight: 500;
+    color: #A30000;
+}
+
+input::placeholder {
+    color: #6a6a6a;
+}
+
+.offscreen {
+    display: none;
+}
+
+.form-field {
+    margin: 12px 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form {
+    width: 70%;
+    color: #333;
+    background: #fff;
+
+    border-radius: 4px;
+    padding: 40px;
+
+    box-shadow: 0px 1px 4px rgba(10, 10, 11, 0.05);
+}
+
+form button {
+    width: fit-content;
+    margin: 20px auto 4px auto;
+}
+
+form h3, p {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -2,14 +2,14 @@ import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import Register from './elements/Register'
-import Login from './elements/Login'
+import Register from './elements/Auth/Register'
+import Login from './elements/Auth/Login'
 
 import Home from './elements/Home'
-import JudgeProfile from './elements/JudgeProfile'
-import Judges from './elements/Judges'
+import JudgeProfile from './elements/Judges/JudgeProfile'
+import Judges from './elements/Judges/Judges'
 
-import Rating from './elements/Rating'
+import Rating from './elements/Judges/Rating'
 
 
 function App() {

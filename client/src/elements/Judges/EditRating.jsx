@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {Navigate, useNavigate, useParams} from "react-router-dom";
 import axios from 'axios'
-import '../App.css';
+import '../../App.css';
 
 const styles = {
     unselected: {

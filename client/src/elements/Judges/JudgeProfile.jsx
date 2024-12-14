@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {useParams} from "react-router-dom";
 import axios from 'axios'
-import '../App.css';
-import '../JudgeProfile.css';
+import '../../App.css';
+import './JudgeProfile.css';
 
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import Rating from './Rating'
 import EditRating from './EditRating';
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from 'axios'
-import '../App.css';
+import '../../App.css';
 
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import JudgePreview from './JudgePreview'
-import Search from './Search'
+import Search from '../Search'
 
 function Judges({userID}) {
     const [allJudges, setData] = useState([]);
