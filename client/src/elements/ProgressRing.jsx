@@ -25,7 +25,6 @@ function ProgressRing({progress, full}) {
     const offset = circumference - (progress / full) * circumference
 
     var color = "#e6e6e6"
-    console.log(progress)
 
     if (progress/full < 0.5 && progress/full > 0) {
         color = "#FF3737"

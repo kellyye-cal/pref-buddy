@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {Link, useParams} from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import AuthContext from '../context/AuthProvider';
 import axios from 'axios'
 import '../App.css';
 
@@ -34,15 +34,21 @@ const styles = {
 
 
 function TournamentCard({userID, tourn}) {
+    const {auth} = useContext(AuthContext);
+
     const startDate = new Date(tourn.start_date)
     const endDate = new Date(tourn.end_date)
     
     const [prefData, setData] = useState([])
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/tournaments/${tourn.tournament_id}`,
-            {params: {u_id:userID}}).then((res) => {
+        axios.get(`http://localhost:4000/api/tournaments/${tourn.tournament_id}`, {
+                headers: {
+                    Authorization: `Bearer ${auth.accessToken}`,
+                },
+                withCredentials: true,}).then((res) => {
             setData(res.data);
+            console.log(res.data)
         })
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);

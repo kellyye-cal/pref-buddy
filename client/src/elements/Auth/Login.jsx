@@ -1,13 +1,14 @@
 import React from 'react'
 import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "../../context/AuthProvider"
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+
+import Home from '../Home';
 
 
 import './Auth.css';
 
 import axios from '../../api/axios';
-const LOGIN_URL = '/auth';
 
 
 
@@ -16,10 +17,12 @@ function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [email, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setsuccess] = useState('');
+
+    const navigate = useNavigate();
     
     useEffect(() => {
         userRef.current.focus();
@@ -27,13 +30,13 @@ function Login() {
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, pwd])
+    }, [email, pwd])
 
     const handleSubmit = async(e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(LOGIN_URL, JSON.stringify({user, pwd}), 
+            const response = await axios.post('/auth', JSON.stringify({email, pwd}), 
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
@@ -43,12 +46,15 @@ function Login() {
             
             const accessToken = response?.data?.accessToken;
             const roles = response?.data?.roles;
+            const userID = response?.data.userId;
 
-            setAuth({user, pwd, roles, accessToken});
+            setAuth({email, pwd, roles, accessToken});
 
             setUser('');
             setPwd('');
             setsuccess(true);
+
+            navigate(`/home/${userID}`, {replace: true})
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -65,50 +71,43 @@ function Login() {
 
     return (
         <>
-            {success ? (
-                <section>
-                    <h1> You are logged in! </h1>
-                </section>
-            ) : (
+            <div class="auth-page">
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
+                <h1> Welcome to PrefBuddy! </h1>
 
-                <div class="auth-page">
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
-                    <h1> Welcome to PrefBuddy! </h1>
+                <form class="auth-form" onSubmit={handleSubmit}>
+                    <h3> Log In</h3>
 
-                    <form class="auth-form" onSubmit={handleSubmit}>
-                        <h3> Log In</h3>
+                    <div class="form-field">
+                        <label htmlFor="email"> Email address<span>*</span> </label>
+                        <input
+                            type="email"
+                            id="email"
+                            ref={userRef}
+                            onChange={(e) => setUser(e.target.value)}
+                            value={email}
+                            required
+                        />
+                    </div>
 
-                        <div class="form-field">
-                            <label htmlFor="email"> Email address<span>*</span> </label>
-                            <input
-                                type="email"
-                                id="email"
-                                ref={userRef}
-                                onChange={(e) => setUser(e.target.value)}
-                                value={user}
-                                required
-                            />
-                        </div>
+                    <div class="form-field">
+                        <label htmlFor="password"> Password<span>*</span> </label>
+                        <input
+                            type="password"
+                            id="password"
+                            onChange={(e) => setPwd(e.target.value)}
+                            value={pwd}
+                            required
+                        />
+                    </div>
 
-                        <div class="form-field">
-                            <label htmlFor="password"> Password<span>*</span> </label>
-                            <input
-                                type="password"
-                                id="password"
-                                onChange={(e) => setPwd(e.target.value)}
-                                value={pwd}
-                                required
-                            />
-                        </div>
-
-                        <button class="cta"> Sign In </button>
-                        <p> Don't have an account?
-                        <span style={{paddingLeft: 2}}>
-                            <Link to="/"> Sign up instead! </Link>
-                        </span> </p>
-                    </form>
-                </div>
-            )}
+                    <button class="cta"> Sign In </button>
+                    <p> Don't have an account?
+                    <span style={{paddingLeft: 2}}>
+                        <Link to="/"> Sign up instead! </Link>
+                    </span> </p>
+                </form>
+            </div>
         </>
     )
 }

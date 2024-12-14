@@ -4,12 +4,19 @@ const mysql = require('mysql2')
 const cors = require('cors')
 const path = require('path')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const verifyJWT = require('../middleware/verifyJWT')
+const cookieParser = require('cookie-parser')
+require('dotenv').config({path: '../.env'});
 
 // create instance of express application, backbone of the server
 const app = express()
 
 // set up middleware functions to serve static files, handles client-side assets like CSS and JS
 app.use(express.static(path.join(__dirname, "public")))
+
+//middleware for cookies
+app.use(cookieParser());
 
 // Cross-Origin Resource Sharing to manage and control web security
 app.use(cors({
@@ -33,10 +40,6 @@ const db = mysql.createConnection({
     database: "pref-buddy",
     port: 3306
 })
-
-// app.get('/', (req, res) => {
-//     res.send("GET request called to root");
-// })
 
 app.post('/register', async (req, res) => {
     const {email, fname, lname, pwd} = req.body;
@@ -75,11 +78,49 @@ app.post('/register', async (req, res) => {
 
 })
 
-app.get('/login', async (req, res) => {
+app.post('/auth', async (req, res) => {
     const {email, pwd} = req.body;
 
     if (!email || !pwd ) return res.status(400).json({'message': 'Email and password are required.'})
+    
+    const sql = "SELECT id, password FROM users WHERE `email` = ?"
 
+    db.query(sql, [email, pwd], (err, result) => {
+        if (err) {
+            console.error("Database error when logging in ", err);
+            return res.status(500).json({error: 'Failed to fetch data'})
+        }
+        
+        if (result.length < 1) return res.status(401).json({error: 'No account with that username'})
+        var match = bcrypt.compare(pwd, result[0].password)
+        const userId = result[0].id;
+        if (match) {
+            // create JWTs
+            const accessToken = jwt.sign(
+                {"id":result[0].id},
+                process.env.ACCESS_TOKEN_SECRET,
+                {expiresIn: '300s'}
+            );
+
+            const refreshToken = jwt.sign(
+                {"id":result[0].id},
+                process.env.REFRESH_TOKEN_SECRET,
+                {expiresIn: '1d'}
+            );
+
+            const refreshTokenSQL = "UPDATE users SET `refresh_token` = ? WHERE `email` = ?"
+            db.query(refreshTokenSQL, [refreshToken, email], (err, result) => {
+                if (err) return res.status(500).json({error: 'Database error'})
+            })
+
+
+            // post the refresh token to the users database
+            res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
+            res.json({accessToken, userId});
+        } else {
+            res.sendStatus(401)
+        }
+    })
     
 })
 
@@ -123,29 +164,28 @@ app.post('/api/set_rating/', (req, res) => {
     const sql = "INSERT INTO ranks (judge_id, ranker_id, rating) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE rating = VALUES(rating)"
     db.query(sql, [j_id, u_id, rating], (err, result) => {
         if (err) {
-            console.log("Database error: ", err)
             return res.status(500).json({error: 'Failed to fetch data'});
         }
         return res.status(200).json({success: true, result})
     })
 })
 
-app.get('/api/tournaments/', (req, res) => {
-    const u_id = req.query.u_id
+app.get('/api/tournaments/', verifyJWT, (req, res) => {
+    const u_id = req.user
 
     const sql = "SELECT * FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
     db.query(sql, [u_id], (err, result) => {
         if (err) {
-            console.log("Database error: ", err);
             return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
         }
+        console.log(result)
         return res.json(result)
     })
 })
 
-app.get('/api/tournaments/:id', async (req, res) => {
+app.get('/api/tournaments/:id', verifyJWT, async (req, res) => {
     const t_id = req.params.id;
-    const u_id = req.query.u_id
+    const u_id = req.user
 
     try {
         var numRated;
@@ -172,7 +212,6 @@ app.get('/api/tournaments/:id', async (req, res) => {
         // })
         return res.json([ratedResult[0]['COUNT(*)'], judgesResult[0]['COUNT(*)']])
     } catch (err) {
-        console.log("Database error: ", err);
         return res.status(500).json({ error: 'Failed to fetch data from tournaments table' });
     }
 })
