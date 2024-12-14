@@ -18,6 +18,7 @@ function App() {
       <Routes>
         {/* <Route exact path='/' element={<Home />} /> */}
         <Route exact path='/' element={<Register />} />
+        <Route path='/login' element={<Login />}/>
         <Route path="/judges" element={<Judges />}/>
         <Route path='/judges/JudgeProfile/:id' element={<JudgeProfile />} />
       </Routes>

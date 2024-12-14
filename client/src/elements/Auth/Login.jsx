@@ -1,6 +1,7 @@
 import React from 'react'
 import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "../../context/AuthProvider"
+import {Link} from 'react-router-dom'
 
 
 import './Auth.css';
@@ -70,38 +71,43 @@ function Login() {
                 </section>
             ) : (
 
-                <section>
+                <div class="auth-page">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
-                    <h1> Sign In</h1>
+                    <h1> Welcome to PrefBuddy! </h1>
 
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="email"> Email address </label>
-                        <input
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            onChange={(e) => setUser(e.target.value)}
-                            value={user}
-                            required
-                        />
+                    <form class="auth-form" onSubmit={handleSubmit}>
+                        <h3> Log In</h3>
 
+                        <div class="form-field">
+                            <label htmlFor="email"> Email address<span>*</span> </label>
+                            <input
+                                type="email"
+                                id="email"
+                                ref={userRef}
+                                onChange={(e) => setUser(e.target.value)}
+                                value={user}
+                                required
+                            />
+                        </div>
 
-                        <label htmlFor="password"> Password </label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={(e) => setPwd(e.target.value)}
-                            value={pwd}
-                            required
-                        />
+                        <div class="form-field">
+                            <label htmlFor="password"> Password<span>*</span> </label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={(e) => setPwd(e.target.value)}
+                                value={pwd}
+                                required
+                            />
+                        </div>
 
-                        <button> Sign In </button>
+                        <button class="cta"> Sign In </button>
+                        <p> Don't have an account?
+                        <span style={{paddingLeft: 2}}>
+                            <Link to="/"> Sign up instead! </Link>
+                        </span> </p>
                     </form>
-                    <p> Don't have an account?
-                        <span>
-                            {/* put router link here instead of html link */}
-                            <a href="#"> Sign up instead! </a></span></p>
-                </section>
+                </div>
             )}
         </>
     )

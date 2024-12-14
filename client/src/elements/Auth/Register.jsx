@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 
 import axios from '../../api/axios'
 
+import { Link } from "react-router-dom";
+
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -112,7 +114,8 @@ const Register = () => {
         {success ? (
             <h1> Success!</h1>
         ) : (
-            <div>
+            <div class="auth-page">
+                <h1> Welcome to PrefBuddy!</h1>
                 <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
 
                 <form class="auth-form" onSubmit={handleSubmit}>
@@ -214,7 +217,10 @@ const Register = () => {
                         Create Account
                     </button>
 
-                    <p> Already have a account? Sign In</p>
+                    <p> Already have an account?
+                        <span style={{paddingLeft: 2}}>
+                            <Link to="login"> Log in instead! </Link>
+                        </span> </p>
                 </form>
 
             </div>
