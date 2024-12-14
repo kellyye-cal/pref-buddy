@@ -8,7 +8,6 @@ import EditRating from './EditRating'
 
 
 function JudgePreview({judge, userID, updateFunc}) {
-    console.log(judge)
     return (
         <div>
             {judge ? (

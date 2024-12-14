@@ -3,6 +3,7 @@ const express = require('express')
 const mysql = require('mysql2')
 const cors = require('cors')
 const path = require('path')
+const bcrypt = require('bcrypt')
 
 // create instance of express application, backbone of the server
 const app = express()
@@ -14,7 +15,8 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }))
 
 // Parse JSON data from HTTP requests to process data sent from the client
@@ -35,6 +37,51 @@ const db = mysql.createConnection({
 // app.get('/', (req, res) => {
 //     res.send("GET request called to root");
 // })
+
+app.post('/register', async (req, res) => {
+    const {email, fname, lname, pwd} = req.body;
+    if (!email || !pwd) return res.status(400).json({'message': 'Valid email and password are required'});
+
+    // check for duplicate emails
+    const findDuplicate = "SELECT email FROM users where `email` = ?"
+    db.query(findDuplicate, [email], (err, result) => {
+        if (err) {
+            console.error("Database error: ", err);
+            return res.status(500).json({error: 'Database error'})
+        }
+        if (result.length >= 1) return res.sendStatus(409);
+    })
+
+    try {
+        // encrypt the password
+        const hashedPwd = await bcrypt.hash(pwd, 10)
+        const name = fname + " " + lname
+
+        // store the new user
+        const insertSQL = "INSERT INTO users (f_name, l_name, email, name, password) VALUES (?, ?, ?, ?, ?)"
+        db.query(insertSQL, [fname, lname, email, name, hashedPwd], (err, result) => {
+            if (err) {
+                console.log("Database error: ", err)
+                return res.status(500).json({error: 'Database error when creating account'});
+            }
+            console.log(result)
+            return res.status(200).json({success: true, result})
+        })
+
+    } catch (err) {
+        res.status(500).json({'message': err.message})
+    }
+
+
+})
+
+app.get('/login', async (req, res) => {
+    const {email, pwd} = req.body;
+
+    if (!email || !pwd ) return res.status(400).json({'message': 'Email and password are required.'})
+
+    
+})
 
 
 app.get('/api/judge/:id', (req, res) => {
