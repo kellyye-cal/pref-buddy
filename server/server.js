@@ -124,6 +124,33 @@ app.post('/auth', async (req, res) => {
     
 })
 
+app.post('/auth/refresh', (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.status(401);
+    const refreshToken = cookies.jwt;
+
+    const findUser = "SELECT * FROM users WHERE `refresh_token` = ?"
+    db.query(findUser, [refreshToken], (err, result) => {
+        if (err) return res.status(500).json({error: 'Failed to fetch data'});
+        
+        if (result.length == 0) return res.status(401).json({error: 'Forbidden'})
+
+        jwt.verify(
+            refreshToken,
+            process.env.REFRESH_TOKEN_SECRET,
+            (err, decoded) => {
+                if (err || result[0].email !== decoded.email) return res.status(403)
+                const accessToken = jwt.sign(
+                    {"email": decoded.email},
+                    process.env.ACCESS_TOKEN_SECRET,
+                    {expiresIn: '300s'}
+                );
+                res.json({accessToken})
+            }
+        )
+    });
+})
+
 
 app.get('/api/judge/:id', (req, res) => {
     //in the query, want to join users with judge info
