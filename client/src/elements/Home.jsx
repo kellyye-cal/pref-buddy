@@ -10,8 +10,7 @@ import TournCardContainer from './TournCardContainer';
 function Home() {
     const {auth} = useContext(AuthContext);
     const {userID} = useParams();
-    const [userData, setUserData] = useState(null);
-    
+
     return (
         <div class="page">
             <NavBar />

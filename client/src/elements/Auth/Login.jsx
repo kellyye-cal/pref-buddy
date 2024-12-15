@@ -42,13 +42,15 @@ function Login() {
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
             
             const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
+            // const roles = response?.data?.roles;
             const userID = response?.data.userId;
 
-            setAuth({email, pwd, roles, accessToken});
+            sessionStorage.setItem('accessToken', accessToken);
+            sessionStorage.setItem('userId', userID);
+
+            setAuth({email, accessToken, userId: userID});
 
             setUser('');
             setPwd('');

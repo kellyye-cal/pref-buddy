@@ -44,11 +44,10 @@ function TournamentCard({userID, tourn}) {
     useEffect(()=>{
         axios.get(`http://localhost:4000/api/tournaments/${tourn.tournament_id}`, {
                 headers: {
-                    Authorization: `Bearer ${auth.accessToken}`,
+                    Authorization: `Bearer ${auth?.accessToken}`,
                 },
                 withCredentials: true,}).then((res) => {
             setData(res.data);
-            console.log(res.data)
         })
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);

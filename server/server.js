@@ -22,8 +22,8 @@ app.use(cookieParser());
 app.use(cors({
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
 }))
 
 // Parse JSON data from HTTP requests to process data sent from the client
@@ -99,7 +99,7 @@ app.post('/auth', async (req, res) => {
             const accessToken = jwt.sign(
                 {"id":result[0].id},
                 process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '300s'}
+                {expiresIn: '10m'}
             );
 
             const refreshToken = jwt.sign(
@@ -115,7 +115,7 @@ app.post('/auth', async (req, res) => {
 
 
             // post the refresh token to the users database
-            res.cookie('jwt', refreshToken, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000})
+            res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
             res.json({accessToken, userId});
         } else {
             res.sendStatus(401)
@@ -129,23 +129,30 @@ app.post('/auth/refresh', (req, res) => {
     if (!cookies?.jwt) return res.status(401);
     const refreshToken = cookies.jwt;
 
+    console.log('Cookies: ', req.cookies);
+
     const findUser = "SELECT * FROM users WHERE `refresh_token` = ?"
     db.query(findUser, [refreshToken], (err, result) => {
         if (err) return res.status(500).json({error: 'Failed to fetch data'});
         
-        if (result.length == 0) return res.status(401).json({error: 'Forbidden'})
-
+        if (result.length === 0) return res.status(401).json({error: 'Forbidden'})
+        
         jwt.verify(
             refreshToken,
             process.env.REFRESH_TOKEN_SECRET,
             (err, decoded) => {
-                if (err || result[0].email !== decoded.email) return res.status(403)
+                if (err) return res.status(403)
+                
+                if (result[0].id !== decoded.id) return res.status(403)
                 const accessToken = jwt.sign(
-                    {"email": decoded.email},
+                    {"id":decoded.id},
                     process.env.ACCESS_TOKEN_SECRET,
                     {expiresIn: '300s'}
                 );
-                res.json({accessToken})
+
+                console.log("new access token: ", accessToken)
+
+                return res.json({accessToken})
             }
         )
     });
@@ -198,21 +205,20 @@ app.post('/api/set_rating/', (req, res) => {
 })
 
 app.get('/api/tournaments/', verifyJWT, (req, res) => {
-    const u_id = req.user
+    const u_id = req.id
 
     const sql = "SELECT * FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
     db.query(sql, [u_id], (err, result) => {
         if (err) {
             return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
         }
-        console.log(result)
         return res.json(result)
     })
 })
 
 app.get('/api/tournaments/:id', verifyJWT, async (req, res) => {
     const t_id = req.params.id;
-    const u_id = req.user
+    const u_id = req.id
 
     try {
         var numRated;

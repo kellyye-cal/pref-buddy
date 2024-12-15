@@ -25,39 +25,49 @@ function App() {
   };
 
   useEffect(() => {
-    const refreshAccessToken = async () => {
-      try {
-        // Send a request to refresh the access token
-        const response = await axios.post('/auth/refresh', {}, {
-          withCredentials: true, // Send cookies with the request
+    const storedAccessToken = sessionStorage.getItem('accessToken');
+    const storedUserId = sessionStorage.getItem('userId');
+    
+    console.log('Stored Access Token:', storedAccessToken);
+    console.log('Stored UserId:', storedUserId);
+
+    if (storedAccessToken && storedUserId) {
+        setAuth({
+            accessToken: storedAccessToken,
+            userId: storedUserId
         });
-
-        // Extract the new access token from the response
-        const newAccessToken = response.data.accessToken;
-
-        // Set the new access token in the Auth context or state
-        setAuth((prevState) => ({
-          ...prevState,
-          accessToken: newAccessToken,
-        }));
-      } catch (err) {
-        // Handle errors (e.g., no refresh token or failed refresh)
-        console.error("Error refreshing access token:", err);
-        // You might want to log the user out or show an error
-      }
-    };
-
-    // Check if there is a valid access token or attempt to refresh it
-    refreshAccessToken();
+        console.log('setting auth by retrieving from session storage', storedAccessToken)
+    }
   }, [setAuth]);
+
+  useEffect(() => {
+    const refreshAccessToken = async () => {
+      if (!auth?.accessToken) {
+        try {
+          const response = await axios.post('/auth/refresh', {}, {
+            withCredentials: true, // Send cookies with the request
+          });
+
+          const newAccessToken = response.data.accessToken;
+
+          setAuth((prev) => ({ ...prev, accessToken: newAccessToken }));
+          console.log("access token being refreshed", newAccessToken)
+
+          sessionStorage.setItem('accessToken', newAccessToken);
+        } catch (err) {
+          console.error("Error refreshing access token:", err);
+        }
+      };
+    }
+
+    refreshAccessToken();
+
+  }, [auth?.accessToken, setAuth]);
 
   return (
     <BrowserRouter>
       <Routes>
         {/* <Route exact path='/' element={<Home />} /> */}
-        <Route exact path='/' element={<Register />} />
-        <Route path='/login' element={<Login />}/>
-
         <Route
           path="/home/:userID"
           element={
@@ -65,6 +75,12 @@ function App() {
               <Home />
             </ProtectedRoute>
           } />
+
+        <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
+        <Route path='/register' element={<Register />}/>
+
+        <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
+
         <Route path="/judges" element={<Judges />}/>
         <Route path='/judges/JudgeProfile/:id' element={<JudgeProfile />} />
       </Routes>

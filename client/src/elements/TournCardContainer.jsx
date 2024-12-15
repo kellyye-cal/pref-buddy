@@ -18,7 +18,7 @@ function TournCardContainer({userID}) {
         
         axios.get(`http://localhost:4000/api/tournaments`, {
             headers: {
-                Authorization: `Bearer ${auth.accessToken}`,
+                Authorization: `Bearer ${auth?.accessToken}`,
             },
             withCredentials: true,
         }).then((res) => {
