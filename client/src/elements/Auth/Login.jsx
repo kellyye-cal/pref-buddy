@@ -47,7 +47,7 @@ function Login() {
             sessionStorage.setItem('accessToken', accessToken);
             sessionStorage.setItem('userId', userID);
 
-            setAuth({email, accessToken, userId: userID, loggedOut: false});
+            setAuth({accessToken, userId: userID, loggedOut: false});
 
             setUser('');
             setPwd('');
@@ -103,7 +103,7 @@ function Login() {
                     <button class="cta"> Sign In </button>
                     <p> Don't have an account?
                     <span style={{paddingLeft: 2}}>
-                        <Link to="/"> Sign up instead! </Link>
+                        <Link to="/register"> Sign up instead! </Link>
                     </span> </p>
                 </form>
             </div>

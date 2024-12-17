@@ -44,7 +44,9 @@ const db = mysql.createConnection({
 
 app.post('/register', async (req, res) => {
     const {email, fname, lname, pwd} = req.body;
-    if (!email || !pwd) return res.status(400).json({'message': 'Valid email and password are required'});
+    if (!email || !pwd) {
+        return res.status(400).json({'message': 'Valid email and password are required'});
+    }
 
     // check for duplicate emails
     const findDuplicate = "SELECT email FROM users where `email` = ?"
@@ -63,16 +65,16 @@ app.post('/register', async (req, res) => {
 
         // store the new user
         const insertSQL = "INSERT INTO users (f_name, l_name, email, name, password) VALUES (?, ?, ?, ?, ?)"
-        db.query(insertSQL, [fname, lname, email, name, hashedPwd], (err, result) => {
+        db.query(insertSQL, [fname, lname, email, name, hashedPwd], async (err, result) => {
             if (err) {
                 console.log("Database error: ", err)
                 return res.status(500).json({error: 'Database error when creating account'});
             }
+
             return res.status(200).json({success: true, result})
         })
-
     } catch (err) {
-        res.status(500).json({'message': err.message})
+        return res.status(500).json({'message': err.message})
     }
 
 
@@ -116,9 +118,9 @@ app.post('/auth', async (req, res) => {
 
             // post the refresh token to the users database
             res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
-            res.json({accessToken, userId});
+            return res.json({accessToken, userId});
         } else {
-            res.sendStatus(401)
+            return res.sendStatus(401)
         }
     })
     
@@ -198,7 +200,6 @@ app.get('/api/judge/:id', verifyJWT, (req, res) => {
             console.error('Database error: ', err);
             return res.status(500).json({error: 'Failed to fetch data'});
         }
-        console.log(result)
         return res.json(result);
     });
 });

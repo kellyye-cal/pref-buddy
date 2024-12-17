@@ -1,8 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 
 import axios from '../../api/axios'
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
+
+import AuthContext from "../../context/AuthProvider";
 
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -13,6 +15,9 @@ const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ'-]+$/;
 // one upper case, one lower case, one number, one special symbol, 8-24 chars
 
 const Register = () => {
+    const {auth, setAuth} = useContext(AuthContext)
+    const navigate = useNavigate();
+
     const userRef = useRef();
     const errRef = useRef();
 
@@ -60,8 +65,6 @@ const Register = () => {
 
     useEffect(() => {
         const result = PWD_REGEX.test(pwd);
-        console.log(result);
-        console.log(pwd);
         setValidPwd(result)
         const match = pwd === matchPwd;
         setValidMatch(match);
@@ -85,16 +88,29 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post('/register', 
+            const registerResponse = await axios.post('/register', 
                 JSON.stringify({email, fname, lname, pwd}),
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
             );
-            console.log(response.data)
-            // console.log(response.accessToken)
-            // setSuccess(true);
+
+            const authResponse = await axios.post('/auth', JSON.stringify({email, pwd}), 
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    withCredentials: true
+                }
+            );
+            setAuth({accessToken: authResponse.data.accessToken,
+                     userId: authResponse.data.userId,
+                     loggedOut: false
+            });
+
+            sessionStorage.setItem('accessToken', authResponse.data.accessToken);
+            sessionStorage.setItem('userId', authResponse.data.userId);
+
+            navigate(`/home/${auth.userId}`)
 
             //TODO: clear the input fields out of the registration field
         } catch (err) {
@@ -219,7 +235,7 @@ const Register = () => {
 
                     <p> Already have an account?
                         <span style={{paddingLeft: 2}}>
-                            <Link to="login"> Log in instead! </Link>
+                            <Link to="/login"> Log in instead! </Link>
                         </span> </p>
                 </form>
 
