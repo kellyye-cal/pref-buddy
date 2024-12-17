@@ -80,8 +80,8 @@ function App() {
 
         <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
 
-        <Route path="/judges" element={<ProtectedRoute> <Judges />  </ProtectedRoute>}/>
-        <Route path='/judges/JudgeProfile/:id' element={<ProtectedRoute> <JudgeProfile /> </ProtectedRoute>} />
+        <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/>
+        <Route path='/judges/JudgeProfile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   //  <h1> hello world</h1>
