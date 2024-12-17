@@ -129,8 +129,6 @@ app.post('/auth/refresh', (req, res) => {
     if (!cookies?.jwt) return res.status(401);
     const refreshToken = cookies.jwt;
 
-    console.log('Cookies: ', req.cookies);
-
     const findUser = "SELECT * FROM users WHERE `refresh_token` = ?"
     db.query(findUser, [refreshToken], (err, result) => {
         if (err) return res.status(500).json({error: 'Failed to fetch data'});
@@ -150,12 +148,49 @@ app.post('/auth/refresh', (req, res) => {
                     {expiresIn: '300s'}
                 );
 
-                console.log("new access token: ", accessToken)
-
                 return res.json({accessToken})
             }
         )
     });
+})
+
+app.post('/auth/logout', (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204)
+
+    const {u_id} = req.body
+    const refreshToken = cookies.jwt
+
+    // checking to see if refreshToken is in the database
+    const checkToken = "SELECT refresh_token FROM users where `refresh_token` = ? AND `id`= ?"
+    db.query(checkToken, [refreshToken, u_id], (err, result) => {
+        if (err) {
+            console.error("Error querying refreshToken:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+        
+        if (result.length === 0) {
+            console.log("No matching refreshToken found.");
+            return res.sendStatus(204); // No content
+        }
+
+        res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
+        const removeToken = "UPDATE users SET `refresh_token` = '' WHERE `id` = ?"
+        db.query(removeToken, [u_id], (removeErr, removeResult) => {
+            if (removeErr) {
+                console.error("Error removing refreshToken:", removeErr);
+                return res.status(500).json({ error: "Failed to clear refresh token" });
+            }
+        })
+        res.sendStatus(204)
+    })
+
+    //find user in DB based on refreshtoken
+    //if we found the user, have to res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); and send status 204
+
+    // delete the refreshtoken in the database
+    // find the user by the refreshtoken and clear the refreshtoken field to ''
+
 })
 
 

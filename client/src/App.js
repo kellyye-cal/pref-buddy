@@ -6,12 +6,11 @@ import axios from './api/axios'
 import AuthContext from './context/AuthProvider'
 import Register from './elements/Auth/Register'
 import Login from './elements/Auth/Login'
+import Logout from './elements/Auth/Logout'
 
 import Home from './elements/Home'
 import JudgeProfile from './elements/Judges/JudgeProfile'
 import Judges from './elements/Judges/Judges'
-
-import Rating from './elements/Judges/Rating'
 
 
 function App() {
@@ -27,9 +26,6 @@ function App() {
   useEffect(() => {
     const storedAccessToken = sessionStorage.getItem('accessToken');
     const storedUserId = sessionStorage.getItem('userId');
-    
-    console.log('Stored Access Token:', storedAccessToken);
-    console.log('Stored UserId:', storedUserId);
 
     if (storedAccessToken && storedUserId) {
         setAuth({
@@ -42,6 +38,9 @@ function App() {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
+      if (auth?.loggedOut) {
+        return;
+      }
       if (!auth?.accessToken) {
         try {
           const response = await axios.post('/auth/refresh', {}, {
@@ -76,8 +75,11 @@ function App() {
             </ProtectedRoute>
           } />
 
+        <Route path="/home/" element={<Navigate to="/login"/>} />
+
         <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
         <Route path='/register' element={<Register />}/>
+        <Route path='logout' element={<Logout />} />
 
         <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
 

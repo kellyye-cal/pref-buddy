@@ -3,9 +3,6 @@ import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "../../context/AuthProvider"
 import {Link, useNavigate} from 'react-router-dom'
 
-import Home from '../Home';
-
-
 import './Auth.css';
 
 import axios from '../../api/axios';
@@ -50,7 +47,7 @@ function Login() {
             sessionStorage.setItem('accessToken', accessToken);
             sessionStorage.setItem('userId', userID);
 
-            setAuth({email, accessToken, userId: userID});
+            setAuth({email, accessToken, userId: userID, loggedOut: false});
 
             setUser('');
             setPwd('');
