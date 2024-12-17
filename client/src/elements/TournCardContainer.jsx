@@ -36,7 +36,7 @@ function TournCardContainer({userID}) {
                 ))
 
             ) : (
-                <div> Failed to display tournament information. </div>
+                <div> No upcoming tournaments. </div>
             )}
         </div>
     )

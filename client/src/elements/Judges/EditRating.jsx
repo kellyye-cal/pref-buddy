@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import {Navigate, useNavigate, useParams} from "react-router-dom";
+import React, { useEffect, useState, useContext } from 'react';
+import AuthContext from '../../context/AuthProvider';
 import axios from 'axios'
 import '../../App.css';
 
@@ -37,6 +37,7 @@ const styles = {
 
 function EditRating({userID, judgeID, currRating, updateFunc}) {    
     const [isEditing, setIsEditing] = useState(false);
+    const {auth, setAuth} = useContext(AuthContext);
 
     const openModal = () => setIsEditing(true);
     const closeModal = () => setIsEditing(false);
@@ -99,7 +100,9 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
             u_id: userID,
             j_id: judgeID,
             rating: rating
-        }).then(() => {
+        }, {headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
+        }}).then(() => {
             updateFunc(judgeID, rating);
             closeModal();
         }).catch((err) => {

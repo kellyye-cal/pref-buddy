@@ -21,7 +21,7 @@ function Logout() {
     const {auth, setAuth} = useContext(AuthContext);
 
     try {
-        const response = axios.post('/auth/logout', { u_id: auth.userId }, {withCredentials: true})
+        const response = axios.post('/auth/logout', { u_id: auth.userId }, {headers: {Authorization: `Bearer ${auth?.accessToken}`}, withCredentials: true})
     } catch (err) {
         console.error("Error logging out: ", err)
     }

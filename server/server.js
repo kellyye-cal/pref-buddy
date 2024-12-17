@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const verifyJWT = require('../middleware/verifyJWT')
 const cookieParser = require('cookie-parser')
+const { verify } = require('crypto')
 require('dotenv').config({path: '../.env'});
 
 // create instance of express application, backbone of the server
@@ -67,7 +68,6 @@ app.post('/register', async (req, res) => {
                 console.log("Database error: ", err)
                 return res.status(500).json({error: 'Database error when creating account'});
             }
-            console.log(result)
             return res.status(200).json({success: true, result})
         })
 
@@ -154,7 +154,7 @@ app.post('/auth/refresh', (req, res) => {
     });
 })
 
-app.post('/auth/logout', (req, res) => {
+app.post('/auth/logout', verifyJWT, (req, res) => {
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204)
 
@@ -184,38 +184,31 @@ app.post('/auth/logout', (req, res) => {
         })
         res.sendStatus(204)
     })
-
-    //find user in DB based on refreshtoken
-    //if we found the user, have to res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); and send status 204
-
-    // delete the refreshtoken in the database
-    // find the user by the refreshtoken and clear the refreshtoken field to ''
-
 })
 
 
-app.get('/api/judge/:id', (req, res) => {
-    //in the query, want to join users with judge info
+app.get('/api/judge/:id', verifyJWT, (req, res) => {
     const j_id = req.params.id;
     const u_id = req.query.u_id;
 
-    const sql = "SELECT *,  (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id INNER JOIN ranks on ranks.judge_id = j.id WHERE `ranker_id` = ?";
+
+    const sql = "SELECT *,  (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
     db.query(sql, [j_id, u_id], (err, result) => {
         if (err) {
             console.error('Database error: ', err);
             return res.status(500).json({error: 'Failed to fetch data'});
         }
-                
+        console.log(result)
         return res.json(result);
     });
 });
 
-app.get('/api/alljudges', (req, res) => {
+app.get('/api/alljudges', verifyJWT, (req, res) => {
     const u_id = req.query.u_id;
+    const cookies = req.cookies;
 
     const sql = "SELECT * FROM users as u LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON u.id = r.judge_id WHERE u.judge = 1 ORDER BY r.rating ASC"
-    // create judge, user pairs -> join with rankings
-    // SELECT * FROM ranks AS r RIGHT JOIN (SELECT u1.id AS user_id, u2.id AS judge_id FROM `users` AS u1 JOIN `users` AS u2 WHERE u2.judge = 1) as u ON u.user_id = r.ranker_id AND u.judge_id = r.judge_id where user_id = 0;
+   
     db.query(sql, [u_id], (err, result) => {
         if (err) {
             console.error('Database error: ', err);
@@ -226,7 +219,7 @@ app.get('/api/alljudges', (req, res) => {
     })
 })
 
-app.post('/api/set_rating/', (req, res) => {
+app.post('/api/set_rating/', verifyJWT, (req, res) => {
     const {u_id, j_id, rating} = req.body;
 
     // const sql = "UPDATE ranks SET `rating` = ? WHERE `ranker_id` = ? AND `judge_id` = ?"

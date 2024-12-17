@@ -105,7 +105,7 @@ form button {
     margin: 20px auto 4px auto;
 }
 
-form h3, p {
+form > h3, form > p {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;

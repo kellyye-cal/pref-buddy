@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {useParams} from "react-router-dom";
 import axios from 'axios'
 import '../../App.css';
@@ -7,16 +7,18 @@ import './JudgeProfile.css';
 import NavBar from '../NavBar'
 import Rating from './Rating'
 import EditRating from './EditRating';
+import AuthContext from '../../context/AuthProvider';
 
 function JudgeProfile() {
-    let userID = 0;
+    const {auth, setAuth} = useContext(AuthContext);
+
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     const { id } = useParams();
 
-    console.log(id)
-
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/judge/${id}`, {params:{u_id: userID}}).then((res) => {
+        axios.get(`http://localhost:4000/api/judge/${id}`, {params:{u_id: auth.userId}, headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
+        }}).then((res) => {
             setJudgeData(res.data);
         })
         .catch((err)=>console.log(err))
@@ -24,15 +26,16 @@ function JudgeProfile() {
 
     function updateRating(judgeID, newRating) {
         axios.post(`http://localhost:4000/api/set_rating/`, {
-            u_id: userID,
+            u_id: auth.userId,
             j_id: judgeID,
             rating: newRating
-        }).then(() => {
+        }, {headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
+        }}).then(() => {
             setJudgeData(prevJudges => prevJudges.map(judge => 
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
         }).catch((err) => console.error("Error saving rating:", err));
-        console.log(judgeData)
     }
 
     return (
@@ -52,7 +55,7 @@ function JudgeProfile() {
                                                                         <div class="ratingContainer">
                                         <Rating rating={judge.rating}/>
 
-                                        <EditRating userID={userID} judgeID={judge.judge_id} updateFunc={updateRating} currRating={judge.rating}/>
+                                        <EditRating userID={auth.userId} judgeID={judge.judge_id} updateFunc={updateRating} currRating={judge.rating}/>
 
                                     </div>
                                 </div>

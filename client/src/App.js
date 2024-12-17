@@ -66,7 +66,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route exact path='/' element={<Home />} /> */}
         <Route
           path="/home/:userID"
           element={
@@ -75,16 +74,14 @@ function App() {
             </ProtectedRoute>
           } />
 
-        <Route path="/home/" element={<Navigate to="/login"/>} />
-
         <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
         <Route path='/register' element={<Register />}/>
         <Route path='logout' element={<Logout />} />
 
         <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
 
-        <Route path="/judges" element={<Judges />}/>
-        <Route path='/judges/JudgeProfile/:id' element={<JudgeProfile />} />
+        <Route path="/judges" element={<ProtectedRoute> <Judges />  </ProtectedRoute>}/>
+        <Route path='/judges/JudgeProfile/:id' element={<ProtectedRoute> <JudgeProfile /> </ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   //  <h1> hello world</h1>

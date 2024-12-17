@@ -20,7 +20,7 @@ function JudgePreview({judge, userID, updateFunc}) {
 
                         </div>
                         <div style={{marginLeft: 20}}>
-                            <Link to={`/judges/JudgeProfile/${judge.judge_id}`} class="judgePrevName" style={{marginBottom: 2}}> {judge.name} </Link>
+                            <Link to={`/judges/JudgeProfile/${judge.id}`} class="judgePrevName" style={{marginBottom: 2}}> {judge.name} </Link>
                             <p style={{fontSize:16, color: '#6a6a6a', marginBottom: 0}}> {judge.affiliation}</p>
                         </div>
                     </div>
