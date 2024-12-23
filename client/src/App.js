@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from './api/axios'
+import axios, { useAxiosInterceptors } from './api/axios'
 
 import AuthContext from './context/AuthProvider'
 import Register from './elements/Auth/Register'
@@ -16,6 +16,8 @@ import TournPage from './elements/Tournaments/TournPage'
 
 
 function App() {
+  useAxiosInterceptors();
+
   const {auth, setAuth} = useContext(AuthContext);
 
   const ProtectedRoute = ({children}) => {
@@ -35,6 +37,8 @@ function App() {
             userId: storedUserId
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
+    } else {
+        setAuth({email: null, accessToken: null, userId: null, loggedOut: true});
     }
   }, [setAuth]);
 
