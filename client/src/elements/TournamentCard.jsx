@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
 import axios from 'axios'
 import '../App.css';
@@ -55,13 +56,13 @@ function TournamentCard({userID, tourn}) {
     // for each tournament, get number of judges attending and number of judges ranked using tourn.i
 
     return (
-        <div style={styles.container}>
+        <Link className="container-hover" to={`/tournaments/${tourn.tournament_id}`} style={styles.container}>
             <ProgressRing progress={prefData[0]} full={prefData[1]}/>
             <p style={{fontSize: 14, paddingTop: 4}}> judges rated</p>
-            <p style={styles.tournName}> {tourn.name} </p>
+            <Link className="link" to={`/tournaments/${tourn.tournament_id}`} style={styles.tournName}> {tourn.name} </Link>
             <p style={styles.tournDate}> {startDate.getMonth() + 1}/{startDate.getDate()}/{startDate.getFullYear().toString().slice(-2)}
                 -{endDate.getMonth() + 1}/{endDate.getDate()}/{endDate.getFullYear().toString().slice(-2)}</p>
-        </div>
+        </Link>
     )
 }
 export default TournamentCard;
