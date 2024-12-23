@@ -245,6 +245,16 @@ app.get('/api/tournaments/', verifyJWT, (req, res) => {
     })
 })
 
+app.get('/api/alltournaments', verifyJWT, (req, res) => {
+    const u_id = req.id
+
+    const sql = "SELECT tournaments.id AS t_id, tournaments.link, tournaments.name, tournaments.name, tournaments.start_date, tournaments.end_date, CASE WHEN a.user_id IS NOT NULL THEN 1 ELSE 0 END AS attending, CASE WHEN j.user_id IS NOT NULL THEN 1 ELSE 0 END AS judging FROM tournaments LEFT JOIN (SELECT * FROM attending WHERE user_id = 1) AS a on a.tournament_id = tournaments.id LEFT JOIN (SELECT * FROM judging_at WHERE user_id = 1) AS j on j.tournament_id = tournaments.id"    
+    db.query(sql, [u_id], (err, result) => {
+        if (err) return res.status(500).json({error: "Failed to fetch tournament data."})
+        return res.json(result)
+    })
+})
+
 app.get('/api/tournaments/:id', verifyJWT, async (req, res) => {
     const t_id = req.params.id;
     const u_id = req.id
@@ -277,6 +287,20 @@ app.get('/api/tournaments/:id', verifyJWT, async (req, res) => {
         return res.status(500).json({ error: 'Failed to fetch data from tournaments table' });
     }
 })
+
+app.get('/api/tournaments/:id/judges', verifyJWT, (req, res) => {
+    const t_id = req.params.id
+    const u_id = req.query.u_id;
+
+    const sql = "SELECT ja.user_id AS j_id, u.f_name, u.l_name, u.affiliation, ji.paradigm, ji.start_year, ji.judge_start_year, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
+    db.query(sql, [u_id, t_id], (err, result) => {
+        if (err) {
+            console.error('Database error: ', err);
+            return res.status(500).json({error: 'Failed to fetch data'});
+        }
+        return res.json(result);
+    });
+});
 
 // Start server to respond to incoming requests
 app.listen(port, ()=>{

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from './api/axios'
 
 import AuthContext from './context/AuthProvider'
@@ -11,6 +11,8 @@ import Logout from './elements/Auth/Logout'
 import Home from './elements/Home'
 import JudgeProfile from './elements/Judges/JudgeProfile'
 import Judges from './elements/Judges/Judges'
+import Tournaments from './elements/Tournaments/Tournaments'
+import TournPage from './elements/Tournaments/TournPage'
 
 
 function App() {
@@ -82,6 +84,10 @@ function App() {
 
         <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/>
         <Route path='/judges/JudgeProfile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
+
+        <Route path="/tournaments" element={auth.accessToken ? <ProtectedRoute> <Tournaments />  </ProtectedRoute> : <Navigate to="/login" />}/>
+        <Route path='/tournaments/:tournId' element={auth.accessToken ? <ProtectedRoute> <TournPage /> </ProtectedRoute> : <Navigate to="/login" />} />
+
       </Routes>
     </BrowserRouter>
   //  <h1> hello world</h1>

@@ -10,9 +10,6 @@ function handleSearchChange(event, [search, setSearch], data, keys, updateFilter
     setSearch(searchTerm)
 
     filteredRecords = data.filter((record) => {
-        console.log(searchTerm)
-
-
         var contains = false;
 
         if (searchTerm === '') {

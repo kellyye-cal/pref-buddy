@@ -14,6 +14,9 @@ function NavBar() {
             {/* <NavLink activeClassName='active'> Settings </NavLink> */}
 
             <NavLink activeClassName='active' to="/judges"> Judges </NavLink>
+            <NavLink activeClassName='active' to="/tournaments"> Tournaments </NavLink>
+            <NavLink to="/tournaments/1"> Alta </NavLink>
+
             <NavLink activeClassName='active' to="/logout"> Logout </NavLink>
         </div>
     )

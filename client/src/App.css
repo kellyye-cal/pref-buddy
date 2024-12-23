@@ -277,10 +277,13 @@ button {
   color: #6a6a6a;
 
   padding-left: 16px;
+  margin-bottom: 8px;
   
   border: solid rgba(217, 217, 217, 0.5);
 
   border-radius: 4px;
+
+  background-color: #fff;
 }
 
 .cta {
@@ -292,4 +295,60 @@ button {
   padding: 8px 16px;
 
   border-radius: 20px;
+}
+
+th {
+  font-size: 14pt;
+}
+
+table tr {
+  padding: 50px;
+}
+
+.table {
+  border-spacing: 20px !important;
+  border-collapse: collapse;
+}
+
+.tourn-link {
+  color: #333;
+
+  font-weight: 500;
+
+  text-decoration: none;
+}
+
+.tourn-link:hover {
+  text-decoration: underline;
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+}
+
+.back {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: center;
+
+  border: #6a6a6a solid 1.75px;
+  color: #6a6a6a;
+
+  font-size: 12pt;
+  font-weight: 700;
+  
+  padding: 4px 12px;
+  border-radius: 40px;
+}
+
+.back:hover {
+  background-color: #6a6a6a;
+  color: #fff;
+}
+
+.back>p {
+  padding-left: 8px;
+  margin-bottom: 0;
 }
