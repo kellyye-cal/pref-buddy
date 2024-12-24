@@ -52,7 +52,7 @@ function App() {
       }
 
       try {
-        const response = await axios.post('/auth/refresh', {}, {
+        const response = await axios.post('/api/auth/refresh', {}, {
           withCredentials: true, // Send cookies with the request
         });
 
@@ -73,7 +73,7 @@ function App() {
       refreshAccessToken();
     }
 
-  }, [auth?.accessToken, auth?.loggedOut, setAuth]);
+  }, [auth?.loggedOut, setAuth]);
 
   return (
     <BrowserRouter>

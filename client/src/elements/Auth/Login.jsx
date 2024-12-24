@@ -33,7 +33,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/auth', JSON.stringify({email, pwd}), 
+            const response = await axios.post('/api/auth/login', JSON.stringify({email, pwd}), 
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true

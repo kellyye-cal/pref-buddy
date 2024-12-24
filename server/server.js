@@ -10,6 +10,8 @@ const cookieParser = require('cookie-parser')
 const { verify } = require('crypto')
 require('dotenv').config({path: '../.env'});
 
+const authRoutes = require('./routes/authRoutes')
+
 // create instance of express application, backbone of the server
 const app = express()
 
@@ -42,151 +44,7 @@ const db = mysql.createConnection({
     port: 3306
 })
 
-app.post('/register', async (req, res) => {
-    const {email, fname, lname, pwd} = req.body;
-    if (!email || !pwd) {
-        return res.status(400).json({'message': 'Valid email and password are required'});
-    }
-
-    // check for duplicate emails
-    const findDuplicate = "SELECT email FROM users where `email` = ?"
-    db.query(findDuplicate, [email], (err, result) => {
-        if (err) {
-            console.error("Database error: ", err);
-            return res.status(500).json({error: 'Database error'})
-        }
-        if (result.length >= 1) return res.sendStatus(409);
-    })
-
-    try {
-        // encrypt the password
-        const hashedPwd = await bcrypt.hash(pwd, 10)
-        const name = fname + " " + lname
-
-        // store the new user
-        const insertSQL = "INSERT INTO users (f_name, l_name, email, name, password) VALUES (?, ?, ?, ?, ?)"
-        db.query(insertSQL, [fname, lname, email, name, hashedPwd], async (err, result) => {
-            if (err) {
-                console.log("Database error: ", err)
-                return res.status(500).json({error: 'Database error when creating account'});
-            }
-
-            return res.status(200).json({success: true, result})
-        })
-    } catch (err) {
-        return res.status(500).json({'message': err.message})
-    }
-
-
-})
-
-app.post('/auth', async (req, res) => {
-    const {email, pwd} = req.body;
-
-    if (!email || !pwd ) return res.status(400).json({'message': 'Email and password are required.'})
-    
-    const sql = "SELECT id, password FROM users WHERE `email` = ?"
-
-    db.query(sql, [email, pwd], (err, result) => {
-        if (err) {
-            console.error("Database error when logging in ", err);
-            return res.status(500).json({error: 'Failed to fetch data'})
-        }
-        
-        if (result.length < 1) return res.status(401).json({error: 'No account with that username'})
-        var match = bcrypt.compare(pwd, result[0].password)
-        const userId = result[0].id;
-        if (match) {
-            // create JWTs
-            const accessToken = jwt.sign(
-                {"id":result[0].id},
-                process.env.ACCESS_TOKEN_SECRET,
-                {expiresIn: '10m'}
-            );
-
-            const refreshToken = jwt.sign(
-                {"id":result[0].id},
-                process.env.REFRESH_TOKEN_SECRET,
-                {expiresIn: '1d'}
-            );
-
-            const refreshTokenSQL = "UPDATE users SET `refresh_token` = ? WHERE `email` = ?"
-            db.query(refreshTokenSQL, [refreshToken, email], (err, result) => {
-                if (err) return res.status(500).json({error: 'Database error'})
-            })
-
-
-            // post the refresh token to the users database
-            res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
-            return res.json({accessToken, userId});
-        } else {
-            return res.sendStatus(401)
-        }
-    })
-    
-})
-
-app.post('/auth/refresh', (req, res) => {
-    const cookies = req.cookies;
-    if (!cookies?.jwt) return res.status(401);
-    const refreshToken = cookies.jwt;
-
-    const findUser = "SELECT * FROM users WHERE `refresh_token` = ?"
-    db.query(findUser, [refreshToken], (err, result) => {
-        if (err) return res.status(500).json({error: 'Failed to fetch data'});
-        
-        if (result.length === 0) return res.status(401).json({error: 'Forbidden'})
-        
-        jwt.verify(
-            refreshToken,
-            process.env.REFRESH_TOKEN_SECRET,
-            (err, decoded) => {
-                if (err) return res.status(403)
-                
-                if (result[0].id !== decoded.id) return res.status(403)
-                const accessToken = jwt.sign(
-                    {"id":decoded.id},
-                    process.env.ACCESS_TOKEN_SECRET,
-                    {expiresIn: '300s'}
-                );
-
-                return res.json({accessToken})
-            }
-        )
-    });
-})
-
-app.post('/auth/logout', verifyJWT, (req, res) => {
-    const cookies = req.cookies;
-    if (!cookies?.jwt) return res.sendStatus(204)
-
-    const {u_id} = req.body
-    const refreshToken = cookies.jwt
-
-    // checking to see if refreshToken is in the database
-    const checkToken = "SELECT refresh_token FROM users where `refresh_token` = ? AND `id`= ?"
-    db.query(checkToken, [refreshToken, u_id], (err, result) => {
-        if (err) {
-            console.error("Error querying refreshToken:", err);
-            return res.status(500).json({ error: "Internal server error" });
-        }
-        
-        if (result.length === 0) {
-            console.log("No matching refreshToken found.");
-            return res.sendStatus(204); // No content
-        }
-
-        res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
-        const removeToken = "UPDATE users SET `refresh_token` = '' WHERE `id` = ?"
-        db.query(removeToken, [u_id], (removeErr, removeResult) => {
-            if (removeErr) {
-                console.error("Error removing refreshToken:", removeErr);
-                return res.status(500).json({ error: "Failed to clear refresh token" });
-            }
-        })
-        res.sendStatus(204)
-    })
-})
+app.use('/api/auth', authRoutes)
 
 
 app.get('/api/judge/:id', verifyJWT, (req, res) => {

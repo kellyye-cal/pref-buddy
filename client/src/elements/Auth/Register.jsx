@@ -88,20 +88,23 @@ const Register = () => {
         }
 
         try {
-            const registerResponse = await axios.post('/register', 
+            const registerResponse = await axios.post('/api/auth/register', 
                 JSON.stringify({email, fname, lname, pwd}),
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
             );
+            console.log("successfully registered", registerResponse)
 
-            const authResponse = await axios.post('/auth', JSON.stringify({email, pwd}), 
+            const authResponse = await axios.post('/api/auth/login', JSON.stringify({email, pwd}), 
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
                 }
             );
+
+            console.log(authResponse)
             setAuth({accessToken: authResponse.data.accessToken,
                      userId: authResponse.data.userId,
                      loggedOut: false

@@ -17,7 +17,7 @@ function Logout() {
     const handleLogout = async() => {
 
         try {
-            const response = await axios.post('/auth/logout', { u_id: auth.userId }, {headers: {Authorization: `Bearer ${auth?.accessToken}`}, withCredentials: true})
+            const response = await axios.post('/api/auth/logout', { u_id: auth.userId }, {headers: {Authorization: `Bearer ${auth?.accessToken}`}, withCredentials: true})
             
             sessionStorage.removeItem('accessToken');
             sessionStorage.removeItem('userId');

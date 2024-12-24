@@ -15,7 +15,7 @@ function Home() {
         <div class="page">
             <NavBar />
             <div class="main">
-                <h1> Hi, Kelly! </h1>
+                <h1> Hi! </h1>
                 <h2> Upcoming Tournaments</h2>
                 <TournCardContainer userID={userID}/>
             </div>
