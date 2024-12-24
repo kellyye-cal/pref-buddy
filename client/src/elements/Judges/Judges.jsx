@@ -14,7 +14,7 @@ function Judges() {
     const [filteredRecords, setFilteredRecords] = useState([]);
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/alljudges`, 
+        axios.get(`http://localhost:4000/api/judges/all-judges`, 
         {params:{
             u_id: auth.userId
         }, headers: {
@@ -28,7 +28,7 @@ function Judges() {
     }, [auth.userId]);
 
     const updateRating = (judgeID, newRating) => {
-        axios.post(`http://localhost:4000/api/set_rating/`, {
+        axios.post(`http://localhost:4000/api/judges/set_rating`, {
             u_id: auth.userId,
             j_id: judgeID,
             rating: newRating
@@ -40,7 +40,7 @@ function Judges() {
             ));
         }).catch((err) => console.error("Error saving rating:", err));
 
-        axios.get(`http://localhost:4000/api/alljudges`,
+        axios.get(`http://localhost:4000/api/judges/all-judges`,
             {params:{
                 u_id: auth.userId
             }, headers: {

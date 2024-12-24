@@ -96,7 +96,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
 
     function saveRating() {
         //send new post request to server
-        axios.post('http://localhost:4000/api/set_rating/', {
+        axios.post('http://localhost:4000/api/judges/set_rating', {
             u_id: userID,
             j_id: judgeID,
             rating: rating

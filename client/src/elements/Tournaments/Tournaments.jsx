@@ -15,7 +15,7 @@ function Tournaments() {
     const [filteredRecords, setFilteredRecords] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/alltournaments`, {headers: {
+        axios.get(`http://localhost:4000/api/tournaments/all`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}
     ).then((res) => {
@@ -23,6 +23,7 @@ function Tournaments() {
         setFilteredRecords(res.data)
     }).catch((err)=>console.log("Error getting all tournaments: ", err))
     }, [auth.userId]);
+
 
     return (
         <div class="page">

@@ -43,11 +43,13 @@ function Login() {
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
             const userID = response?.data.userId;
+            const name = response?.data.name
 
             sessionStorage.setItem('accessToken', accessToken);
             sessionStorage.setItem('userId', userID);
+            sessionStorage.setItem('name', name)
 
-            setAuth({accessToken, userId: userID, loggedOut: false});
+            setAuth({accessToken, userId: userID, loggedOut: false, name});
 
             setUser('');
             setPwd('');

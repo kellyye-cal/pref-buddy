@@ -16,7 +16,7 @@ function JudgeProfile() {
     const { id } = useParams();
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/judge/${id}`, {params:{u_id: auth.userId}, headers: {
+        axios.get(`http://localhost:4000/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
             setJudgeData(res.data);
@@ -25,7 +25,7 @@ function JudgeProfile() {
     }, []);
 
     function updateRating(judgeID, newRating) {
-        axios.post(`http://localhost:4000/api/set_rating/`, {
+        axios.post(`http://localhost:4000/api/judges/set_rating`, {
             u_id: auth.userId,
             j_id: judgeID,
             rating: newRating
@@ -36,6 +36,13 @@ function JudgeProfile() {
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
         }).catch((err) => console.error("Error saving rating:", err));
+
+        axios.get(`http://localhost:4000/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
+        }}).then((res) => {
+            setJudgeData(res.data);
+        })
+        .catch((err)=>console.log(err))
     }
 
     return (

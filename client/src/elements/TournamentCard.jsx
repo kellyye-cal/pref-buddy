@@ -57,9 +57,9 @@ function TournamentCard({userID, tourn}) {
 
     return (
         <Link className="container-hover" to={`/tournaments/${tourn.tournament_id}`} style={styles.container}>
-            <ProgressRing progress={prefData[0]} full={prefData[1]}/>
+            <ProgressRing progress={prefData.numRated} full={prefData.numTotal}/>
             <p style={{fontSize: 14, paddingTop: 4}}> judges rated</p>
-            <Link className="link" to={`/tournaments/${tourn.tournament_id}`} style={styles.tournName}> {tourn.name} </Link>
+            <p className="link" style={styles.tournName}> {tourn.name} </p>
             <p style={styles.tournDate}> {startDate.getMonth() + 1}/{startDate.getDate()}/{startDate.getFullYear().toString().slice(-2)}
                 -{endDate.getMonth() + 1}/{endDate.getDate()}/{endDate.getFullYear().toString().slice(-2)}</p>
         </Link>

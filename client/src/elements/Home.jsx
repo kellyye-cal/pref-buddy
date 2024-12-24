@@ -11,11 +11,13 @@ function Home() {
     const {auth} = useContext(AuthContext);
     const {userID} = useParams();
 
+    const firstName = auth.name.split(' ')[0]
+
     return (
         <div class="page">
             <NavBar />
             <div class="main">
-                <h1> Hi! </h1>
+                <h1> Hi, {firstName}! </h1>
                 <h2> Upcoming Tournaments</h2>
                 <TournCardContainer userID={userID}/>
             </div>

@@ -16,7 +16,7 @@ function TournCardContainer({userID}) {
     useEffect(()=>{
         if (!auth?.accessToken) return;
         
-        axios.get(`http://localhost:4000/api/tournaments`, {
+        axios.get(`http://localhost:4000/api/tournaments/mytournaments`, {
             headers: {
                 Authorization: `Bearer ${auth?.accessToken}`,
             },
@@ -24,7 +24,7 @@ function TournCardContainer({userID}) {
         }).then((res) => {
             setData(res.data);
         })
-        .catch((err)=>console.log("Error getting all judges: ", err))
+        .catch((err)=>console.log("Error getting all tournaments: ", err))
     }, []);
 
 

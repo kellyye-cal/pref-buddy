@@ -24,11 +24,10 @@ const registerUser = async({email, fname, lname, pwd}) => {
         const hashedPwd = await bcrypt.hash(pwd, 10)
 
         // concat name to enter into record
-        const name = fname + " " + lname
 
         //insert new user into database
-        const insertSQL = "INSERT INTO users (f_name, l_name, email, name, password) VALUES (?, ?, ?, ?, ?)"
-        const [result] = await db.query(insertSQL, [fname, lname, email, name, hashedPwd])
+        const insertSQL = "INSERT INTO users (f_name, l_name, email, password) VALUES (?, ?, ?, ?, ?)"
+        const [result] = await db.query(insertSQL, [fname, lname, email, hashedPwd])
 
         return {id: result.insertId, email}
 
@@ -39,7 +38,7 @@ const registerUser = async({email, fname, lname, pwd}) => {
 
 const login = async({email, pwd}) => {
     // Query database for login credentials
-    const sql = "SELECT id, password FROM users WHERE `email` = ?"
+    const sql = "SELECT id, password, f_name, l_name FROM users WHERE `email` = ?"
     const [result] = await db.query(sql, [email]);
     if (result.length < 1) throw new Error('No account with that username');
 
@@ -66,8 +65,9 @@ const login = async({email, pwd}) => {
         const refreshTokenSQL = "UPDATE users SET `refresh_token` = ? WHERE `email` = ?"
         const [insertResult] = await db.query(refreshTokenSQL, [refreshToken, email])
 
+        const name = result[0].f_name + " " + result[0].l_name
         // Send cookie with refreshToken and return accessToken & userId
-        return {refreshToken, accessToken, userId};
+        return {refreshToken, accessToken, userId, name: name};
     }
 }
 

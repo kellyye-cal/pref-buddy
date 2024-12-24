@@ -29,7 +29,7 @@ const loginUser = async(req, res) => {
         const user = await authService.login({email, pwd})
 
         res.cookie('jwt', user.refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
-        return res.json({accessToken: user.accessToken, userId: user.userId})
+        return res.json({accessToken: user.accessToken, userId: user.userId, name: user.name})
     } catch (error) {
         res.status(500).json({message: "Error logging in", error})
     }

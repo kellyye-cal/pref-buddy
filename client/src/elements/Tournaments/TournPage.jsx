@@ -18,10 +18,11 @@ function TournPage() {
 
     useEffect(()=>{
         // Get the tournament information
-        axios.get(`http://localhost:4000/api/alltournaments`, {headers: {
+        axios.get(`http://localhost:4000/api/tournaments/${tournId}`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`}}
         ).then((res) => {
-            setTournData(res.data.find((t) => String(t.t_id) === tournId));
+            setTournData(res.data.tournament)
+            // setTournData(res.data.find((t) => String(t.t_id) === tournId));
         })
         .catch((err)=>console.log(err))
 
@@ -35,7 +36,7 @@ function TournPage() {
     }, []);
 
     const updateRating = (judgeID, newRating) => {
-        axios.post(`http://localhost:4000/api/set_rating/`, {
+        axios.post(`http://localhost:4000/api/judges/set_rating/`, {
             u_id: auth.userId,
             j_id: judgeID,
             rating: newRating
@@ -59,10 +60,7 @@ function TournPage() {
             })
             .catch((err)=>console.log("Error getting all judges: ", err))
     }
-
     
-
-
     return (
         <div class="page">
             <NavBar />

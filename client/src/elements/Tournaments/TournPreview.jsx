@@ -27,7 +27,7 @@ function TournPreview({tournament, index}) {
 
     useEffect(() => {
         if (tournament.attending === 1 || tournament.judging === 1) {
-            if (prefData[0] === prefData[1]) {
+            if (prefData.numRated === prefData.numTotal) {
                 setStatus("complete")
             } else {
                 setStatus("pending")
@@ -36,16 +36,6 @@ function TournPreview({tournament, index}) {
             setStatus("notAttending")
         }
     }, [prefData, tournament])
-
-
-
-
-    // write a function that returns an icon based on tournament entry and prefs
-    // if not entered -> not entered
-    // if entered and not finished prefs -> pending
-    // if entered & finishe prefs -> complete
-
-    console.log(tournament, prefData)
 
     return (
         <tr key={index}>

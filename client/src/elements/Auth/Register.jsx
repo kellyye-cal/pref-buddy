@@ -95,7 +95,6 @@ const Register = () => {
                     withCredentials: true
                 }
             );
-            console.log("successfully registered", registerResponse)
 
             const authResponse = await axios.post('/api/auth/login', JSON.stringify({email, pwd}), 
                 {
@@ -107,11 +106,13 @@ const Register = () => {
             console.log(authResponse)
             setAuth({accessToken: authResponse.data.accessToken,
                      userId: authResponse.data.userId,
+                     name: authResponse.data.name,
                      loggedOut: false
             });
 
             sessionStorage.setItem('accessToken', authResponse.data.accessToken);
             sessionStorage.setItem('userId', authResponse.data.userId);
+            sessionStorage.setItem('name', authResponse.data.name)
 
             navigate(`/home/${auth.userId}`)
 

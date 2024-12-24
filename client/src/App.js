@@ -30,12 +30,14 @@ function App() {
   useEffect(() => {
     const storedAccessToken = sessionStorage.getItem('accessToken');
     const storedUserId = sessionStorage.getItem('userId');
+    const storedName = sessionStorage.getItem('name')
 
     if (storedAccessToken && storedUserId) {
         setAuth({
             accessToken: storedAccessToken,
             userId: storedUserId,
-            loggedOut: false
+            loggedOut: false,
+            name: storedName
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
       }
