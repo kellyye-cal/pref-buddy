@@ -14,7 +14,7 @@ function TournList({data}) {
           </thead>
           <tbody>
             {data.map((tournament, index) => (
-              <TournPreview tournament={tournament} index={index} />
+              <TournPreview key={index} tournament={tournament}/>
             ))}
           </tbody>
         </table>

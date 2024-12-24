@@ -72,14 +72,14 @@ function Login() {
 
     return (
         <>
-            <div class="auth-page">
+            <div className="auth-page">
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
                 <h1> Welcome to PrefBuddy! </h1>
 
-                <form class="auth-form" onSubmit={handleSubmit}>
+                <form className="auth-form" onSubmit={handleSubmit}>
                     <h3> Log In</h3>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="email"> Email address<span>*</span> </label>
                         <input
                             type="email"
@@ -91,7 +91,7 @@ function Login() {
                         />
                     </div>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="password"> Password<span>*</span> </label>
                         <input
                             type="password"
@@ -102,7 +102,7 @@ function Login() {
                         />
                     </div>
 
-                    <button class="cta"> Sign In </button>
+                    <button className="cta"> Sign In </button>
                     <p> Don't have an account?
                     <span style={{paddingLeft: 2}}>
                         <Link to="/register"> Sign up instead! </Link>

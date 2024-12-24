@@ -22,7 +22,7 @@ function PrefPreview({judgeData, updateFunc}) {
 
  return (
     <div>
-        <div class="judgePreview">
+        <div className="judgePreview">
             <div style={{
                 overflow: 'hidden',
                 transition: 'max-height 0.3s ease-out',
@@ -32,13 +32,13 @@ function PrefPreview({judgeData, updateFunc}) {
                 <div ref={contentRef}>
                     <div className="h-between" style={{alignItems: "center"}} ref={prevRef}>
                         <div style={{display:'flex'}}>
-                            <div class="ratingContainer">
+                            <div className="ratingContainer">
                                 <Rating rating={judgeData.rating}/>
 
                                 <EditRating userID={auth.userId} judgeID={judgeData.j_id} updateFunc={updateFunc} currRating={judgeData.rating}/>
                             </div>
                             <div style={{marginLeft: 20}}>
-                                <Link to={`/judges/JudgeProfile/${judgeData.id}`} class="judgePrevName" style={{marginBottom: 2}}> {judgeData.name} </Link>
+                                <Link to={`/judges/JudgeProfile/${judgeData.id}`} className="judgePrevName" style={{marginBottom: 2}}> {judgeData.name} </Link>
                                 <p className="judgePrevAffiliation"> {judgeData.affiliation}</p>
                             </div>
                         </div>

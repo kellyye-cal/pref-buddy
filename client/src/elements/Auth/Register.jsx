@@ -134,14 +134,14 @@ const Register = () => {
         {success ? (
             <h1> Success!</h1>
         ) : (
-            <div class="auth-page">
+            <div className="auth-page">
                 <h1> Welcome to PrefBuddy!</h1>
                 <p ref={errRef} className={errMsg ? "errMsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
 
-                <form class="auth-form" onSubmit={handleSubmit}>
+                <form className="auth-form" onSubmit={handleSubmit}>
                     <h3> Create an Account </h3>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="email"> Email Address<span>*</span> </label>
                         <input
                             type="email"
@@ -159,7 +159,7 @@ const Register = () => {
                         <p id="uidnote" className={email && !validEmail ? "instructions" : "offscreen"}> *Enter a valid email address.</p>
                     </div>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="fname"> First Name<span>*</span></label>
                         <input
                             type="text"
@@ -177,7 +177,7 @@ const Register = () => {
                         <p id="fnamenote" className={fname && !validFname ? "instructions" : "offscreen"}> Enter a first name.</p>
                     </div>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="lname"> Last name<span>*</span></label>
                         <input
                             type="text"
@@ -195,7 +195,7 @@ const Register = () => {
                         <p id="lnamenote" className={lname && !validLname ? "instructions" : "offscreen"}> Enter a last name.</p>
                     </div>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="password">Password<span>*</span></label>
                         <input
                             type="password"
@@ -214,7 +214,7 @@ const Register = () => {
                         </p>
                     </div>
 
-                    <div class="form-field">
+                    <div className="form-field">
                         <label htmlFor="confirm_pwd"> Confirm Password<span>*</span></label>
                         <input
                             type="password"
@@ -233,7 +233,7 @@ const Register = () => {
                         </p>
                     </div>
 
-                    <button class="cta" disabled={!validEmail || !validFname || !validLname || !validPwd || !validMatch ? true : false}>
+                    <button className="cta" disabled={!validEmail || !validFname || !validLname || !validPwd || !validMatch ? true : false}>
                         Create Account
                     </button>
 

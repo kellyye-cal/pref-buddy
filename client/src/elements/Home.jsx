@@ -14,9 +14,9 @@ function Home() {
     const firstName = auth.name.split(' ')[0]
 
     return (
-        <div class="page">
+        <div className="page">
             <NavBar />
-            <div class="main">
+            <div className="main">
                 <h1> Hi, {firstName}! </h1>
                 <h2> Upcoming Tournaments</h2>
                 <TournCardContainer userID={userID}/>

@@ -62,9 +62,9 @@ function TournPage() {
     }
     
     return (
-        <div class="page">
+        <div className="page">
             <NavBar />
-            <div class="main">
+            <div className="main">
                 <Back link={"/tournaments"}> </Back>
                 <h1> {tournData.name} </h1>
                 <h2> Prefs </h2>

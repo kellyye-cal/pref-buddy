@@ -26,9 +26,9 @@ function Tournaments() {
 
 
     return (
-        <div class="page">
+        <div className="page">
             <NavBar />
-            <div class="main">
+            <div className="main">
                 <h1> Tournaments </h1>
                 
                 <Search data={tournaments} keys={["name"]} onFilteredRecordChange={setFilteredRecords} />

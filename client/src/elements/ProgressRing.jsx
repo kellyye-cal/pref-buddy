@@ -54,7 +54,7 @@ function ProgressRing({progress, full}) {
                     cx="40"
                     cy="40"
                     strokeDasharray={circumference}
-                    strokeDashoffset={offset}
+                    strokeDashoffset={offset ? offset : 0}
                 />
 
             </svg>

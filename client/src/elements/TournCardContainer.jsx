@@ -29,10 +29,10 @@ function TournCardContainer({userID}) {
 
 
     return (
-        <div class="h-between">
+        <div className="h-between">
             {allTournaments && allTournaments.length > 0 ? (
                 allTournaments.map((tourn, index) => (
-                    <TournamentCard userID={userID} tourn={tourn}/>
+                    <TournamentCard key={index} userID={userID} tourn={tourn}/>
                 ))
 
             ) : (

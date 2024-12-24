@@ -136,17 +136,17 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
     return (
         <div>
             <button
-                class="editRatingButton"
+                className="editRatingButton"
                 onClick={openModal}>
                     Edit 
             </button>
 
             {isEditing && (
                 <div>
-                    <div class="overlay"> </div>
-                    <div class="editRatingModal">
+                    <div className="overlay"> </div>
+                    <div className="editRatingModal">
                         <h3> Edit Judge Rating </h3>
-                        <div class="ratingButtons">
+                        <div className="ratingButtons">
                             <button id="unselectOption" onClick={clickRating} style={getButtonStyle(0, currRating)}> - </button>
                             <button id="optionOne" onClick={clickRating} style={getButtonStyle(1, currRating)}> 1 </button>
                             <button id="optionTwo" onClick={clickRating} style={getButtonStyle(2, currRating)}> 2 </button>
@@ -157,7 +157,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                         </div>
                         <div style={
                             {width: "100%", display: "flex", justifyContent: "center"}}>
-                            <button class="pillButton" onClick={saveRating} to ="/judges"> Save </button>
+                            <button className="pillButton" onClick={saveRating} to ="/judges"> Save </button>
                         </div>
                     </div>
                 </div>

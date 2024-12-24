@@ -10,13 +10,13 @@ function NavBar() {
     const {auth} = useContext(AuthContext);
     return (
         <div id="navbar">
-            <NavLink activeClassName='active' to={`/home/${auth.userId}`}> Home </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/home/${auth.userId}`}> Home </NavLink>
             {/* <NavLink activeClassName='active'> Settings </NavLink> */}
 
-            <NavLink activeClassName='active' to="/judges"> Judges </NavLink>
-            <NavLink activeClassName='active' to="/tournaments"> Tournaments </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/judges"> Judges </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/tournaments"> Tournaments </NavLink>
 
-            <NavLink activeClassName='active' to="/logout"> Logout </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/logout"> Logout </NavLink>
         </div>
     )
 }

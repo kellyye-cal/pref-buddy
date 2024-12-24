@@ -54,9 +54,9 @@ function Judges() {
     }
 
     return (
-            <div class="page">
+            <div className="page">
                 <NavBar />
-                <div class="main">
+                <div className="main">
                     <h1> Judges </h1>
                     <Search data={allJudges} keys={['name', 'affiliation']} onFilteredRecordChange={setFilteredRecords}> </Search>
                     <div>

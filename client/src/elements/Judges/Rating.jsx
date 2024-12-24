@@ -15,7 +15,7 @@ function Rating({rating}) {
     }
 
     return (
-        <div class={
+        <div className={
             display === "1" ? "rating oneRate" :
             display === "2" ? "rating twoRate" :
             display === "3" ? "rating threeRate" :
