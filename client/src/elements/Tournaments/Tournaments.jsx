@@ -24,8 +24,6 @@ function Tournaments() {
     }).catch((err)=>console.log("Error getting all tournaments: ", err))
     }, [auth.userId]);
 
-    console.log(tournaments)
-
     return (
         <div class="page">
             <NavBar />

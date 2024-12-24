@@ -5,7 +5,6 @@ const useAuth = () => {
   const { setAuth } = useContext(AuthContext);
 
   const clearAuthState = () => {
-    console.log("made it to clearauthstate")
     setAuth({email: null, accessToken: null, userId: null, loggedOut: true}); // Clear AuthContext state
     sessionStorage.removeItem("accessToken"); // Remove token from localStorage
     sessionStorage.removeItem("userId"); // Remove token from localStorage

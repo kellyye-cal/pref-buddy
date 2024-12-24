@@ -34,7 +34,8 @@ function App() {
     if (storedAccessToken && storedUserId) {
         setAuth({
             accessToken: storedAccessToken,
-            userId: storedUserId
+            userId: storedUserId,
+            loggedOut: false
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
       }
@@ -44,31 +45,35 @@ function App() {
   }, [setAuth]);
 
   useEffect(() => {
+    console.log(auth)
     const refreshAccessToken = async () => {
-      if (auth?.loggedOut) {
+      if (auth?.loggedOut || !auth?.accessToken) {
         return;
       }
-      if (!auth?.accessToken) {
-        try {
-          const response = await axios.post('/auth/refresh', {}, {
-            withCredentials: true, // Send cookies with the request
-          });
 
-          const newAccessToken = response.data.accessToken;
+      try {
+        const response = await axios.post('/auth/refresh', {}, {
+          withCredentials: true, // Send cookies with the request
+        });
 
-          setAuth((prev) => ({ ...prev, accessToken: newAccessToken }));
+        const newAccessToken = response.data.accessToken;
+
+        if (newAccessToken !== auth.accessToken) {
+          setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false }));
           console.log("access token being refreshed", auth, newAccessToken)
 
           sessionStorage.setItem('accessToken', newAccessToken);
-        } catch (err) {
-          console.error("Error refreshing access token:", err);
         }
-      };
+      } catch (err) {
+        console.error("Error refreshing access token:", err);
+      }
     }
 
-    refreshAccessToken();
+    if (auth?.accessToken) {
+      refreshAccessToken();
+    }
 
-  }, [auth?.accessToken, setAuth]);
+  }, [auth?.accessToken, auth?.loggedOut, setAuth]);
 
   return (
     <BrowserRouter>

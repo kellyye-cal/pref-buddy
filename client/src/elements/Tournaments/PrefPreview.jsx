@@ -20,8 +20,6 @@ function PrefPreview({judgeData, updateFunc}) {
         setIsExpanded(!isExpanded);
     }
 
-    console.log(judgeData)
-
  return (
     <div>
         <div class="judgePreview">

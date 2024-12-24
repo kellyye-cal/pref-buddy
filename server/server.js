@@ -265,23 +265,11 @@ app.get('/api/tournaments/:id', verifyJWT, async (req, res) => {
 
         const numRatedQuery = "SELECT COUNT(*) FROM judging_at INNER JOIN ranks on judging_at.user_id = ranks.judge_id WHERE `tournament_id` = ? AND `ranker_id` = ? AND `rating` IS NOT NULL AND `rating` > 0"
         const [ratedResult] = await db.promise().query(numRatedQuery, [t_id, u_id]);
-        // db.query(num_rated_query, [t_id, u_id], (err, result) => {
-        //     if (err) {
-        //         console.log("Database error: ", err);
-        //         return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
-        //     }
-        //     numRated = result
-        // })
+
 
         const numJudgesQuery = "SELECT COUNT(*) from judging_at WHERE `tournament_id` = ?"
         const [judgesResult] = await db.promise().query(numJudgesQuery, [t_id]);
-        // db.query(num_judges_query, [t_id], (err, result) => {
-        //     if (err) {
-        //         console.log("Database error: ", err);
-        //         return res.status(500).json({error: 'Failed to fetch data from tournaments table'});
-        //     }
-        //     numJudges = result
-        // })
+
         return res.json([ratedResult[0]['COUNT(*)'], judgesResult[0]['COUNT(*)']])
     } catch (err) {
         return res.status(500).json({ error: 'Failed to fetch data from tournaments table' });
