@@ -292,7 +292,7 @@ app.get('/api/tournaments/:id/judges', verifyJWT, (req, res) => {
     const t_id = req.params.id
     const u_id = req.query.u_id;
 
-    const sql = "SELECT ja.user_id AS j_id, u.f_name, u.l_name, u.affiliation, ji.paradigm, ji.start_year, ji.judge_start_year, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
+    const sql = "SELECT ja.user_id AS j_id, u.name, u.affiliation, ji.paradigm, (year(curdate()) - ji.start_year) AS yrs_dbt, (year(curdate()) - ji.judge_start_year) AS yrs_judge, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
     db.query(sql, [u_id, t_id], (err, result) => {
         if (err) {
             console.error('Database error: ', err);

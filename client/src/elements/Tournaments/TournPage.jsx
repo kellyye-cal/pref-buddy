@@ -6,6 +6,7 @@ import AuthContext from '../../context/AuthProvider';
 import NavBar from '../NavBar';
 import Back from '../Back';
 import PrefPreview from './PrefPreview';
+import Search from '../Search'
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -13,6 +14,7 @@ function TournPage() {
 
     const [tournData, setTournData] = useState([])
     const [judgeData, setJudgeData] = useState([])
+    const [filteredJudges, setFilteredJudges] = useState([])
 
     useEffect(()=>{
         // Get the tournament information
@@ -28,6 +30,7 @@ function TournPage() {
             Authorization: `Bearer ${auth?.accessToken}`}}
         ).then((res) => {
             setJudgeData(res.data)
+            setFilteredJudges(res.data)
         }).catch((err) => console.log(err))
     }, []);
 
@@ -52,11 +55,12 @@ function TournPage() {
             }}
             ).then((res) => {
                 setJudgeData(res.data);
+                setFilteredJudges(res.data)
             })
             .catch((err)=>console.log("Error getting all judges: ", err))
     }
 
-    console.log(judgeData)
+    
 
 
     return (
@@ -65,8 +69,10 @@ function TournPage() {
             <div class="main">
                 <Back link={"/tournaments"}> </Back>
                 <h1> {tournData.name} </h1>
-                {judgeData.map((judge, index) => (
-                    <PrefPreview judgeData={judge} updateFunc={updateRating}/>
+                <h2> Prefs </h2>
+                <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
+                {filteredJudges.map((judge, index) => (
+                    <PrefPreview key={judge.id} judgeData={judge} updateFunc={updateRating}/>
                 ))}
             </div>
         </div>

@@ -86,8 +86,8 @@ h5 {
 }
 
 .ratingContainer {
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   border-radius: 100px;
 
   position: relative
@@ -95,11 +95,11 @@ h5 {
 
 .rating {
   
-  font-size: 36pt;
+  font-size: 32pt;
   font-weight: 800;
 
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 50px;
   border-radius: 100px;
   
   text-align: center;
@@ -246,7 +246,7 @@ button {
   color: #333;
 
   background-color: white;
-  padding: 20px;
+  padding: 12px 20px;
 
   border-radius: 8px;
   margin-top: 8px;
@@ -254,7 +254,7 @@ button {
 }
 
 .judgePrevName {
-  font-size: 16pt;
+  font-size: 14pt;
   font-weight: 600;
   text-decoration: none;
   color: #333;
@@ -263,6 +263,12 @@ button {
 
 .judgePrevName:hover {
   text-decoration: underline;
+}
+
+.judgePrevAffiliation {
+  font-size: 12pt;
+  color: #6a6a6a;
+  margin-bottom: 0;
 }
 
 .hover:hover {
@@ -336,11 +342,13 @@ a {
   border: #6a6a6a solid 1.75px;
   color: #6a6a6a;
 
-  font-size: 12pt;
+  font-size: 10pt;
   font-weight: 700;
   
-  padding: 4px 12px;
+  padding: 2px 12px;
   border-radius: 40px;
+
+  margin-bottom: 8px;
 }
 
 .back:hover {
@@ -363,4 +371,20 @@ a {
 
 .container-hover:hover>.link {
   text-decoration: underline;
+}
+
+.prefPrevExpand {
+  font-size: 12pt;
+
+  margin-top: 16px;
+}
+
+
+.prefPrevExpand>div {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.prefPrevExpand p {
+  margin: 0
 }

@@ -37,12 +37,11 @@ const styles = {
 
 function EditRating({userID, judgeID, currRating, updateFunc}) {    
     const [isEditing, setIsEditing] = useState(false);
+    const [rating, setRating] = useState(currRating)
     const {auth, setAuth} = useContext(AuthContext);
 
     const openModal = () => setIsEditing(true);
     const closeModal = () => setIsEditing(false);
-
-    let rating = null;
 
     function clickRating(event) {
         const newRatingID = event.target.id;
@@ -50,35 +49,35 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
         switch (newRatingID) {
             case 'unselectOption':
                 event.target.style.backgroundColor = styles.noRating.backgroundColor;
-                rating = 0
+                setRating(0)
                 break;
             case 'optionOne':
                 event.target.style.backgroundColor = styles.one.backgroundColor;
-                rating = 1
+                setRating(1)
                 break;
             case 'optionTwo':
                 event.target.style.backgroundColor = styles.two.backgroundColor;
                 event.target.style.color = styles.two.color;
-                rating = 2
+                setRating(2)
                 break;
             case 'optionThree':
                 event.target.style.backgroundColor = styles.three.backgroundColor;
                 event.target.style.color = styles.three.color;
-                rating = 3
+                setRating(3)
                 break;
             case 'optionFour':
                 event.target.style.backgroundColor = styles.four.backgroundColor;
                 event.target.style.color = styles.four.color;
-                rating = 4
+                setRating(4)
                 break;
             case 'optionFive':
                 event.target.style.backgroundColor = styles.five.backgroundColor;
                 event.target.style.color = styles.five.color;
-                rating = 5
+                setRating(5)
                 break;
             case 'optionStrike':
                 event.target.style.backgroundColor = styles.strike.backgroundColor;
-                rating = 6
+                setRating(6)
                 break;
             default:
                 break;
@@ -92,6 +91,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                 child.style.color = '#fff'
             }
         })
+
     }
 
     function saveRating() {

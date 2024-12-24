@@ -37,9 +37,10 @@ function App() {
             userId: storedUserId
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
-    } else {
-        setAuth({email: null, accessToken: null, userId: null, loggedOut: true});
-    }
+      }
+    // } else {
+    //     setAuth({email: null, accessToken: null, userId: null});
+    // }
   }, [setAuth]);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ function App() {
           const newAccessToken = response.data.accessToken;
 
           setAuth((prev) => ({ ...prev, accessToken: newAccessToken }));
-          console.log("access token being refreshed", newAccessToken)
+          console.log("access token being refreshed", auth, newAccessToken)
 
           sessionStorage.setItem('accessToken', newAccessToken);
         } catch (err) {
