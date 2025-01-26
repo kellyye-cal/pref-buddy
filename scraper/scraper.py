@@ -20,7 +20,7 @@ def extract_ids(judge_data):
             cursor.execute(get_ids, judge)
             result = cursor.fetchone()
             if result:
-                ids.append(result[0])
+                ids.append(int(result[0]))
     except mysql.connector.Error as err:
         cnx.rollback()
 
@@ -121,10 +121,31 @@ def save_judge_to_tourn(judge_data, t_id):
         cnx.rollback()
     return
 
+def save_to_judge_info(judge_data):
+    sql = (
+        """
+        INSERT INTO judge_info (id, tab_id)
+        VALUES(%s, %s)
+        """
+    )
+
+    try:
+        for judge in judge_data:
+            cursor.execute("SELECT id FROM users WHERE tab_id = %s", (int(judge["tab_id"]), ))
+            user_id = cursor.fetchone()[0]
+
+            cursor.execute(sql, (user_id, int(judge["tab_id"]))) 
+            cnx.commit()           
+    except mysql.connector.Error as err:
+        cnx.rollback()
+        
+    return
+
 if __name__ == '__main__':
     data = scrape_judges("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=82525&tourn_id=31084")
     save_judges_to_users(data)
     save_judges_to_ranks(data, 0)
     save_judge_to_tourn(data, 2)
+    save_to_judge_info(data)
 
     # have to save info to judge_info, judging_at

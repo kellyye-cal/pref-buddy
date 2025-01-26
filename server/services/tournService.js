@@ -49,6 +49,8 @@ const getJudges = async({u_id, t_id}) => {
     const sql = "SELECT ja.user_id AS j_id, CONCAT(u.f_name, ' ', u.l_name) AS name, u.affiliation, ji.paradigm, (year(curdate()) - ji.start_year) AS yrs_dbt, (year(curdate()) - ji.judge_start_year) AS yrs_judge, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
     const [judges] = await db.query(sql, [u_id, t_id])
 
+    console.log(judges)
+
     return judges;
 }
 
