@@ -1,0 +1,32 @@
+2025-01-27 22:26:16,137 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-01-27 22:26:16,388 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/index.mhtml?tourn_id=34410 HTTP/1.1" 200 None
+2025-01-27 22:26:16,398 - DEBUG - {'id': 34410, 'link': 'https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=34410', 'name': 'California Round Robin', 'start_date': '2025-02-13', 'end_date': '2025-03-14'}
+2025-01-27 22:26:16,405 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-01-27 22:26:16,635 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=92129&tourn_id=34410 HTTP/1.1" 200 None
+2025-01-27 22:26:16,652 - DEBUG - <th class="smaller" title="Paradigm">
+						Paradigm
+					</th>
+2025-01-27 22:26:16,652 - DEBUG - <th>
+						First
+					</th>
+2025-01-27 22:26:16,652 - DEBUG - <th>
+						Last
+					</th>
+2025-01-27 22:26:16,652 - DEBUG - <th>
+						Institution
+					</th>
+2025-01-27 22:26:16,653 - DEBUG - <th>
+						Location
+					</th>
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,653 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5
+2025-01-27 22:26:16,654 - DEBUG - 5

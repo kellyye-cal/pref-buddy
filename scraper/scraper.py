@@ -1,15 +1,26 @@
+import sys
 import requests
 from bs4 import BeautifulSoup
 import re
 import mysql.connector
+from datetime import datetime
+import json
+import logging
 
 cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 cursor = cnx.cursor()
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    filename='scraper.log',
+    filemode='w'
+)
+
 def extract_ids(judge_data):
     get_ids = (
         """
-        SELECT id FROM users WHERE tab_id = %(tab_id)s
+        SELECT id FROM users WHERE id = %(tab_id)s
         """
     )
 
@@ -26,14 +37,36 @@ def extract_ids(judge_data):
 
     return ids
 
-def scrape_judges(url):
 
-    # url = "https://www.tabroom.com/index/tourn/judges.mhtml?category_id=82525&tourn_id=31084"
+def scrape_judges(url):
+    """
+        Scrapes judge data from the list of judges at a tournmane given a Tabroom link.
+
+        Parameters: link to the judges page for a given tournament
+
+        Returns: a list of dictionaries, where each dictionary
+        in the list corresponds to a judge attending a given tournament.
+        The dictionary keys are f_name, l_name, affiliation, paradigm_link, and tab_id.
+    """
+
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    table = soup.find('table', id='judgelist')
+    table = soup.find('table')
     rows = table.find_all('tr')
+    headers = table.find_all('th')
+    col_i = {}
+
+    for i, header in enumerate(headers):
+        logging.debug(header)
+        header_text = header.text.strip().lower()
+
+        if 'first' in header_text:
+            col_i['f_name'] = i
+        elif 'last' in header_text:
+            col_i['l_name'] = i
+        elif 'institution' in header_text:
+            col_i['institution'] = i
 
     judge_info = []
 
@@ -41,16 +74,15 @@ def scrape_judges(url):
         cols = list(row.find_all('td'))
 
         if len(cols):
-            f_name = cols[1].text.strip()
-            l_name = cols[2].text.strip()
-            affiliation = cols[3].text.strip().replace("\n", "").replace("\t", "").replace("1", "")
-            paradigm_link = cols[1].select_one('a').get('href')
+            logging.debug(len(cols))
+            f_name = cols[col_i['f_name']].text.strip()
+            l_name = cols[col_i['l_name']].text.strip()
+            affiliation = cols[col_i['institution']].text.strip().replace("\n", "").replace("\t", "").replace("1", "")
+            paradigm_link = cols[0].select_one('a').get('href')
 
-            # extract the tabroom id
-            # '/index/paradigm.mhtml?judge_person_id=90885'
-            tab_id = re.search("judge_person_id=(\d+)", paradigm_link).group(1)
 
-            # judge_info.append([f_name, l_name, affiliation, paradigm_link])
+            tab_id = int(re.search("judge_person_id=(\d+)", paradigm_link).group(1))
+
             data = {
                 'f_name': f_name,
                 'l_name': l_name,
@@ -67,8 +99,13 @@ def save_judges_to_users(judge_info):
     # takes in a list of judge data, each element in the list is JSON
     sql = (
         """
-        INSERT INTO users (f_name, l_name, affiliation, tab_id, judge)
+        INSERT INTO users (f_name, l_name, affiliation, id, judge)
         VALUES (%(f_name)s, %(l_name)s, %(affiliation)s, %(tab_id)s, 1)
+        ON DUPLICATE KEY UPDATE 
+        f_name = VALUES(f_name),
+        l_name = VALUES(l_name),
+        affiliation = VALUES(affiliation),
+        judge = 1
         """
     )
 
@@ -77,6 +114,7 @@ def save_judges_to_users(judge_info):
         cnx.commit()
     except mysql.connector.Error as err:
         cnx.rollback()
+        logging.error(err)
 
     return
 
@@ -86,7 +124,7 @@ def save_judges_to_ranks(judge_data, ranker_id):
 
     insert_ids = (
         """
-        INSERT INTO ranks (judge_id, ranker_id)
+        INSERT IGNORE INTO ranks (judge_id, ranker_id)
         VALUES (%s, %s)
         """
     )
@@ -99,6 +137,7 @@ def save_judges_to_ranks(judge_data, ranker_id):
             cnx.commit()
 
     except mysql.connector.Error as err:
+        logging.error(err)
         cnx.rollback()
 
     return
@@ -107,7 +146,7 @@ def save_judge_to_tourn(judge_data, t_id):
 
     sql = (
         """
-        INSERT into judging_at (user_id, tournament_id)
+        INSERT IGNORE into judging_at (user_id, tournament_id)
         VALUES(%s, %s)
         """
     )
@@ -118,34 +157,147 @@ def save_judge_to_tourn(judge_data, t_id):
             cursor.execute(sql, (id, t_id))
             cnx.commit()
     except mysql.connector.Error as err:
+        logging.error(err)
         cnx.rollback()
     return
 
 def save_to_judge_info(judge_data):
+    # TODO: ADD SUPPORT FOR MULTIPLE AFFILIATIONS
+
     sql = (
         """
-        INSERT INTO judge_info (id, tab_id)
-        VALUES(%s, %s)
+        INSERT IGNORE INTO judge_info (id)
+        VALUES (%s)
         """
     )
 
     try:
         for judge in judge_data:
-            cursor.execute("SELECT id FROM users WHERE tab_id = %s", (int(judge["tab_id"]), ))
-            user_id = cursor.fetchone()[0]
-
-            cursor.execute(sql, (user_id, int(judge["tab_id"]))) 
+            cursor.execute(sql, (int(judge["tab_id"]),)) 
             cnx.commit()           
     except mysql.connector.Error as err:
         cnx.rollback()
         
     return
 
-if __name__ == '__main__':
-    data = scrape_judges("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=82525&tourn_id=31084")
-    save_judges_to_users(data)
-    save_judges_to_ranks(data, 0)
-    save_judge_to_tourn(data, 2)
-    save_to_judge_info(data)
 
-    # have to save info to judge_info, judging_at
+def scrape_tourn(url):
+    # https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=31084
+
+    # Scraping from webpage linked by URL
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Extracting name and tournament dates
+    name = soup.find('h2').text.strip()
+    sidenote_div = soup.find_all("div", class_="sidenote")[1]
+    start_end = sidenote_div.find_all("div")[0].find_all("span")[1].text.strip()
+
+    # Extracting month, date, and year from returned date strng
+    dates = re.findall(r"([A-Za-z]{3}) (\d{1,2})", start_end)
+    year = re.search(r"\d{4}", start_end).group(0)
+
+    # Converting to datetime format
+    start_date = datetime.strptime(dates[0][0] + " " + dates[0][1] + " " + year, "%b %d %Y").strftime("%Y-%m-%d")
+    end_date = datetime.strptime(dates[1][0] + " " + dates[1][1] + " " + year, "%b %d %Y").strftime("%Y-%m-%d")
+    
+    # Extract tournament ID from URL
+    tourn_id = int(re.search(r"tourn_id=(\d+)", url).group(1))
+    
+    tournament = {
+        'id': tourn_id,
+        'link': url,
+        'name': name,
+        'start_date': start_date,
+        'end_date': end_date
+    }
+
+    return tournament
+
+def save_tourn(tournament):
+    logging.debug(tournament)
+    sql = (
+        """
+        INSERT INTO tournaments (id, link, name, start_date, end_date)
+        VALUES (%(id)s, %(link)s, %(name)s, %(start_date)s, %(end_date)s)
+        ON DUPLICATE KEY UPDATE
+            link = VALUES(link),
+            name = VALUES(name),
+            start_date = VALUES(start_date),
+            end_date = VALUES(end_date)
+        """
+    )
+
+    try:
+        cursor.execute(sql, tournament) 
+        cnx.commit()           
+    except mysql.connector.Error as err:
+        logging.error(err)
+        cnx.rollback()
+        
+    return
+
+def save_to_attending(u_id, t_id):
+    sql = """
+    INSERT IGNORE INTO attending (user_id, tournament_id)
+    VALUES (%s, %s)
+    """
+
+    try:
+        cursor.execute(sql, (u_id, t_id))
+        cnx.commit()
+    except mysql.connector.Error as err:
+        cnx.rollback()
+
+    return
+    
+def scrape_tourn_api(url, user_id):
+    """URL input should be list of judges for the tournament"""
+    if not url:
+        return jsonify({"error": "URL is required"}), 400
+    if not user_id:
+        return jsonify({"error": "User ID is required"}), 400
+    
+    tourn_id = re.search(r"tourn_id=(\d+)", url).group(1)
+    tourn_url = "https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=" + tourn_id
+
+    try:
+        # Scrape tournament then save to tournaments table
+        tournament = scrape_tourn(tourn_url)
+        save_tourn(tournament)
+
+        # Scrape judge information for the given tournament
+        judges = scrape_judges(url)
+
+        save_judges_to_users(judges)
+        save_judges_to_ranks(judges, user_id)
+        save_judge_to_tourn(judges, tourn_id)
+        save_to_judge_info(judges)
+        save_to_attending(user_id, tourn_id)
+
+        result = {
+            "status": "success",
+            "message": f"Scraped tournament data from {url} for user {user_id}",
+            "data": {"tourn_id": tourn_id}
+        }
+
+        sys.stdout.write(json.dumps(result))
+        sys.stdout.flush()
+
+    except Exception as e:
+        sys.stderr.write(f"Error: {str(e)}\n")
+        sys.stderr.flush()
+        sys.exit(1)
+        
+        logging.error("Error in scrape_tourn: {e}")
+
+if __name__ == '__main__':    
+    scrape_type = sys.argv[1]
+
+    if scrape_type == "tournament":
+        url = sys.argv[2]
+        user_id = sys.argv[3]
+
+        scrape_tourn_api(url, user_id)
+    # scrape_tourn_api("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=92129&tourn_id=34410", 0)
+    # save_to_attending(0, 34410)
