@@ -5,12 +5,23 @@ const getJudgeById = async(req, res) => {
     const j_id = req.params.id;
     const u_id = req.query.u_id;
 
+    var judgeInfo;
+    var paradigm = "No paradigm found."
+
     try {
-        const judgeInfo = await judgeServices.getJudgeById({j_id, u_id});
-        return res.json(judgeInfo)
+        judgeInfo = await judgeServices.getJudgeById({j_id, u_id});
     } catch (error) {
         res.status(500).json({message: "Error getting judge information", error})
     }
+
+    try {
+        paradigm = await judgeServices.getParadigm({j_id});
+    } catch (error) {
+        console.log(error)
+    }
+
+    return res.json({judgeInfo, paradigm})
+
 }
 
 const getAllJudges = async(req, res) => {

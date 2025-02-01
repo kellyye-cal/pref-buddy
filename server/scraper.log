@@ -1,0 +1,6 @@
+2025-01-31 18:55:19,098 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-01-31 18:55:22,736 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-01-31 18:55:24,196 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-01-31 18:55:25,707 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-01-31 18:55:26,989 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=undefined HTTP/1.1" 200 None
+2025-01-31 18:55:26,994 - DEBUG - No paradigm found.

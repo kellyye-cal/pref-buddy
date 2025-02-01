@@ -60,6 +60,13 @@ function TournPage() {
             })
             .catch((err)=>console.log("Error getting all judges: ", err))
     }
+
+    const sortedJudges = [...filteredJudges].sort((a, b) => {
+        if (b.rating === a.rating) {
+            return (a.name).localeCompare(b.name)
+        }
+        return b.rating - a.rating
+    })
     
     return (
         <div className="page">
@@ -69,7 +76,7 @@ function TournPage() {
                 <h1> {tournData.name} </h1>
                 <h2> Prefs </h2>
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
-                {filteredJudges.map((judge, index) => (
+                {sortedJudges.map((judge, index) => (
                     <PrefPreview key={judge.id} judgeData={judge} updateFunc={updateRating}/>
                 ))}
             </div>

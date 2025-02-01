@@ -12,6 +12,7 @@ function TournCardContainer({userID}) {
     // GET A LIST OF TOURNAMENTS ATTENDED BY THE USER, THEN MAP IT TO A TOURNAMENT CARD INSTANCE
     const {auth} = useContext(AuthContext);
     const [allTournaments, setData] = useState([]); //to store fetched data
+    var upcoming;
 
     useEffect(()=>{
         if (!auth?.accessToken) return;
@@ -23,15 +24,22 @@ function TournCardContainer({userID}) {
             withCredentials: true,
         }).then((res) => {
             setData(res.data);
-        })
-        .catch((err)=>console.log("Error getting all tournaments: ", err))
+        }).catch((err)=>console.log("Error getting all tournaments: ", err))
+
     }, []);
+
+    upcoming = allTournaments.filter((tourn) => {
+        const now = new Date();
+        const end = new Date(tourn.end_date)
+        
+        return(now < end)
+     })
 
 
     return (
-        <div className="h-between">
-            {allTournaments && allTournaments.length > 0 ? (
-                allTournaments.map((tourn, index) => (
+        <div className="tourn-grid">
+            {upcoming && upcoming.length > 0 ? (
+                upcoming.map((tourn, index) => (
                     <TournamentCard key={index} userID={userID} tourn={tourn}/>
                 ))
 

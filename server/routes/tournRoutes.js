@@ -7,6 +7,7 @@ router.get('/mytournaments', verifyJWT, tournController.getMyTournaments)
 router.get('/all', verifyJWT, tournController.getAllTournaments)
 router.get('/:id', verifyJWT, tournController.getTournamentById)
 router.get('/:id/judges', verifyJWT, tournController.getJudgesAtTourn)
+router.post('/scrape', verifyJWT, tournController.scrapeTournament)
 
 
 module.exports = router;

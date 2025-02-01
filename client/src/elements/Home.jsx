@@ -6,6 +6,7 @@ import AuthContext from '../context/AuthProvider';
 
 import NavBar from './NavBar'
 import TournCardContainer from './TournCardContainer';
+import AddTournament from './Tournaments/AddTournament';
 
 function Home() {
     const {auth} = useContext(AuthContext);
@@ -18,7 +19,10 @@ function Home() {
             <NavBar />
             <div className="main">
                 <h1> Hi, {firstName}! </h1>
-                <h2> Upcoming Tournaments</h2>
+                <div className="h-between">
+                    <h2> Upcoming Tournaments</h2>
+                    <AddTournament />
+                </div>
                 <TournCardContainer userID={userID}/>
             </div>
         </div>

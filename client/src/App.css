@@ -184,7 +184,8 @@ h5 {
 }
 
 button {
-  border: 0
+  border: 0;
+  background-color: transparent;
 }
 
 .pillButton {
@@ -303,6 +304,10 @@ button {
   border-radius: 20px;
 }
 
+.cta:disabled {
+  background-color: #6a6a6a;
+}
+
 th {
   font-size: 14pt;
 }
@@ -387,4 +392,33 @@ a {
 
 .prefPrevExpand p {
   margin: 0
+}
+
+.floatingModal {
+  position: fixed;
+  left: 25%;
+  right: 25%;
+
+  top: 25%;
+  background-color: #fff;
+  padding: 20px;
+
+  border: 1px solid rgba(80, 80, 80, 0.2);
+  border-radius: 4px;
+
+  z-index: 2;
+}
+
+.tourn-grid {
+
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.v-scroll {
+  height: 75vh;
+  overflow: scroll;
 }

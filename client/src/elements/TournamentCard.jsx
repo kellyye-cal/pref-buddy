@@ -23,13 +23,15 @@ const styles = {
         margin: 0
     },
     container: {
-        width: '32%',
+        flex: "1 0 30%",
         backgroundColor: "#fff",
         padding: '20px 32px 20px 32px',
+        // margin: '8px 0',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         borderRadius: 12,
+        overflow: 'hidden',
     }
 }
 

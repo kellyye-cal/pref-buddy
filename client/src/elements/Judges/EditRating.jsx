@@ -77,7 +77,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                 break;
             case 'optionStrike':
                 event.target.style.backgroundColor = styles.strike.backgroundColor;
-                setRating(6)
+                setRating(-1)
                 break;
             default:
                 break;
@@ -126,7 +126,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                 return styles.four;
             case 5:
                 return styles.five;
-            case 6:
+            case -1:
                 return styles.strike;
             default:
                 return styles.noRating;
@@ -153,7 +153,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                             <button id="optionThree" onClick={clickRating} style={getButtonStyle(3, currRating)}> 3 </button>
                             <button id="optionFour" onClick={clickRating} style={getButtonStyle(4, currRating)}> 4 </button>
                             <button id="optionFive" onClick={clickRating} style={getButtonStyle(5, currRating)}> 5 </button>
-                            <button id="optionStrike" onClick={clickRating} style={getButtonStyle(6, currRating)}> S </button>
+                            <button id="optionStrike" onClick={clickRating} style={getButtonStyle(-1, currRating)}> S </button>
                         </div>
                         <div style={
                             {width: "100%", display: "flex", justifyContent: "center"}}>

@@ -53,15 +53,22 @@ function Judges() {
             .catch((err)=>console.log("Error getting all judges: ", err))
     }
 
+    const sortedJudges = [...filteredRecords].sort((a, b) => {
+        if (b.rating === a.rating) {
+            return (a.name).localeCompare(b.name)
+        }
+        return b.rating - a.rating
+    })
+
     return (
             <div className="page">
                 <NavBar />
                 <div className="main">
                     <h1> Judges </h1>
                     <Search data={allJudges} keys={['name', 'affiliation']} onFilteredRecordChange={setFilteredRecords}> </Search>
-                    <div>
-                        {Array.isArray(filteredRecords) && filteredRecords.length > 0 ? (
-                                filteredRecords.map((judge, index) => (
+                    <div className="v-scroll">
+                        {Array.isArray(sortedJudges) && sortedJudges.length > 0 ? (
+                                sortedJudges.map((judge, index) => (
                                     <div key={index}><JudgePreview judge={judge} userID={auth.userId} updateFunc={updateRating}/> </div>
                                 ))
                             ) : (

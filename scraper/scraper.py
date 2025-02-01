@@ -1,4 +1,5 @@
 import sys
+import os
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -6,6 +7,12 @@ import mysql.connector
 from datetime import datetime
 import json
 import logging
+import html2text
+from dotenv import load_dotenv
+
+load_dotenv()
+USERNAME = os.getenv("TABROOM_USERNAME")
+PASSWORD = os.getenv("TABROOM_PASSWORD")
 
 cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 cursor = cnx.cursor()
@@ -50,6 +57,7 @@ def scrape_judges(url):
     """
 
     response = requests.get(url)
+
     soup = BeautifulSoup(response.text, 'html.parser')
 
     table = soup.find('table')
@@ -58,7 +66,6 @@ def scrape_judges(url):
     col_i = {}
 
     for i, header in enumerate(headers):
-        logging.debug(header)
         header_text = header.text.strip().lower()
 
         if 'first' in header_text:
@@ -74,11 +81,13 @@ def scrape_judges(url):
         cols = list(row.find_all('td'))
 
         if len(cols):
-            logging.debug(len(cols))
+            if (cols[0].find('a') is None):
+                continue
+
             f_name = cols[col_i['f_name']].text.strip()
             l_name = cols[col_i['l_name']].text.strip()
             affiliation = cols[col_i['institution']].text.strip().replace("\n", "").replace("\t", "").replace("1", "")
-            paradigm_link = cols[0].select_one('a').get('href')
+            paradigm_link = cols[0].find('a').get('href')
 
 
             tab_id = int(re.search("judge_person_id=(\d+)", paradigm_link).group(1))
@@ -182,8 +191,6 @@ def save_to_judge_info(judge_data):
 
 
 def scrape_tourn(url):
-    # https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=31084
-
     # Scraping from webpage linked by URL
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -215,7 +222,6 @@ def scrape_tourn(url):
     return tournament
 
 def save_tourn(tournament):
-    logging.debug(tournament)
     sql = (
         """
         INSERT INTO tournaments (id, link, name, start_date, end_date)
@@ -291,13 +297,57 @@ def scrape_tourn_api(url, user_id):
         
         logging.error("Error in scrape_tourn: {e}")
 
+def scrape_paradigm(id):
+    login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
+    login_payload = {
+        "username": USERNAME,
+        "password": PASSWORD
+    }
+
+    session = requests.Session()
+
+    url = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + str(id)
+
+    login_res = session.post(login_url, data=login_payload)
+    if login_res.status_code == 200:
+        response = session.get(url)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        text_maker = html2text.HTML2Text()
+        text_maker.body_width = 0
+        text_maker.ignore_links = False
+        text_maker.single_line_break = False
+
+        paradigm_html = soup.find_all('div', class_="paradigm")
+        paradigm = "No paradigm found."
+
+        if len(paradigm_html) > 1:
+            paradigm = text_maker.handle(str(paradigm_html[1])).strip()
+
+
+        logging.debug(paradigm)        
+        sys.stdout.write(json.dumps({"paradigm": paradigm}))
+        sys.stdout.flush()
+        sys.exit(1)
+    else:
+        logging.error("Can't log into Tabroom with given credentials")
+        sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
+        sys.stderr.flush()
+        sys.exit(1)
+
+    
+    return
+
 if __name__ == '__main__':    
     scrape_type = sys.argv[1]
 
     if scrape_type == "tournament":
         url = sys.argv[2]
         user_id = sys.argv[3]
-
         scrape_tourn_api(url, user_id)
+    elif scrape_type == "paradigm":
+        url = sys.argv[2]
+        scrape_paradigm(url)
+
     # scrape_tourn_api("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=92129&tourn_id=34410", 0)
     # save_to_attending(0, 34410)

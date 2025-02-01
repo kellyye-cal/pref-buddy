@@ -1,5 +1,8 @@
 const mysql = require('mysql2/promise')
 const verifyJWT = require('../../middleware/verifyJWT')
+const {PythonShell} = require('python-shell')
+const {spawn} = require('child_process')
+const path = require('path');
 
 const db = mysql.createPool({
     host: "localhost",
@@ -49,9 +52,40 @@ const getJudges = async({u_id, t_id}) => {
     const sql = "SELECT ja.user_id AS j_id, CONCAT(u.f_name, ' ', u.l_name) AS name, u.affiliation, ji.paradigm, (year(curdate()) - ji.start_year) AS yrs_dbt, (year(curdate()) - ji.judge_start_year) AS yrs_judge, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
     const [judges] = await db.query(sql, [u_id, t_id])
 
-    console.log(judges)
-
     return judges;
+}
+
+const scrapeTournament = async({url, u_id}) => {
+
+    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const args = ['tournament', url, u_id]
+
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+
+        let output = '';
+
+        pythonProcess.stdout.on('data', (data) => {
+            output += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error from Python: ${data}`)
+            reject(new Error(data.toString()));
+        })
+
+        pythonProcess.on('close', (code) => {
+            try {
+                const parsedOutput = JSON.parse(output);
+                const tourn_id = parsedOutput.data.tourn_id;
+
+                resolve(tourn_id);
+            } catch (err) {
+                reject(new Error('Error parsing Python output: ' + err.message))
+            }
+        })
+    })
+
 }
 
 module.exports = {
@@ -60,5 +94,6 @@ module.exports = {
     getNumRated,
     getNumJudges,
     getJudges,
-    getTournamentById
+    getTournamentById,
+    scrapeTournament
 }

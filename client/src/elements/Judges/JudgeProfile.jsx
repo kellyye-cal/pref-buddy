@@ -9,17 +9,22 @@ import Rating from './Rating'
 import EditRating from './EditRating';
 import AuthContext from '../../context/AuthProvider';
 
+import ReactMarkdown from 'react-markdown';
+
 function JudgeProfile() {
     const {auth, setAuth} = useContext(AuthContext);
 
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
+    const [paradigm, setParadigm] = useState(["No paradigm."]);
     const { id } = useParams();
 
     useEffect(()=>{
         axios.get(`http://localhost:4000/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data);
+            setJudgeData(res.data.judgeInfo);
+
+            setParadigm(res.data.paradigm)
         })
         .catch((err)=>console.log(err))
     }, []);
@@ -59,7 +64,7 @@ function JudgeProfile() {
                                         <h4> {judge.affiliation}</h4>
                                     </div>
 
-                                                                        <div className="ratingContainer">
+                                    <div className="ratingContainer">
                                         <Rating rating={judge.rating}/>
 
                                         <EditRating userID={auth.userId} judgeID={judge.judge_id} updateFunc={updateRating} currRating={judge.rating}/>
@@ -96,14 +101,14 @@ function JudgeProfile() {
                                 </div>
 
                                 <div className="history container container-spacing">
-                                    <h3> Judge Information </h3>
-                                    <p> {judge.paradigm} </p>
+                                    <h3> Paradigm </h3>
+                                    <ReactMarkdown children={paradigm}/>
                                 </div>
                             </div>
                         ))
                     ) : (
                         <div>
-                            <p> failed to load resource </p>
+                            <p> Loading... </p>
                         </div>
 
                     )}

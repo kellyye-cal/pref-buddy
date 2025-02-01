@@ -1,4 +1,7 @@
 const mysql = require('mysql2/promise')
+const {PythonShell} = require('python-shell')
+const {spawn} = require('child_process')
+const path = require('path');
 
 const db = mysql.createPool({
     host: "localhost",
@@ -27,8 +30,38 @@ const updateRating = async({u_id, j_id, rating}) => {
     const [postResult] = await db.query(sql, [j_id, u_id, rating])
 }
 
+const getParadigm = async({j_id}) => {
+    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const args = ['paradigm', j_id]
+
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+
+        let output = '';
+
+        pythonProcess.stdout.on('data', (data) => {
+            output += data.toString();
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error from Python: ${data}`)
+            reject(new Error(data.toString()));
+        })
+
+        pythonProcess.on('close', (code) => {
+            try {
+                const parsedOutput = JSON.parse(output);
+                resolve(parsedOutput.paradigm);
+            } catch (err) {
+                reject(new Error('Error parsing Python output: ' + err.message))
+            }
+        })
+    })
+}
+
 module.exports = {
     getJudgeById,
     getAllJudges,
     updateRating,
+    getParadigm
 }

@@ -43,7 +43,7 @@ function TournPreview({tournament, index}) {
                 <td>{new Date(tournament.start_date).getMonth() + 1}/{new Date(tournament.start_date).getDate()}/{new Date(tournament.start_date).getFullYear().toString().slice(-2)} - {new Date(tournament.end_date).getMonth() + 1}/{new Date(tournament.end_date).getDate()}/{new Date(tournament.end_date).getFullYear().toString().slice(-2)}</td>
                 <td style={{textAlign: "center", verticalAlign: "center"}}> {status === "complete" ? <FontAwesomeIcon style={{color: "#148943"}} icon={faCheck} /> :
                     status === "pending" ? <FontAwesomeIcon style={{color: "#f3a72d"}} icon={faSpinner} /> :
-                    <FontAwesomeIcon style={{color: "#6a6a6a"}} icon={faBan} />
+                    <FontAwesomeIcon style={{color: "#ff2c2c"}} icon={faBan} />
                         }
                 </td>
               </tr>
