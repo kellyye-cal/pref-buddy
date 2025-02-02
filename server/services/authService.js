@@ -52,13 +52,13 @@ const login = async({email, pwd}) => {
         const accessToken = jwt.sign(
             {"id":result[0].id},
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '10m'}
+            {expiresIn: '1h'}
         );
 
         const refreshToken = jwt.sign(
             {"id":result[0].id},
             process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '1d'}
+            {expiresIn: '7d'}
         );
 
         // Add refresh token to database
@@ -96,7 +96,7 @@ const refreshAccessToken = async({refreshToken}) => {
         const accessToken = jwt.sign(
             {id: decoded.id},
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: "300s"}
+            {expiresIn: "1h"}
         );
 
         return {accessToken}
