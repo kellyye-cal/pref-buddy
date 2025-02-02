@@ -182,6 +182,7 @@ def save_to_judge_info(judge_data):
 
     try:
         for judge in judge_data:
+            scrape_paradigm(int(judge["tab_id"]))
             cursor.execute(sql, (int(judge["tab_id"]),)) 
             cnx.commit()           
     except mysql.connector.Error as err:
@@ -244,10 +245,10 @@ def save_tourn(tournament):
     return
 
 def save_to_attending(u_id, t_id):
-    sql = """
+    sql = ("""
     INSERT IGNORE INTO attending (user_id, tournament_id)
     VALUES (%s, %s)
-    """
+    """)
 
     try:
         cursor.execute(sql, (u_id, t_id))
@@ -260,9 +261,9 @@ def save_to_attending(u_id, t_id):
 def scrape_tourn_api(url, user_id):
     """URL input should be list of judges for the tournament"""
     if not url:
-        return jsonify({"error": "URL is required"}), 400
+        return json.dumps({"error": "URL is required"}), 400
     if not user_id:
-        return jsonify({"error": "User ID is required"}), 400
+        return json.dumps({"error": "User ID is required"}), 400
     
     tourn_id = re.search(r"tourn_id=(\d+)", url).group(1)
     tourn_url = "https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=" + tourn_id
@@ -297,6 +298,24 @@ def scrape_tourn_api(url, user_id):
         
         logging.error("Error in scrape_tourn: {e}")
 
+def save_paradigm(id, paradigm):
+    sql = ("""
+    INSERT INTO judge_info (id, paradigm, updated)
+    VALUES (%(id)s, %(paradigm)s, %(updated)s)
+    ON DUPLICATE KEY UPDATE
+        paradigm = VALUES(paradigm),
+        updated = VALUES(updated)
+    """)
+    
+    try:
+        cursor.execute(sql, {'id': id, 'paradigm': paradigm, 'updated': datetime.now()})
+        cnx.commit()
+    except mysql.connector.Error as err:
+        logging.error(err)
+        cnx.rollback()
+
+    return
+
 def scrape_paradigm(id):
     login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
     login_payload = {
@@ -323,9 +342,9 @@ def scrape_paradigm(id):
 
         if len(paradigm_html) > 1:
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()
-
-
-        logging.debug(paradigm)        
+            save_paradigm(id, paradigm)
+        
+              
         sys.stdout.write(json.dumps({"paradigm": paradigm}))
         sys.stdout.flush()
         sys.exit(1)
@@ -338,6 +357,81 @@ def scrape_paradigm(id):
     
     return
 
+def scrape_all():
+    cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
+    cursor = cnx.cursor()
+
+    get_ids = (
+        """
+        SELECT id FROM judge_info
+        """
+    )
+
+    ids = []
+
+    try:
+        cursor.execute(get_ids)
+        ids = cursor.fetchall()
+    except mysql.connector.Error as err:
+        logging.error(err)
+
+    login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
+    login_payload = {
+        "username": USERNAME,
+        "password": PASSWORD
+    }
+
+    session = requests.Session()
+    login_res = session.post(login_url, data=login_payload)
+    if login_res.status_code != 200:
+        logging.error("Can't log into Tabroom with given credentials")
+        sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
+        sys.stderr.flush()
+        sys.exit(1)
+
+    text_maker = html2text.HTML2Text()
+    text_maker.body_width = 0
+    text_maker.ignore_links = False
+    text_maker.single_line_break = False
+
+    logging.debug("TOTAL RECORDS: ", str(len(ids)))
+
+    save_sql = (
+        """
+        INSERT INTO judge_info (id, paradigm, updated)
+        VALUES (%(id)s, %(paradigm)s, %(updated)s)
+        ON DUPLICATE KEY UPDATE
+            paradigm = VALUES(paradigm),
+            updated = VALUES(updated)
+        """
+    )
+
+    for id in ids:
+        url = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + str(id[0])
+        response = session.get(url)
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        paradigm_html = soup.find_all('div', class_="paradigm")
+        paradigm = "No paradigm found."
+
+        if len(paradigm_html) > 1:
+            paradigm = text_maker.handle(str(paradigm_html[1])).strip()
+
+        p = {'id': id[0], 'paradigm': paradigm, 'updated': datetime.now()}
+    
+        try:
+            cursor.execute(save_sql, p)
+            cnx.commit()
+        except mysql.connector.Error as err:
+            logging.error(err)
+            cnx.rollback()
+    
+    cursor.close()
+    cnx.close()
+
+    return
+
 if __name__ == '__main__':    
     scrape_type = sys.argv[1]
 
@@ -348,6 +442,8 @@ if __name__ == '__main__':
     elif scrape_type == "paradigm":
         url = sys.argv[2]
         scrape_paradigm(url)
+    elif scrape_type == "all":
+        scrape_all()
 
     # scrape_tourn_api("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=92129&tourn_id=34410", 0)
     # save_to_attending(0, 34410)

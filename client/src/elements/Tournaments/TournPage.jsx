@@ -16,6 +16,8 @@ function TournPage() {
     const [judgeData, setJudgeData] = useState([])
     const [filteredJudges, setFilteredJudges] = useState([])
 
+    const [scrollHeight, setScrollHeight] = useState("100%")
+
     useEffect(()=>{
         // Get the tournament information
         axios.get(`http://localhost:4000/api/tournaments/${tournId}`, {headers: {
@@ -71,14 +73,16 @@ function TournPage() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main">
+            <div className="main" style={{display: "flex", flexDirection: "column", height: "calc(100vh - 120px)", overflow: "hidden"}}>
                 <Back link={"/tournaments"}> </Back>
                 <h1> {tournData.name} </h1>
                 <h2> Prefs </h2>
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
-                {sortedJudges.map((judge, index) => (
-                    <PrefPreview key={judge.id} judgeData={judge} updateFunc={updateRating}/>
-                ))}
+                <div className="v-scroll">
+                    {sortedJudges.map((judge, index) => (
+                        <PrefPreview key={index} judgeData={judge} updateFunc={updateRating}/>
+                    ))}
+                </div>
             </div>
         </div>
     )

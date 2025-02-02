@@ -30,15 +30,21 @@ h5 {
   font-weight: 600;
 }
 
+.page {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .main {
   margin: 60px;
+  max-width: calc(100vw - 160px - 120px);
+
   flex-grow: 1;
 }
 
-.page {
-  display: flex;
-  width: 100%;
-}
+
 
 .container {
   border-radius: 12px;
@@ -72,8 +78,8 @@ h5 {
 
   text-decoration: none;
 
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 #navbar *:hover {
@@ -81,8 +87,31 @@ h5 {
 }
 
 #navbar *.active {
-  color: blue;
-  font-weight: 700;
+  color: #2680FF;
+  font-weight: 800;
+}
+
+#logo {
+  font-size: 26pt;
+  font-weight: 900;
+
+  line-height: 90%;
+
+  margin: 12px 0;
+}
+
+.nav-line {
+  height: 1.5px;
+  width: 30px;
+  background-color: #333;
+  opacity: 0.5;
+  border: none;
+
+  margin: 12px 0;
+}
+
+.menu-section {
+  font-size: 10pt;
 }
 
 .ratingContainer {
@@ -252,6 +281,8 @@ button {
   border-radius: 8px;
   margin-top: 8px;
   margin-bottom: 8px;
+
+  width: 100%;
 }
 
 .judgePrevName {
@@ -379,6 +410,8 @@ a {
 }
 
 .prefPrevExpand {
+  width: 100%;
+  overflow: hidden;
   font-size: 12pt;
 
   margin-top: 16px;
@@ -386,6 +419,7 @@ a {
 
 
 .prefPrevExpand>div {
+  width: 100%;
   margin-top: 8px;
   margin-bottom: 8px;
 }
@@ -410,7 +444,6 @@ a {
 }
 
 .tourn-grid {
-
   margin-top: 4px;
   display: flex;
   flex-wrap: wrap;
@@ -419,6 +452,41 @@ a {
 }
 
 .v-scroll {
-  height: 75vh;
-  overflow: scroll;
+  flex-grow: 1;
+  /* height: 100%; */
+  overflow-y: scroll;
+  /* overflow-y: auto; */
+}
+
+.markdown-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.markdown-content {
+  max-width: 100%;
+  overflow-x: hidden;
+  text-overflow:clip;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  display: block;
+  width: 100%;
+
+}
+
+.markdown-content pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  overflow-x: auto !important;
+  max-width: 100% !important;
+}
+
+.markdown-content code {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  max-width: 100% !important;
 }

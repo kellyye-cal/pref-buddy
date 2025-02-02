@@ -10,6 +10,9 @@ import EditRating from "../Judges/EditRating";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
 
+import ReactMarkdown from 'react-markdown';
+
+
 function PrefPreview({judgeData, updateFunc}) {
     const {auth, setAuth} = useContext(AuthContext)
     const [isExpanded, setIsExpanded] = useState(false)
@@ -38,7 +41,7 @@ function PrefPreview({judgeData, updateFunc}) {
                                 <EditRating userID={auth.userId} judgeID={judgeData.j_id} updateFunc={updateFunc} currRating={judgeData.rating}/>
                             </div>
                             <div style={{marginLeft: 20}}>
-                                <Link to={`/judges/JudgeProfile/${judgeData.id}`} className="judgePrevName" style={{marginBottom: 2}}> {judgeData.name} </Link>
+                                <Link to={`/judges/JudgeProfile/${judgeData.j_id}`} className="judgePrevName" style={{marginBottom: 2}}> {judgeData.name} </Link>
                                 <p className="judgePrevAffiliation"> {judgeData.affiliation}</p>
                             </div>
                         </div>
@@ -56,9 +59,10 @@ function PrefPreview({judgeData, updateFunc}) {
                             <p> -- </p>
                         </div>
 
-                        <div>
+                        <div className="markdown-container">
                             <p style={{fontWeight: 600}}> Paradigm</p>
-                            <p> {judgeData.paradigm} </p>
+                            <div className="markdown-content"> <ReactMarkdown children={judgeData.paradigm} className="markdown-content"/> </div>
+
                         </div>
                     </div>
                 </div>

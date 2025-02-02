@@ -53,7 +53,7 @@ function JudgeProfile() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main">
+            <div className="main" style={{overflowY: "auto"}}>
                 <div>
                     {judgeData && judgeData.length > 0 ? (
                         judgeData.map((judge, index) => (
@@ -100,9 +100,9 @@ function JudgeProfile() {
                                     </div>
                                 </div>
 
-                                <div className="history container container-spacing">
+                                <div className="container container-spacing">
                                     <h3> Paradigm </h3>
-                                    <ReactMarkdown children={paradigm}/>
+                                    <div className="v-scroll"> <ReactMarkdown children={paradigm}/> </div> 
                                 </div>
                             </div>
                         ))

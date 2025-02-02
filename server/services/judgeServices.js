@@ -3,6 +3,9 @@ const {PythonShell} = require('python-shell')
 const {spawn} = require('child_process')
 const path = require('path');
 
+const utils = require('./utils')
+
+
 const db = mysql.createPool({
     host: "localhost",
     user: "root",
@@ -30,7 +33,7 @@ const updateRating = async({u_id, j_id, rating}) => {
     const [postResult] = await db.query(sql, [j_id, u_id, rating])
 }
 
-const getParadigm = async({j_id}) => {
+const scrapeParadigm = async({j_id}) => {
     const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
     const args = ['paradigm', j_id]
 
@@ -57,6 +60,22 @@ const getParadigm = async({j_id}) => {
             }
         })
     })
+}
+
+const getParadigm = async({j_id}) => {
+    const sql = "SELECT paradigm, updated FROM judge_info WHERE `id` = ?"
+    const [judgeInfo] = await db.query(sql, [j_id])
+
+    var paradigm = "No paradigm."
+
+    lastUpdated = new Date(judgeInfo[0].updated)
+    if (isNaN(lastUpdated.getTime()) || utils.isOlderThanWeek(lastUpdated)) {
+        paradigm = await scrapeParadigm({j_id});
+    } else {
+        paradigm = judgeInfo[0].paradigm;
+    }
+
+    return paradigm
 }
 
 module.exports = {
