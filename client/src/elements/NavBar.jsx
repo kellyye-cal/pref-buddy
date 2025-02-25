@@ -32,7 +32,9 @@ function NavBar() {
             <hr className="nav-line" style={{padding: 0}}/>
 
             <p style={styles.menuSection}> Settings </p>
+            {(auth.admin === 1) ? <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/register"> Create Accounts </NavLink> : <div />}
             <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/logout"> Logout </NavLink>
+            
         </div>
     )
 }

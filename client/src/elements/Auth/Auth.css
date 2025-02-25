@@ -19,7 +19,8 @@ form {
     flex-direction: column;
     justify-content: center;
 }
-label {
+
+label{
     font-size: 12pt;
     font-weight: 600;
 
@@ -35,6 +36,22 @@ label span {
     padding: 0px;
     line-height: 1;
     vertical-align: middle;
+}
+
+.form-checkbox label {
+    margin-bottom: 0;
+    margin-left: 4px;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.form-checkbox input {
+    width: 14px;
+    vertical-align: middle;
+    margin-bottom: 0;
 }
 
 input {

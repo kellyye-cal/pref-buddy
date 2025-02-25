@@ -100,6 +100,10 @@ h5 {
   margin: 12px 0;
 }
 
+#logo:hover {
+  font-weight: 900;
+}
+
 .nav-line {
   height: 1.5px;
   width: 30px;

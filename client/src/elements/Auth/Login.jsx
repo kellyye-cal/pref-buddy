@@ -49,7 +49,7 @@ function Login() {
             sessionStorage.setItem('userId', userID);
             sessionStorage.setItem('name', name)
 
-            setAuth({accessToken, userId: userID, loggedOut: false, name});
+            setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
 
             setUser('');
             setPwd('');

@@ -23,7 +23,7 @@ function Logout() {
             sessionStorage.removeItem('userId');
             sessionStorage.removeItem('name');
     
-            setAuth({email: null, accessToken: null, userId: null, loggedOut: true, name: null});
+            setAuth({email: null, accessToken: null, userId: null, loggedOut: true, name: null, admin: 0});
     
             navigate('/login');
         } catch (err) {

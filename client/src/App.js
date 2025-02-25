@@ -13,6 +13,7 @@ import JudgeProfile from './elements/Judges/JudgeProfile'
 import Judges from './elements/Judges/Judges'
 import Tournaments from './elements/Tournaments/Tournaments'
 import TournPage from './elements/Tournaments/TournPage'
+import CreateAccount from './elements/Auth/CreateAccounts'
 
 
 function App() {
@@ -40,10 +41,7 @@ function App() {
             name: storedName
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
-      }
-    // } else {
-    //     setAuth({email: null, accessToken: null, userId: null});
-    // }
+    }
   }, [setAuth]);
 
   useEffect(() => {
@@ -61,7 +59,7 @@ function App() {
         const newAccessToken = response.data.accessToken;
 
         if (newAccessToken !== auth.accessToken) {
-          setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false }));
+          setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
           console.log("access token being refreshed", auth, newAccessToken)
 
           sessionStorage.setItem('accessToken', newAccessToken);
@@ -89,7 +87,7 @@ function App() {
           } />
 
         <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
-        <Route path='/register' element={<Register />}/>
+        <Route path='/register' element={(auth.accessToken && auth.admin === 1) ? <ProtectedRoute> <CreateAccount /> </ProtectedRoute> : <Navigate to="/login" />}/>
         <Route path='logout' element={<Logout />} />
 
         <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />

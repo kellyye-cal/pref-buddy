@@ -38,7 +38,7 @@ const registerUser = async({email, fname, lname, pwd}) => {
 
 const login = async({email, pwd}) => {
     // Query database for login credentials
-    const sql = "SELECT id, password, f_name, l_name FROM users WHERE `email` = ?"
+    const sql = "SELECT id, password, f_name, l_name, admin FROM users WHERE `email` = ?"
     const [result] = await db.query(sql, [email]);
     if (result.length < 1) throw new Error('No account with that username');
 
@@ -67,7 +67,32 @@ const login = async({email, pwd}) => {
 
         const name = result[0].f_name + " " + result[0].l_name
         // Send cookie with refreshToken and return accessToken & userId
-        return {refreshToken, accessToken, userId, name: name};
+        return {refreshToken, accessToken, userId, name: name, admin: result[0].admin};
+    }
+}
+
+const createUser = async({email, fname, lname, pwd, affiliation, judge, coach, debater}) => {
+    try {
+        //check if user exists
+        const findDuplicate = "SELECT email FROM users where `email` = ?"
+        const [existingUsers] = await db.query(findDuplicate, [email]);
+
+        if (existingUsers.length >= 1) throw new Error("User already exists with this email.")
+
+        // hash password
+        const hashedPwd = await bcrypt.hash(pwd, 10)
+
+        console.log("hashed pwd")
+
+        //insert new user into database
+        const insertSQL = "INSERT INTO users (f_name, l_name, email, password, affiliation, judge, coach, debater) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        const [result] = await db.query(insertSQL, [fname, lname, email, hashedPwd, affiliation, judge, coach, debater])
+
+        console.log(result)
+        return {id: result.insertId, email}
+
+    } catch (error) {
+        throw new Error(error.message)
     }
 }
 
@@ -99,7 +124,7 @@ const refreshAccessToken = async({refreshToken}) => {
             {expiresIn: "1h"}
         );
 
-        return {accessToken}
+        return {accessToken: accessToken, admin: user[0].admin}
     } catch (error) {
         throw new Error(error.message)
     }
@@ -120,6 +145,7 @@ const removeToken = async({id}) => {
 module.exports = {
     registerUser,
     login,
+    createUser,
     refreshAccessToken,
     verifyRefreshToken,
     removeToken,

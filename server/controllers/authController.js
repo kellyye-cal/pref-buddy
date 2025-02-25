@@ -20,6 +20,27 @@ const registerUser = async(req, res) => {
     }
 }
 
+const createUser = async(req, res) => {
+    const {email, fname, lname, pwd, affiliation, judge, coach, debater} = req.body;
+
+    if (!email || !pwd) {
+        return res.status(400).json({'message': 'Valid email and password are required'});
+    }
+
+    try {
+        //Call the service function
+        console.log("in controller")
+
+        const user = await authService.createUser({email, fname, lname, pwd, affiliation, judge, coach, debater})
+        res.status(201).json({
+            message: "Successfully registered user.",
+            user: {email: user.email, id: user.id}
+        });
+    } catch (error) {
+        res.status(500).json({message: "Error registering user", error})
+    }
+}
+
 const loginUser = async(req, res) => {
     //Verify Input
     const {email, pwd} = req.body;
@@ -29,7 +50,7 @@ const loginUser = async(req, res) => {
         const user = await authService.login({email, pwd})
 
         res.cookie('jwt', user.refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
-        return res.json({accessToken: user.accessToken, userId: user.userId, name: user.name})
+        return res.json({accessToken: user.accessToken, userId: user.userId, name: user.name, admin: user.admin})
     } catch (error) {
         res.status(500).json({message: "Error logging in", error})
     }
@@ -43,7 +64,7 @@ const refresh = async(req, res) => {
 
     try {
         const accessToken = await authService.refreshAccessToken({refreshToken})
-        return res.json({accessToken: accessToken.accessToken})
+        return res.json({accessToken: accessToken.accessToken, admin: accessToken.admin})
     } catch (error) {
         res.status(500).json({message: "Error authenticating user", error})
     }
@@ -70,6 +91,7 @@ const logout = async(req, res) => {
 
 module.exports = {
     registerUser,
+    createUser,
     loginUser,
     refresh,
     logout
