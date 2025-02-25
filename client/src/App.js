@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import {BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate} from 'react-router-dom'
 import axios, { useAxiosInterceptors } from './api/axios'
 
 import AuthContext from './context/AuthProvider'
@@ -14,6 +13,7 @@ import Judges from './elements/Judges/Judges'
 import Tournaments from './elements/Tournaments/Tournaments'
 import TournPage from './elements/Tournaments/TournPage'
 import CreateAccount from './elements/Auth/CreateAccounts'
+import AppRoutes from './AppRoutes'
 
 
 function App() {
@@ -21,17 +21,11 @@ function App() {
 
   const {auth, setAuth} = useContext(AuthContext);
 
-  const ProtectedRoute = ({children}) => {
-    if (!auth?.accessToken) {
-      return <Navigate to="/" replace />
-    }
-    return children;
-  };
 
   useEffect(() => {
     const storedAccessToken = sessionStorage.getItem('accessToken');
     const storedUserId = sessionStorage.getItem('userId');
-    const storedName = sessionStorage.getItem('name')
+    const storedName = sessionStorage.getItem('name');
 
     if (storedAccessToken && storedUserId) {
         setAuth({
@@ -41,12 +35,16 @@ function App() {
             name: storedName
         });
         console.log('setting auth by retrieving from session storage', storedAccessToken)
+    } else if (auth?.loggedOut || !auth?.accessToken) {
+      return
+    } else if (!auth?.loggedOut && auth.accessToken) {
+
     }
   }, [setAuth]);
 
   useEffect(() => {
-    console.log(auth)
     const refreshAccessToken = async () => {
+      console.log(auth)
       if (auth?.loggedOut || !auth?.accessToken) {
         return;
       }
@@ -77,30 +75,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/home/:userID"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          } />
-
-        <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
-        <Route path='/register' element={(auth.accessToken && auth.admin === 1) ? <ProtectedRoute> <CreateAccount /> </ProtectedRoute> : <Navigate to="/login" />}/>
-        <Route path='logout' element={<Logout />} />
-
-        <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
-
-        <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/>
-        <Route path='/judges/JudgeProfile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
-
-        <Route path="/tournaments" element={auth.accessToken ? <ProtectedRoute> <Tournaments />  </ProtectedRoute> : <Navigate to="/login" />}/>
-        <Route path='/tournaments/:tournId' element={auth.accessToken ? <ProtectedRoute> <TournPage /> </ProtectedRoute> : <Navigate to="/login" />} />
-
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
-  //  <h1> hello world</h1>
   );
 }
 

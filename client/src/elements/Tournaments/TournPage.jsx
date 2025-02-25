@@ -70,7 +70,6 @@ function TournPage() {
         return b.rating - a.rating
     })
 
-    console.log(tournData)
     
     return (
         <div className="page">

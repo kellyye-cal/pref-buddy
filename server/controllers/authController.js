@@ -78,7 +78,7 @@ const logout = async(req, res) => {
         const refreshToken = cookies.jwt
 
         // check to see if refreshToken is in database
-        authService.verifyRefreshToken({refreshToken, id: u_id});
+        // authService.verifyRefreshToken({refreshToken, id: u_id});
         
         //clear cookie
         res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
