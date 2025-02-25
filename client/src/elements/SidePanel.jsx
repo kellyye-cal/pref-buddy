@@ -8,6 +8,9 @@ import EditRating from "./Judges/EditRating";
 import AuthContext from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 
+import ReactMarkdown from 'react-markdown';
+
+
 const SidePanel = ({judgeData, updateFunc, closeFunc}) => {
     const {auth, setAuth} = useContext(AuthContext)
 
@@ -29,6 +32,15 @@ const SidePanel = ({judgeData, updateFunc, closeFunc}) => {
 
                     <EditRating userID={auth.userId} judgeID={judgeData.j_id} updateFunc={updateFunc} currRating={judgeData.rating}/>
                 </div>
+            </div>
+
+            <div className="panel-container"> 
+                <h5> Stats </h5>
+            </div>
+
+            <div className="panel-container"> 
+                <h5> Paradigm </h5>
+                <ReactMarkdown children={judgeData.paradigm}/>
             </div>
         </div>
     )

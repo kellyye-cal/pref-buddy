@@ -28,7 +28,7 @@ function PrefPreview({judgeData, updateFunc, onSelect, isSelected}) {
                         <div className="ratingContainer">
                             <Rating rating={judgeData.rating}/>
 
-                            <EditRating userID={auth.userId} judgeID={judgeData.j_id} updateFunc={updateFunc} currRating={judgeData.rating}/>
+                            {/* <EditRating userID={auth.userId} judgeID={judgeData.j_id} updateFunc={updateFunc} currRating={judgeData.rating}/> */}
                         </div>
                         <div style={{marginLeft: 20}}>
                             <div className="judgePrevName"> {judgeData.name} </div>
