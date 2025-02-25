@@ -152,7 +152,6 @@ def save_judges_to_ranks(judge_data, ranker_id):
     return
 
 def save_judge_to_tourn(judge_data, t_id):
-
     sql = (
         """
         INSERT IGNORE into judging_at (user_id, tournament_id)
@@ -184,7 +183,7 @@ def save_to_judge_info(judge_data):
         for judge in judge_data:
             scrape_paradigm(int(judge["tab_id"]))
             cursor.execute(sql, (int(judge["tab_id"]),)) 
-            cnx.commit()           
+            cnx.commit()   
     except mysql.connector.Error as err:
         cnx.rollback()
         
@@ -278,8 +277,10 @@ def scrape_tourn_api(url, user_id):
 
         save_judges_to_users(judges)
         save_judges_to_ranks(judges, user_id)
+        logging.debug(tourn_id)
         save_judge_to_tourn(judges, tourn_id)
         save_to_judge_info(judges)
+        logging.debug(tourn_id)
         save_to_attending(user_id, tourn_id)
 
         result = {
@@ -344,10 +345,6 @@ def scrape_paradigm(id):
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()
             save_paradigm(id, paradigm)
         
-              
-        sys.stdout.write(json.dumps({"paradigm": paradigm}))
-        sys.stdout.flush()
-        sys.exit(1)
     else:
         logging.error("Can't log into Tabroom with given credentials")
         sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")

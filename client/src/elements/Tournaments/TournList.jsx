@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import TournPreview from './TournPreview';
 
 function TournList({data, sortOrder}) {
+      console.log(data)
       const sortedData = [...data].sort((a, b) => {
         if (sortOrder === 'asc') {
           return new Date(a.end_date) - new Date(b.end_date)

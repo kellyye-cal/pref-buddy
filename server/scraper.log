@@ -1,5 +1,306 @@
-2025-02-24 13:35:57,504 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-02-24 13:35:57,782 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
-2025-02-24 13:35:58,266 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
-2025-02-24 13:35:58,409 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
-2025-02-24 13:35:58,882 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=137392 HTTP/1.1" 200 None
+2025-02-24 18:05:30,609 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:30,851 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/index.mhtml?tourn_id=34644 HTTP/1.1" 200 None
+2025-02-24 18:05:30,866 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:31,117 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=92861&tourn_id=34644 HTTP/1.1" 200 None
+2025-02-24 18:05:31,184 - DEBUG - 34644
+2025-02-24 18:05:31,215 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:31,483 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:31,831 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:31,953 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:32,068 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=235724 HTTP/1.1" 200 None
+2025-02-24 18:05:32,113 - DEBUG - success
+2025-02-24 18:05:32,115 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:32,364 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:32,621 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:32,750 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:32,857 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=122495 HTTP/1.1" 200 None
+2025-02-24 18:05:32,901 - DEBUG - success
+2025-02-24 18:05:32,903 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:33,146 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:33,640 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:33,779 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:33,901 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=33360 HTTP/1.1" 200 None
+2025-02-24 18:05:34,083 - DEBUG - success
+2025-02-24 18:05:34,085 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:34,410 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:34,874 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:35,008 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:35,395 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=199272 HTTP/1.1" 200 None
+2025-02-24 18:05:35,442 - DEBUG - success
+2025-02-24 18:05:35,444 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:35,699 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:36,123 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:36,252 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:36,368 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=244731 HTTP/1.1" 200 None
+2025-02-24 18:05:36,424 - DEBUG - success
+2025-02-24 18:05:36,425 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:36,706 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:37,204 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:37,332 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:37,459 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=20123 HTTP/1.1" 200 None
+2025-02-24 18:05:37,729 - DEBUG - success
+2025-02-24 18:05:37,731 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:37,990 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:38,522 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:38,650 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:39,247 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=8348 HTTP/1.1" 200 None
+2025-02-24 18:05:39,616 - DEBUG - success
+2025-02-24 18:05:39,617 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:39,910 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:40,331 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:40,534 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:40,660 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=202687 HTTP/1.1" 200 None
+2025-02-24 18:05:40,691 - DEBUG - success
+2025-02-24 18:05:40,692 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:40,974 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:41,372 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:41,506 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:41,986 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=53138 HTTP/1.1" 200 None
+2025-02-24 18:05:42,124 - DEBUG - success
+2025-02-24 18:05:42,125 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:42,379 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:42,738 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:42,862 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:43,394 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=6310 HTTP/1.1" 200 None
+2025-02-24 18:05:43,656 - DEBUG - success
+2025-02-24 18:05:43,658 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:43,917 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:44,234 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:44,413 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:45,016 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=32282 HTTP/1.1" 200 None
+2025-02-24 18:05:45,314 - DEBUG - success
+2025-02-24 18:05:45,320 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:45,569 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:45,964 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:46,094 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:46,549 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=81511 HTTP/1.1" 200 None
+2025-02-24 18:05:46,644 - DEBUG - success
+2025-02-24 18:05:46,645 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:46,915 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:47,227 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:47,365 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:47,483 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=10442 HTTP/1.1" 200 None
+2025-02-24 18:05:47,675 - DEBUG - success
+2025-02-24 18:05:47,676 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:47,956 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:48,221 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:48,365 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:48,806 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=177436 HTTP/1.1" 200 None
+2025-02-24 18:05:48,849 - DEBUG - success
+2025-02-24 18:05:48,850 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:49,151 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:49,426 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:49,785 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:49,907 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=153128 HTTP/1.1" 200 None
+2025-02-24 18:05:49,968 - DEBUG - success
+2025-02-24 18:05:49,973 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:50,236 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:50,675 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:50,825 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:51,195 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=6244 HTTP/1.1" 200 None
+2025-02-24 18:05:51,248 - DEBUG - success
+2025-02-24 18:05:51,249 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:51,536 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:51,941 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:52,105 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:52,543 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=70926 HTTP/1.1" 200 None
+2025-02-24 18:05:52,599 - DEBUG - success
+2025-02-24 18:05:52,600 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:52,875 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:53,433 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:53,565 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:53,703 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=130727 HTTP/1.1" 200 None
+2025-02-24 18:05:53,770 - DEBUG - success
+2025-02-24 18:05:53,771 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:54,047 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:54,429 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:54,735 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:55,201 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=170665 HTTP/1.1" 200 None
+2025-02-24 18:05:55,276 - DEBUG - success
+2025-02-24 18:05:55,277 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:55,543 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:55,966 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:56,118 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:56,248 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=11643 HTTP/1.1" 200 None
+2025-02-24 18:05:56,474 - DEBUG - success
+2025-02-24 18:05:56,476 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:56,780 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:57,168 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:57,344 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:58,226 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=100961 HTTP/1.1" 200 None
+2025-02-24 18:05:58,566 - DEBUG - success
+2025-02-24 18:05:58,567 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:05:58,826 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:05:59,450 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:05:59,590 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:05:59,710 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=67590 HTTP/1.1" 200 None
+2025-02-24 18:05:59,754 - DEBUG - success
+2025-02-24 18:05:59,756 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:00,208 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:00,561 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:00,695 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:00,826 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=7379 HTTP/1.1" 200 None
+2025-02-24 18:06:01,164 - DEBUG - success
+2025-02-24 18:06:01,167 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:01,416 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:02,086 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:02,226 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:02,362 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=37107 HTTP/1.1" 200 None
+2025-02-24 18:06:02,679 - DEBUG - success
+2025-02-24 18:06:02,680 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:02,988 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:03,371 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:03,525 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:03,681 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=86071 HTTP/1.1" 200 None
+2025-02-24 18:06:03,942 - DEBUG - success
+2025-02-24 18:06:03,944 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:04,200 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:04,882 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:05,056 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:05,187 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=175348 HTTP/1.1" 200 None
+2025-02-24 18:06:05,369 - DEBUG - success
+2025-02-24 18:06:05,371 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:05,634 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:06,114 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:06,267 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:06,400 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=148028 HTTP/1.1" 200 None
+2025-02-24 18:06:06,532 - DEBUG - success
+2025-02-24 18:06:06,533 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:06,793 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:07,216 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:07,361 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:07,484 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=147576 HTTP/1.1" 200 None
+2025-02-24 18:06:07,549 - DEBUG - success
+2025-02-24 18:06:07,551 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:07,816 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:08,198 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:08,332 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:08,788 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=17746 HTTP/1.1" 200 None
+2025-02-24 18:06:08,911 - DEBUG - success
+2025-02-24 18:06:08,915 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:09,174 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:09,592 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:09,732 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:09,862 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=8501 HTTP/1.1" 200 None
+2025-02-24 18:06:10,083 - DEBUG - success
+2025-02-24 18:06:10,084 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:10,332 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:10,774 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:10,906 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:11,026 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=87660 HTTP/1.1" 200 None
+2025-02-24 18:06:11,110 - DEBUG - success
+2025-02-24 18:06:11,112 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:11,365 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:11,642 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:11,778 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:11,903 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=37738 HTTP/1.1" 200 None
+2025-02-24 18:06:11,998 - DEBUG - success
+2025-02-24 18:06:12,000 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:12,246 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:12,682 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:12,807 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:12,925 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=130496 HTTP/1.1" 200 None
+2025-02-24 18:06:12,986 - DEBUG - success
+2025-02-24 18:06:12,988 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:13,232 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:13,581 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:13,721 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:13,830 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=121390 HTTP/1.1" 200 None
+2025-02-24 18:06:13,888 - DEBUG - success
+2025-02-24 18:06:13,890 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:14,136 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:14,503 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:14,720 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:14,842 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=63706 HTTP/1.1" 200 None
+2025-02-24 18:06:14,990 - DEBUG - success
+2025-02-24 18:06:14,992 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:15,239 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:15,529 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:15,663 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:15,785 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=18329 HTTP/1.1" 200 None
+2025-02-24 18:06:15,874 - DEBUG - success
+2025-02-24 18:06:15,876 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:16,132 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:16,426 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:16,562 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:16,674 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=254563 HTTP/1.1" 200 None
+2025-02-24 18:06:16,695 - DEBUG - success
+2025-02-24 18:06:16,698 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:16,958 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:17,523 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:17,664 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:18,010 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=674887 HTTP/1.1" 200 None
+2025-02-24 18:06:18,081 - DEBUG - success
+2025-02-24 18:06:18,083 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:18,345 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:18,970 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:19,494 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:19,665 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=172294 HTTP/1.1" 200 None
+2025-02-24 18:06:20,116 - DEBUG - success
+2025-02-24 18:06:20,118 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:21,069 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:21,594 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:21,740 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:21,926 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=78600 HTTP/1.1" 200 None
+2025-02-24 18:06:22,072 - DEBUG - success
+2025-02-24 18:06:22,073 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:22,565 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:22,974 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:23,139 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:23,263 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=138435 HTTP/1.1" 200 None
+2025-02-24 18:06:23,568 - DEBUG - success
+2025-02-24 18:06:23,570 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:23,832 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:24,106 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:24,277 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:24,800 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=6695 HTTP/1.1" 200 None
+2025-02-24 18:06:24,834 - DEBUG - success
+2025-02-24 18:06:24,835 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:25,247 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:25,596 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:25,736 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:25,854 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=45906 HTTP/1.1" 200 None
+2025-02-24 18:06:26,031 - DEBUG - success
+2025-02-24 18:06:26,033 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:26,382 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:26,809 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:26,951 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:27,170 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=57255 HTTP/1.1" 200 None
+2025-02-24 18:06:27,216 - DEBUG - success
+2025-02-24 18:06:27,218 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:27,488 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:27,772 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:27,898 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:28,023 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=113094 HTTP/1.1" 200 None
+2025-02-24 18:06:28,154 - DEBUG - success
+2025-02-24 18:06:28,156 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:28,423 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:28,839 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:28,973 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:29,366 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=200709 HTTP/1.1" 200 None
+2025-02-24 18:06:29,402 - DEBUG - success
+2025-02-24 18:06:29,404 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:29,656 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:29,970 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:30,108 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:30,553 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=136849 HTTP/1.1" 200 None
+2025-02-24 18:06:30,631 - DEBUG - success
+2025-02-24 18:06:30,632 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:30,880 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:31,254 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:31,394 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:31,530 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=183389 HTTP/1.1" 200 None
+2025-02-24 18:06:31,657 - DEBUG - success
+2025-02-24 18:06:31,658 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:31,907 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:32,190 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:32,328 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:32,453 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=90885 HTTP/1.1" 200 None
+2025-02-24 18:06:32,609 - DEBUG - success
+2025-02-24 18:06:32,610 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-24 18:06:32,858 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-24 18:06:33,117 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-24 18:06:33,247 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-24 18:06:33,371 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=121400 HTTP/1.1" 200 None
+2025-02-24 18:06:33,460 - DEBUG - success
+2025-02-24 18:06:33,460 - DEBUG - 34644

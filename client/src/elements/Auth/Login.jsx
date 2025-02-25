@@ -103,10 +103,10 @@ function Login() {
                     </div>
 
                     <button className="cta"> Sign In </button>
-                    <p> Don't have an account?
+                    {/* <p> Don't have an account?
                     <span style={{paddingLeft: 2}}>
                         <Link to="/register"> Sign up instead! </Link>
-                    </span> </p>
+                    </span> </p> */}
                 </form>
             </div>
         </>

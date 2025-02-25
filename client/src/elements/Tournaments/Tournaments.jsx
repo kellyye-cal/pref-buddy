@@ -20,7 +20,7 @@ function Tournaments() {
     const now = new Date();
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/tournaments/all`, {headers: {
+        axios.get(`http://localhost:4000/api/tournaments/mytournaments`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}
     ).then((res) => {

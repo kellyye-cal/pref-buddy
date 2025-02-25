@@ -39,7 +39,7 @@ function TournPreview({tournament, index}) {
 
     return (
         <tr key={index}>
-                <td className="tourn-link"> <NavLink to={`/tournaments/${tournament.t_id}`} key={tournament.id}> {tournament.name} </NavLink></td>
+                <td className="tourn-link"> <NavLink to={`/tournaments/${tournament.id}`} key={tournament.id}> {tournament.name} </NavLink></td>
                 <td>{new Date(tournament.start_date).getMonth() + 1}/{new Date(tournament.start_date).getDate()}/{new Date(tournament.start_date).getFullYear().toString().slice(-2)} - {new Date(tournament.end_date).getMonth() + 1}/{new Date(tournament.end_date).getDate()}/{new Date(tournament.end_date).getFullYear().toString().slice(-2)}</td>
                 <td style={{textAlign: "center", verticalAlign: "center"}}> {status === "complete" ? <FontAwesomeIcon style={{color: "#148943"}} icon={faCheck} /> :
                     status === "pending" ? <FontAwesomeIcon style={{color: "#f3a72d"}} icon={faSpinner} /> :

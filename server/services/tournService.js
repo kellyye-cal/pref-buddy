@@ -81,6 +81,7 @@ const scrapeTournament = async({url, u_id}) => {
 
                 resolve(tourn_id);
             } catch (err) {
+                console.log(err)
                 reject(new Error('Error parsing Python output: ' + err.message))
             }
         })
