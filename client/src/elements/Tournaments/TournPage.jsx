@@ -7,6 +7,7 @@ import NavBar from '../NavBar';
 import Back from '../Back';
 import PrefPreview from './PrefPreview';
 import Search from '../Search'
+import SidePanel from '../SidePanel';
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -70,6 +71,16 @@ function TournPage() {
         return b.rating - a.rating
     })
 
+    const [selectedJudge, setSelectedJudge] = useState(null)
+
+    const handleSelectJudge = (judge) => {
+        setSelectedJudge(judge)
+    }
+
+    const closeSidePanel = () => {
+        setSelectedJudge(null)
+
+    }
     
     return (
         <div className="page">
@@ -81,9 +92,14 @@ function TournPage() {
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
                 <div className="v-scroll">
                     {sortedJudges.map((judge, index) => (
-                        <PrefPreview key={index} judgeData={judge} updateFunc={updateRating}/>
+                        <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
+                        isSelected={selectedJudge?.j_id === judge.j_id}/>
                     ))}
                 </div>
+
+                {selectedJudge && (
+                    <SidePanel judgeData={selectedJudge} updateFunc={updateRating} closeFunc={closeSidePanel} />
+                )}
             </div>
         </div>
     )

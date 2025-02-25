@@ -5,8 +5,9 @@ import AuthContext from "../../context/AuthProvider"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../Spinner';
 
-function AddTournament() {
+function AddTournament({onAdd}) {
     const {auth, setAuth} = useContext(AuthContext);
 
     const [url, setURL] = useState('');
@@ -14,6 +15,7 @@ function AddTournament() {
     const [errMsg, setErrMsg] = useState('')
 
     const [isOpen, setIsOpen] = useState(false)
+    const [submitted, setSubmit] = useState(false)
 
     useEffect(() => {
         setErrMsg('');
@@ -31,6 +33,8 @@ function AddTournament() {
         e.preventDefault();
         const form = document.getElementById('addForm');
 
+        setSubmit(true)
+
         try {
             const res = await axios.post('http://localhost:4000/api/tournaments/scrape',
                 {
@@ -44,7 +48,13 @@ function AddTournament() {
             );
 
             closeModal();
+            setSubmit(false);
             console.log("success", res)
+
+            if (onAdd) {
+                onAdd();
+            }
+            
         } catch(err) {
             console.error("Error scraping tournament data", err)
         }
@@ -75,25 +85,33 @@ function AddTournament() {
                             </button>
                         </div>
                         
-                        <form onSubmit={handleSubmit} id="addForm" >
-                            <p className={errMsg ? "errmsg" : "offscreen"}> {errMsg} </p>
+                        {(!submitted) ?
+                            <form onSubmit={handleSubmit} id="addForm" >
+                                <p className={errMsg ? "errmsg" : "offscreen"}> {errMsg} </p>
 
-                            <label htmlFor="url" style={{marginTop: 8, marginBottom: 4}}> Enter the Tabroom link to the list of judges for tournament you want to link</label>
-                            <input
-                                type="url"
-                                id="tab_url"
-                                onChange={(e) => setURL(e.target.value)}
-                                value={url}
-                                required
-                            />
+                                <label htmlFor="url" style={{marginTop: 8, marginBottom: 4}}> Enter the Tabroom link to the list of judges for tournament you want to link</label>
+                                <input
+                                    type="url"
+                                    id="tab_url"
+                                    onChange={(e) => setURL(e.target.value)}
+                                    value={url}
+                                    required
+                                />
 
-                            <p id="urlnote" className={url && !validURL ? "instructions": "offscreen"}> *Enter a valid Tabroom Link to the judges page of a tournament</p>
+                                <p id="urlnote" className={url && !validURL ? "instructions": "offscreen"}> *Enter a valid Tabroom Link to the judges page of a tournament</p>
 
-                            
-                            <button className="cta" disabled={!validURL ? true : false}>
-                                Link Tournament
-                            </button>
-                        </form>
+                                
+                                <button className="cta" disabled={!validURL ? true : false}>
+                                    Link Tournament
+                                </button>
+                            </form>
+                        :
+                        <div>
+                            <p> Fetching tournament data...</p>
+                            <Spinner />
+                        </div>
+                        }
+                        
                     </div>
                 </div>
             )}

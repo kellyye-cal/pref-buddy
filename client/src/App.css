@@ -5,12 +5,12 @@ body {
 }
 
 h1 {
-  font-size: 32pt;
+  font-size: 24pt;
   font-weight: 800;
 }
 
 h2 {
-  font-size: 22pt;
+  font-size: 20pt;
   font-weight: 700;
 }
 
@@ -20,13 +20,13 @@ h3 {
 }
 
 h4 {
-  font-size: 18pt;
+  font-size: 16pt;
   color: #717171;
   font-weight: 600;
 }
 
 h5 {
-  font-size: 16pt;
+  font-size: 14pt;
   font-weight: 600;
 }
 
@@ -119,8 +119,8 @@ h5 {
 }
 
 .ratingContainer {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   border-radius: 100px;
 
   position: relative
@@ -128,11 +128,11 @@ h5 {
 
 .rating {
   
-  font-size: 32pt;
+  font-size: 24pt;
   font-weight: 800;
 
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   border-radius: 100px;
   
   text-align: center;
@@ -216,6 +216,20 @@ h5 {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.overlay-container {
+  position: relative;
+}
+
+.pref-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
 button {
   border: 0;
   background-color: transparent;
@@ -290,11 +304,16 @@ button {
 }
 
 .judgePrevName {
-  font-size: 14pt;
-  font-weight: 600;
+  font-size: 12pt;
+  font-weight: 700;
   text-decoration: none;
   color: #333;
+  text-align: left;
+}
 
+.judgePreview:hover {
+  background-color: rgba(197, 208, 224, 0.2);
+  cursor: pointer;
 }
 
 .judgePrevName:hover {
@@ -306,6 +325,8 @@ button {
   color: #6a6a6a;
   margin-bottom: 0;
 }
+
+
 
 .hover:hover {
   text-decoration: underline;
@@ -493,4 +514,70 @@ a {
   white-space: pre-wrap !important;
   word-wrap: break-word !important;
   max-width: 100% !important;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.spinner {
+  animation: spin 5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -400px;
+
+  width: 400px;
+  height: 100vh;
+
+  background-color: white;
+  border: rgba(0, 0, 0, 0.05) solid 1px;
+  box-shadow: 0px 4px 4px -4px rgba(12, 12, 13, 0.1);
+
+  padding: 32px 24px;
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.side-panel.open {
+  transform: translateX(-400px);
+
+}
+
+.judgePanelName {
+  font-size: 16pt;
+  font-weight: 700;
+  text-decoration: none;
+  color: #333;
+  text-align: left;
+}
+
+.judgePanelName:hover{
+  text-decoration: underline;
+}
+
+.judgePanelAffil {
+  font-size: 14pt;
+  color: #6a6a6a;
+  margin-bottom: 0;
+}
+
+.judgePreview.selected {
+  background-color: rgba(197, 208, 224, 0.2);
+
+  border: rgba(168, 183, 203, 0.6) 1.5px solid;
 }

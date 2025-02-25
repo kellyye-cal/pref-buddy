@@ -19,15 +19,19 @@ function Tournaments() {
     var filteredUpcoming;
     const now = new Date();
 
-    useEffect(() => {
+    const fetchTournaments = async () => {
         axios.get(`http://localhost:4000/api/tournaments/mytournaments`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}
-    ).then((res) => {
-        setTournaments(res.data)
-        setFilteredRecords(res.data)
-    }).catch((err)=>console.log("Error getting all tournaments: ", err))
-    }, [auth.userId]);
+        ).then((res) => {
+            setTournaments(res.data)
+            setFilteredRecords(res.data)
+        }).catch((err)=>console.log("Error getting all tournaments: ", err))
+    }
+
+    useEffect(() => {
+        fetchTournaments();
+    }, []);
 
     filteredPast = filteredRecords.filter((tourn) => {
         const end = new Date(tourn.end_date)
@@ -48,7 +52,7 @@ function Tournaments() {
             <div className="main">
                 <div className="h-between" style={{alignItems: "center"}}>
                     <h1> Tournaments </h1>
-                    <AddTournament/>
+                    <AddTournament onAdd={fetchTournaments}/>
                 </div>
 
                 
