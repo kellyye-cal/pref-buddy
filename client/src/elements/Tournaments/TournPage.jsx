@@ -68,7 +68,7 @@ function TournPage() {
         if (b.rating === a.rating) {
             return (a.name).localeCompare(b.name)
         }
-        return b.rating - a.rating
+        return a.rating - b.rating
     })
 
     const [selectedJudge, setSelectedJudge] = useState(null)

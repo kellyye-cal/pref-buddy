@@ -13,7 +13,7 @@ const db = mysql.createPool({
 })
 
 const getMyTournaments = async({id}) => {
-    const sql = "SELECT * FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
+    const sql = "SELECT *, 1 AS attending FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
     const [tournaments] = await db.query(sql, [id])
 
     return tournaments

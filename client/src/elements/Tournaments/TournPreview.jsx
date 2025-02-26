@@ -15,7 +15,7 @@ function TournPreview({tournament, index}) {
     const [status, setStatus] = useState(["notAttending"])
 
     useEffect(()=>{
-      axios.get(`http://localhost:4000/api/tournaments/${tournament.t_id}`, {
+      axios.get(`http://localhost:4000/api/tournaments/${tournament.id}`, {
               headers: {
                   Authorization: `Bearer ${auth?.accessToken}`,
               },

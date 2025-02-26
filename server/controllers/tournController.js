@@ -18,6 +18,7 @@ const getTournamentById = async (req, res) => {
     const t_id = req.params.id;
     const u_id = req.id
 
+
     const tournament = await tournService.getTournamentById({t_id})
 
     const numRated = await tournService.getNumRated({t_id, u_id})

@@ -49,9 +49,9 @@ function Tournaments() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main">
+            <div className="main v-scroll">
                 <div className="h-between" style={{alignItems: "center"}}>
-                    <h1> Tournaments </h1>
+                    <h1> My Tournaments </h1>
                     <AddTournament onAdd={fetchTournaments}/>
                 </div>
 

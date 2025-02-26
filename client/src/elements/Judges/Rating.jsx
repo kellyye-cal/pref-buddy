@@ -10,7 +10,7 @@ function Rating({rating}) {
 
     if (rating === 0 || !rating) {
         display = "-";
-    } else if (rating === -1) {
+    } else if (rating === 6) {
         display = "S";
     }
 
