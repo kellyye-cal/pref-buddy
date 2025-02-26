@@ -2,34 +2,38 @@ import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../../context/AuthProvider';
 import axios from 'axios'
 import '../../App.css';
+import ReactDOM from 'react-dom';
+import EditRatingModal from './EditRatingModal';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
 const styles = {
     unselected: {
         backgroundColor: "#d9d9d9"
     },
-    noRating: {
+    0: {
         backgroundColor: "#6a6a6a"
     },
-    one: {
+    1: {
         backgroundColor: "#148943"
     },
-    two: {
+    2: {
         backgroundColor: "#9DE06E",
         color: '#333'
     },
-    three: {
+    3: {
         backgroundColor: "#FFD900",
         color: '#333'
     },
-    four: {
+    4: {
         backgroundColor: "#F3A72D",
         color: '#333'
     },
-    five: {
+    5: {
         backgroundColor: "#FF7D38",
         color: '#333'
     },
-    strike: {
+    6: {
         backgroundColor: "#FF2A2A"
     }
 }
@@ -47,36 +51,25 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
         const newRatingID = event.target.id;
 
         switch (newRatingID) {
-            case 'unselectOption':
-                event.target.style.backgroundColor = styles.noRating.backgroundColor;
+            case 'option0':
                 setRating(0)
                 break;
-            case 'optionOne':
-                event.target.style.backgroundColor = styles.one.backgroundColor;
+            case 'option1':
                 setRating(1)
                 break;
-            case 'optionTwo':
-                event.target.style.backgroundColor = styles.two.backgroundColor;
-                event.target.style.color = styles.two.color;
+            case 'option2':
                 setRating(2)
                 break;
-            case 'optionThree':
-                event.target.style.backgroundColor = styles.three.backgroundColor;
-                event.target.style.color = styles.three.color;
+            case 'option3':
                 setRating(3)
                 break;
-            case 'optionFour':
-                event.target.style.backgroundColor = styles.four.backgroundColor;
-                event.target.style.color = styles.four.color;
+            case 'option4':
                 setRating(4)
                 break;
-            case 'optionFive':
-                event.target.style.backgroundColor = styles.five.backgroundColor;
-                event.target.style.color = styles.five.color;
+            case 'option5':
                 setRating(5)
                 break;
-            case 'optionStrike':
-                event.target.style.backgroundColor = styles.strike.backgroundColor;
+            case 'option6':
                 setRating(6)
                 break;
             default:
@@ -86,7 +79,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
         const allButtons = Array.from(document.querySelector('.ratingButtons').children)
         
         allButtons.forEach(child => {
-            if (child.id != newRatingID) {
+            if (child.id !== newRatingID) {
                 child.style.backgroundColor = '#d9d9d9'
                 child.style.color = '#fff'
             }
@@ -110,29 +103,6 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
         })
     }
 
-    const getButtonStyle = (buttonValue, activeValue) => {
-        if (buttonValue !=activeValue) {
-            return styles.unselected;
-        }
-
-        switch (buttonValue) {
-            case 1:
-                return styles.one;
-            case 2:
-                return styles.two;
-            case 3:
-                return styles.three;
-            case 4:
-                return styles.four;
-            case 5:
-                return styles.five;
-            case 6:
-                return styles.strike;
-            default:
-                return styles.noRating;
-        }
-    }
-
     return (
         <div>
             <button
@@ -141,7 +111,35 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                     Edit 
             </button>
 
-            {isEditing && (
+            <EditRatingModal isOpen={isEditing} closeFunc={closeModal}>
+                <div className="h-between">
+                    <h3 style={{margin: 0}}> Edit Judge Rating </h3>
+                    <button onClick={closeModal}>
+                        <FontAwesomeIcon icon={faTimes} size="s"/>
+                    </button>
+                </div>
+
+                <div className="ratingButtons">
+                    {[0, 1, 2, 3, 4, 5, 6].map((val) => (
+                        <button
+                            key={val}
+                            id={`option${val}`}
+                            onClick={clickRating}
+                            style={val === rating ? styles[val] : styles.unselected}
+                        >
+                            {val === 0 ? '-' : val === 6 ? "S" : val}
+                        </button>
+                    ))}
+                </div>
+
+                <div style={
+                            {width: "100%", display: "flex", justifyContent: "center"}}>
+                            <button className="pillButton" onClick={saveRating} to ="/judges"> Save </button>
+                        </div>
+
+            </EditRatingModal>
+
+            {/* {isEditing && (
                 <div>
                     <div className="overlay"> </div>
                     <div className="editRatingModal">
@@ -161,7 +159,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
 
         </div>
     )
