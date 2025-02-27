@@ -101,6 +101,10 @@ function JudgeProfile() {
                                 </div>
 
                                 <div className="container container-spacing">
+                                    <h3> Notes </h3>
+                                </div>
+
+                                <div className="container container-spacing">
                                     <h3> Paradigm </h3>
                                     <div className="v-scroll"> <ReactMarkdown children={paradigm}/> </div> 
                                 </div>
