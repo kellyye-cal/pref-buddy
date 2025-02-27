@@ -63,7 +63,7 @@ function Judges() {
     return (
             <div className="page">
                 <NavBar />
-                <div className="main" style={{display: "flex", flexDirection: "column", height: "calc(100vh - 120px)", overflow: "hidden"}}>
+                <div className="main" style={{display: "flex", flexDirection: "column", overflow: "hidden"}}>
                     <h1> Judges </h1>
                     <Search data={allJudges} keys={['name', 'affiliation']} onFilteredRecordChange={setFilteredRecords}> </Search>
                     <div className="v-scroll">

@@ -53,7 +53,7 @@ function JudgeProfile() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main" style={{overflowY: "auto"}}>
+            <div className="main">
                 <div>
                     {judgeData && judgeData.length > 0 ? (
                         judgeData.map((judge, index) => (

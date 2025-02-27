@@ -85,7 +85,7 @@ function TournPage() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main" style={{display: "flex", flexDirection: "column", height: "calc(100vh - 120px)", overflow: "hidden"}}>
+            <div className="main" style={{display: "flex", flexDirection: "column", overflow: "hidden"}}>
                 <Back link={"/tournaments"}> </Back>
                 <h1> {tournData.name} </h1>
                 <h2> Prefs </h2>
