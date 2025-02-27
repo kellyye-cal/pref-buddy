@@ -26,7 +26,7 @@ h4 {
 }
 
 h5 {
-  font-size: 14pt;
+  font-size: 12pt;
   font-weight: 600;
 }
 
@@ -242,7 +242,7 @@ h5 {
   width: 100vw;
   height: 100vh;
 
-  z-index: 500;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -495,7 +495,7 @@ a {
   border: 1px solid rgba(80, 80, 80, 0.2);
   border-radius: 4px;
 
-  z-index: 2;
+  z-index: 101;
 }
 
 .tourn-grid {
@@ -614,4 +614,8 @@ a {
   background-color: rgba(197, 208, 224, 0.2);
 
   border: rgba(168, 183, 203, 0.6) 1.5px solid;
+}
+
+.hidden {
+  display: none;
 }

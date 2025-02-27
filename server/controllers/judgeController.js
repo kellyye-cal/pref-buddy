@@ -50,8 +50,33 @@ const setRating = async(req, res) => {
     }
 }
 
+const getNotes = async(req, res) => {
+    const {u_id, j_id} = req.query;
+    
+    try {
+        const result = await judgeServices.getNotes({u_id, j_id});
+        return res.json(result.notes)
+    } catch (error) {
+        res.status(500).json({message: "Error fetching notes", error})
+    }
+}
+
+const saveNote = async(req, res) => {
+    const {u_id, j_id, note} = req.body;
+
+    try {
+        await judgeServices.saveNote({u_id, j_id, note})
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).json({message: "Error updating rating", error})
+
+    }
+}
+
 module.exports = {
     getJudgeById,
     getAllJudges,
     setRating,
+    getNotes,
+    saveNote,
 }

@@ -289,7 +289,7 @@ def scrape_tourn_api(url, user_id):
             "data": {"tourn_id": tourn_id}
         }
 
-        sys.stdout.write(json.dumps(result))
+        sys.stdout.write(json.dumps(result) + "\n")
         sys.stdout.flush()
 
     except Exception as e:
@@ -328,9 +328,20 @@ def scrape_paradigm(id):
 
     url = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + str(id)
 
-    login_res = session.post(login_url, data=login_payload)
-    if login_res.status_code == 200:
+    try:
+        login_res = session.post(login_url, data=login_payload)
+        if login_res.status_code != 200:
+            logging.error("Can't log into Tabroom with given credentials")
+            sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
+            sys.stderr.flush()
+            sys.exit(1)
+        
         response = session.get(url)
+        if response.status_code != 200:
+            sys.stderr.write(f"Error: Failed to get judge page \n")
+            sys.stderr.flush()
+            sys.exit(1)
+
         soup = BeautifulSoup(response.text, 'html.parser')
 
         text_maker = html2text.HTML2Text()
@@ -343,14 +354,15 @@ def scrape_paradigm(id):
 
         if len(paradigm_html) > 1:
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()
-            save_paradigm(id, paradigm)
+            
+        save_paradigm(id, paradigm)
+        sys.stdout.write(json.dumps(paradigm))
+        sys.stdout.flush()
         
-    else:
-        logging.error("Can't log into Tabroom with given credentials")
-        sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
+    except Exception as e:
+        sys.stderr.write(f"Error \n")
         sys.stderr.flush()
         sys.exit(1)
-
     
     return
 

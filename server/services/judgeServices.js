@@ -33,6 +33,21 @@ const updateRating = async({u_id, j_id, rating}) => {
     const [postResult] = await db.query(sql, [j_id, u_id, rating])
 }
 
+const getNotes = async({u_id, j_id}) => {
+    const sql = "SELECT notes FROM ranks WHERE judge_id = ? AND ranker_id = ?"
+    const [notes] = await db.query(sql, [j_id, u_id])
+
+    return {notes}
+}
+
+const saveNote = async({u_id, j_id, note}) => {
+    const sql = 'INSERT into ranks (judge_id, ranker_id, notes) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE notes = VALUES(notes)'
+    const [postResult] = await db.query(sql, [j_id, u_id, note])
+
+    return {postResult}
+}
+
+
 const scrapeParadigm = async({j_id}) => {
     const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
     const args = ['paradigm', j_id]
@@ -82,5 +97,7 @@ module.exports = {
     getJudgeById,
     getAllJudges,
     updateRating,
-    getParadigm
+    getParadigm,
+    saveNote,
+    getNotes,
 }

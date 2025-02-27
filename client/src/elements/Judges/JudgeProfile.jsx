@@ -8,14 +8,18 @@ import NavBar from '../NavBar'
 import Rating from './Rating'
 import EditRating from './EditRating';
 import AuthContext from '../../context/AuthProvider';
+import JudgeNotes from './JudgeNotes';
 
 import ReactMarkdown from 'react-markdown';
+
 
 function JudgeProfile() {
     const {auth, setAuth} = useContext(AuthContext);
 
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     const [paradigm, setParadigm] = useState(["No paradigm."]);
+    const [judgeNotes, setJudgeNotes] = useState(["..."])
+
     const { id } = useParams();
 
     useEffect(()=>{
@@ -25,6 +29,8 @@ function JudgeProfile() {
             setJudgeData(res.data.judgeInfo);
 
             setParadigm(res.data.paradigm)
+
+            setJudgeNotes(res.data.judgeInfo[0].notes)
         })
         .catch((err)=>console.log(err))
     }, []);
@@ -72,36 +78,41 @@ function JudgeProfile() {
                                     </div>
                                 </div>
 
-                                <div className="container-spacing container">
-                                    <h3 style={{margin: 0}}> Stats </h3>
+                                <div className="h-between" style={{gap: 12, alignItems: "stretch"}}>
+                                    <div className="container-spacing container">
+                                        <h3 style={{margin: 0}}> Stats </h3>
 
-                                    <div className="h-between" style={{marginTop: 8, marginBottom: 8}}>
-                                        <div className="stat-instance">
-                                            <h5> Years Judging </h5>
-                                            <p className="stat-text"> {judge.yrs_judge} </p>
+                                        <div className="h-between" style={{marginTop: 8, marginBottom: 8, flexWrap: "wrap", gap: 8}}>
+                                            <div className="stat-instance">
+                                                <h5> Years Judging </h5>
+                                                <p className="stat-text"> {judge.yrs_judge} </p>
+                                            </div>
+
+                                            <div className="stat-instance">
+                                                <h5> Years in Debate </h5>
+                                                <p className="stat-text"> {judge.yrs_dbt} </p>
+                                            </div>
+
+                                            <div className="stat-instance">
+                                                <h5> Speaker Pt Avg </h5>
+                                                <p className="stat-text"> -- </p>
+                                            </div>
                                         </div>
 
+                                        <div style={{marginTop: 8, marginBottom: 8}}>
                                         <div className="stat-instance">
-                                            <h5> Years in Debate </h5>
-                                            <p className="stat-text"> {judge.yrs_dbt} </p>
-                                        </div>
+                                                <h5> 24-25 Topic Round Stats </h5>
+                                                <p className="stat-text"> <span> Policy v. Policy: </span> -- </p>
+                                                <p className="stat-text"> <span> Policy v. K: </span> -- </p>
+                                                <p className="stat-text"> <span> Clash: </span> -- </p>
+                                                <p className="stat-text"> <span> K v. K: </span> -- </p>
+                                                <p className="stat-text"> <span> T/Theory: </span> -- </p>
 
-                                        <div className="stat-instance">
-                                            <h5> Speaker Pt Avg </h5>
-                                            <p className="stat-text"> -- </p>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div style={{marginTop: 8, marginBottom: 8}}>
-                                    <div className="stat-instance">
-                                            <h5> 24-25 Topic Round Stats </h5>
-                                            <p className="stat-text"> -- </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="container container-spacing">
-                                    <h3> Notes </h3>
+                                    <JudgeNotes judgeId={id} notes={judgeNotes}/>
                                 </div>
 
                                 <div className="container container-spacing">
