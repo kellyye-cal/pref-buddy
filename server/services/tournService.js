@@ -26,9 +26,44 @@ const getAllTournaments = async({id}) => {
     return tournaments
 }
 
+const updateJudgeList = async({t_id, j_url}) => {
+    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const args = ["update_judge_list", t_id, j_url]
+
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+
+
+        pythonProcess.stderr.on('data', (data) => {
+            try {
+                const jsonData = JSON.parse(data);
+                console.log(jsonData);
+            } catch (error) {
+                console.error("Error parsing JSON from Python:", error);
+                reject(new Error("Error parsing JSON"));
+            }
+        })
+
+        pythonProcess.on('close', (code) => {
+            resolve("Success")
+            console.log("success")
+        })
+    })
+}
+
 const getTournamentById = async({t_id}) => {
     const sql = "SELECT * FROM tournaments WHERE `id` = ?"
     const [tournaments] = await db.query(sql, [t_id])
+
+
+    const now = new Date()
+    const end = new Date(tournaments[0].end_date)
+    const last_updated = new Date(tournaments[0].last_updated)
+    const since_updated = now - last_updated
+
+    if (end > now && since_updated > 2 * 60 * 60 * 1000) {
+        updateJudgeList({t_id, j_url: tournaments[0].j_url})
+    }
 
     return tournaments[0]
 }
@@ -76,6 +111,7 @@ const scrapeTournament = async({url, u_id}) => {
 
         pythonProcess.on('close', (code) => {
             try {
+                console.log(output)
                 const parsedOutput = JSON.parse(output);
                 const tourn_id = parsedOutput.data.tourn_id;
 
