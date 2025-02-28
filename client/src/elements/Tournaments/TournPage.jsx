@@ -2,6 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from '../../api/axios';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faCheck, faSpinner} from '@fortawesome/free-solid-svg-icons'
+
+
 import AuthContext from '../../context/AuthProvider';
 import NavBar from '../NavBar';
 import Back from '../Back';
@@ -17,7 +21,9 @@ function TournPage() {
     const [judgeData, setJudgeData] = useState([])
     const [filteredJudges, setFilteredJudges] = useState([])
 
-    const [scrollHeight, setScrollHeight] = useState("100%")
+    const [numRated, setNumRated] = useState(0)
+    const [totalJudges, setTotalJudges] = useState(0)
+    const [status, setStatus] = useState(["pending"])
 
     useEffect(()=>{
         // Get the tournament information
@@ -25,6 +31,8 @@ function TournPage() {
             Authorization: `Bearer ${auth?.accessToken}`}}
         ).then((res) => {
             setTournData(res.data.tournament)
+            setNumRated(res.data.numRated)
+            setTotalJudges(res.data.numTotal)
             // setTournData(res.data.find((t) => String(t.t_id) === tournId));
         })
         .catch((err)=>console.log(err))
@@ -37,6 +45,14 @@ function TournPage() {
             setFilteredJudges(res.data)
         }).catch((err) => console.log(err))
     }, []);
+
+    useEffect(() => {
+        if (numRated === totalJudges) {
+            setStatus("complete")
+        } else {
+            setStatus("pending")
+        }
+    }, [numRated])
 
     const updateRating = (judgeID, newRating) => {
         axios.post(`http://localhost:4000/api/judges/set_rating/`, {
@@ -62,6 +78,10 @@ function TournPage() {
                 setFilteredJudges(res.data)
             })
             .catch((err)=>console.log("Error getting all judges: ", err))
+
+        if (newRating > 0) {
+            setNumRated(numRated + 1)
+        }
     }
 
     const sortedJudges = [...filteredJudges].sort((a, b) => {
@@ -81,6 +101,7 @@ function TournPage() {
         setSelectedJudge(null)
 
     }
+
     
     return (
         <div className="page">
@@ -88,7 +109,18 @@ function TournPage() {
             <div className="main" style={{display: "flex", flexDirection: "column", overflow: "hidden"}}>
                 <Back link={"/tournaments"}> </Back>
                 <h1> {tournData.name} </h1>
-                <h2> Prefs </h2>
+
+                <div className="h-between" style={{alignItems: "center"}}>
+                    <h2> Prefs </h2>
+                    <div style={{marginBottom: 8}}>
+                        <span style={{marginRight: 4, fontWeight: 500}}> {numRated} / {totalJudges} </span>
+                        {status === "pending" ? 
+                        <FontAwesomeIcon icon={faSpinner} size="lg" style={{color: "#f3a72d"}}/>
+                        : 
+                        <FontAwesomeIcon icon={faCheck} size="lg" style={{color: "#148943"}}/>}
+                    </div>
+                </div>
+
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
                 <div className="v-scroll">
                     {sortedJudges.map((judge, index) => (

@@ -298,6 +298,7 @@ def scrape_all():
     return
 
 def update_tournament(t_id, j_url):
+    logging.debug("Called update tournament")
     utils.update_tourn_timestamp(t_id)
     utils.update_judge_list(t_id, j_url)
 
