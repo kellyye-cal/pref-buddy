@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import AuthContext from '../../context/AuthProvider';
 
 import axios from 'axios';
-import EditRatingModal from '../Judges/EditRatingModal';
+import FloatingModal from '../FloatingModal';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -52,7 +52,7 @@ function ExportCSV({tournId, defaultFileName}) {
         <div>
             <button className="pill-default" onClick={openFunc}> Export Prefs </button>
 
-            <EditRatingModal isOpen={editing} closeFunc={closeFunc}>
+            <FloatingModal isOpen={editing} closeFunc={closeFunc}>
                 <div className="h-between" style={{alignItems: "center"}}>
                     <h3 style={{marginBottom: 0}}> Export Prefs</h3>
                     <button onClick={closeFunc} style={{padding: 0}}> <FontAwesomeIcon icon={faTimes}/> </button>
@@ -76,7 +76,7 @@ function ExportCSV({tournId, defaultFileName}) {
                     <button className="pillButton"> Download CSV </button>
                 </form>
 
-            </EditRatingModal>
+            </FloatingModal>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import AuthContext from '../../context/AuthProvider';
 import axios from 'axios'
 import '../../App.css';
 import ReactDOM from 'react-dom';
-import EditRatingModal from './EditRatingModal';
+import FloatingModal from '../FloatingModal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 
@@ -111,7 +111,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                     Edit 
             </button>
 
-            <EditRatingModal isOpen={isEditing} closeFunc={closeModal}>
+            <FloatingModal isOpen={isEditing} closeFunc={closeModal}>
                 <div className="h-between">
                     <h3 style={{margin: 0}}> Edit Judge Rating </h3>
                     <button onClick={closeModal}>
@@ -137,7 +137,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                             <button className="pillButton" onClick={saveRating} to ="/judges"> Save </button>
                         </div>
 
-            </EditRatingModal>
+            </FloatingModal>
 
             {/* {isEditing && (
                 <div>

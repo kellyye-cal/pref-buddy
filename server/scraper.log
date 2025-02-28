@@ -1,6 +1,25 @@
-2025-02-28 15:36:01,554 - DEBUG - Starting authorization phase
-2025-02-28 15:36:01,554 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 15:36:01,555 - DEBUG - mysql_native_password completed succesfully
-2025-02-28 15:36:01,556 - DEBUG - Starting authorization phase
-2025-02-28 15:36:01,556 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 15:36:01,558 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 15:45:57,841 - DEBUG - Starting authorization phase
+2025-02-28 15:45:57,841 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-28 15:45:57,841 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 15:45:57,847 - DEBUG - Starting authorization phase
+2025-02-28 15:45:57,847 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-28 15:45:57,847 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 15:45:57,863 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-28 15:45:58,207 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/index.mhtml?tourn_id=34410 HTTP/1.1" 200 None
+2025-02-28 15:45:58,248 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-28 15:45:58,524 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=92129&tourn_id=34410 HTTP/1.1" 200 None
+2025-02-28 15:45:58,608 - DEBUG - False
+2025-02-28 15:45:58,609 - DEBUG - False
+2025-02-28 15:45:58,611 - DEBUG - False
+2025-02-28 15:45:58,612 - DEBUG - False
+2025-02-28 15:45:58,613 - DEBUG - False
+2025-02-28 15:45:58,613 - DEBUG - False
+2025-02-28 15:45:58,614 - DEBUG - False
+2025-02-28 15:45:58,614 - DEBUG - False
+2025-02-28 15:45:58,615 - DEBUG - False
+2025-02-28 15:45:58,616 - DEBUG - False
+2025-02-28 15:45:58,617 - DEBUG - False
+2025-02-28 15:45:58,617 - DEBUG - False
+2025-02-28 15:45:58,617 - DEBUG - False
+2025-02-28 15:45:58,618 - DEBUG - False
+2025-02-28 15:45:58,619 - DEBUG - False

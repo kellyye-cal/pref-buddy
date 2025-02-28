@@ -194,7 +194,7 @@ h5 {
   opacity: 100%;
 }
 
-.editRatingModal {
+.floatingModal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -211,7 +211,7 @@ h5 {
   z-index: 101;
 }
 
-.side-panel .editRatingModal {
+.side-panel .floatingModal {
   position: fixed;
   top: 120px;
   left: 60px;
@@ -511,21 +511,6 @@ a {
 
 .prefPrevExpand p {
   margin: 0
-}
-
-.floatingModal {
-  position: fixed;
-  left: 25%;
-  right: 25%;
-
-  top: 25%;
-  background-color: #fff;
-  padding: 20px;
-
-  border: 1px solid rgba(80, 80, 80, 0.2);
-  border-radius: 4px;
-
-  z-index: 101;
 }
 
 .tourn-grid {
