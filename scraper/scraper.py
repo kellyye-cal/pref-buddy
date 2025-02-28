@@ -162,7 +162,10 @@ def scrape_tourn_api(url, user_id):
 def scrape_paradigm(id):
     should_scrape = utils.check_scrape_paradigm(id)
     logging.debug(should_scrape)
+
     if (not should_scrape):
+        sys.stdout.write(json.dumps({"status": "success", "message": "Success"}))
+        sys.stdout.flush()
         return
 
     login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
@@ -203,7 +206,14 @@ def scrape_paradigm(id):
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()
             
         utils.save_paradigm(id, paradigm)
-        sys.stdout.write(json.dumps({"status": "success", "message": "Success"}))
+
+        result = {
+            "status": "success",
+            "message": f"Scraped paradigm",
+            "data": {"paradigm": paradigm}
+        }
+
+        sys.stdout.write(json.dumps(result) + "\n")
         sys.stdout.flush()
         
     except Exception as e:

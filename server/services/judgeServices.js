@@ -15,6 +15,8 @@ const db = mysql.createPool({
 })
 
 const getJudgeById = async({j_id, u_id}) => {
+    // Determine if paradigm has to be scraped by calling scraper.scrape_paradigm
+
     const sql = "SELECT judge_id, rating, email, affiliation, paradigm,  CONCAT(u.f_name, ' ', u.l_name) AS name, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
     const [judge] = await db.query(sql, [j_id, u_id]);
 
@@ -68,6 +70,7 @@ const scrapeParadigm = async({j_id}) => {
 
         pythonProcess.on('close', (code) => {
             try {
+                console.log(output)
                 const parsedOutput = JSON.parse(output);
                 resolve(parsedOutput.paradigm);
             } catch (err) {
@@ -77,18 +80,14 @@ const scrapeParadigm = async({j_id}) => {
     })
 }
 
+
 const getParadigm = async({j_id}) => {
-    const sql = "SELECT paradigm, updated FROM judge_info WHERE `id` = ?"
+    await scrapeParadigm({j_id})
+
+    const sql = "SELECT paradigm FROM judge_info WHERE `id` = ?"
     const [judgeInfo] = await db.query(sql, [j_id])
 
-    var paradigm = "No paradigm."
-
-    lastUpdated = new Date(judgeInfo[0].updated)
-    if (isNaN(lastUpdated.getTime()) || utils.isOlderThanWeek(lastUpdated)) {
-        paradigm = await scrapeParadigm({j_id});
-    } else {
-        paradigm = judgeInfo[0].paradigm;
-    }
+    const paradigm = judgeInfo[0].paradigm;
 
     return paradigm
 }

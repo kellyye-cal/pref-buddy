@@ -1,43 +1,7 @@
-2025-02-27 17:16:36,973 - DEBUG - Starting authorization phase
-2025-02-27 17:16:36,973 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-27 17:16:36,973 - DEBUG - mysql_native_password completed succesfully
-2025-02-27 17:16:36,975 - DEBUG - Starting authorization phase
-2025-02-27 17:16:36,975 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-27 17:16:36,975 - DEBUG - mysql_native_password completed succesfully
-2025-02-27 17:16:36,981 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-02-27 17:16:37,266 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/index.mhtml?tourn_id=32089 HTTP/1.1" 200 None
-2025-02-27 17:16:37,287 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-02-27 17:16:37,537 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=85142&tourn_id=32089 HTTP/1.1" 200 None
-2025-02-27 17:16:37,596 - DEBUG - False
-2025-02-27 17:16:37,596 - DEBUG - False
-2025-02-27 17:16:37,597 - DEBUG - False
-2025-02-27 17:16:37,598 - DEBUG - False
-2025-02-27 17:16:37,598 - DEBUG - False
-2025-02-27 17:16:37,598 - DEBUG - False
-2025-02-27 17:16:37,599 - DEBUG - False
-2025-02-27 17:16:37,599 - DEBUG - False
-2025-02-27 17:16:37,600 - DEBUG - False
-2025-02-27 17:16:37,600 - DEBUG - False
-2025-02-27 17:16:37,600 - DEBUG - False
-2025-02-27 17:16:37,601 - DEBUG - False
-2025-02-27 17:16:37,601 - DEBUG - False
-2025-02-27 17:16:37,602 - DEBUG - False
-2025-02-27 17:16:37,602 - DEBUG - False
-2025-02-27 17:16:37,603 - DEBUG - False
-2025-02-27 17:16:37,604 - DEBUG - False
-2025-02-27 17:16:37,604 - DEBUG - False
-2025-02-27 17:16:37,605 - DEBUG - False
-2025-02-27 17:16:37,606 - DEBUG - False
-2025-02-27 17:16:37,606 - DEBUG - False
-2025-02-27 17:16:37,606 - DEBUG - False
-2025-02-27 17:16:37,607 - DEBUG - False
-2025-02-27 17:16:37,607 - DEBUG - False
-2025-02-27 17:16:37,608 - DEBUG - False
-2025-02-27 17:16:37,608 - DEBUG - False
-2025-02-27 17:16:37,608 - DEBUG - False
-2025-02-27 17:16:37,609 - DEBUG - False
-2025-02-27 17:16:37,609 - DEBUG - False
-2025-02-27 17:16:37,610 - DEBUG - False
-2025-02-27 17:16:37,610 - DEBUG - False
-2025-02-27 17:16:37,610 - DEBUG - False
-2025-02-27 17:16:37,611 - DEBUG - False
+2025-02-27 17:29:24,186 - DEBUG - Starting authorization phase
+2025-02-27 17:29:24,186 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-27 17:29:24,187 - DEBUG - mysql_native_password completed succesfully
+2025-02-27 17:29:24,188 - DEBUG - Starting authorization phase
+2025-02-27 17:29:24,188 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-27 17:29:24,189 - DEBUG - mysql_native_password completed succesfully
+2025-02-27 17:29:24,190 - DEBUG - False
