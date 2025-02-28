@@ -54,10 +54,21 @@ function Judges() {
     }
 
     const sortedJudges = [...filteredRecords].sort((a, b) => {
+        // If a is less than b, the result is negative, and a is placed before b.
+        // If a is greater than b, the result is positive, and a is placed after b.
+        // If a and b are equal, the result is zero, and their order remains unchanged.
+        // 1 2 3 4 5 6 0
+
         if (b.rating === a.rating) {
             return (a.name).localeCompare(b.name)
         }
-        return b.rating - a.rating
+
+        if (a.rating === 0 || !a.rating) {
+            return 1;
+        } else if (b.rating === 0 || !b.rating) {
+            return -1;
+        }
+        return a.rating - b.rating
     })
 
     return (
