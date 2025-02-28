@@ -3,6 +3,8 @@ const verifyJWT = require('../../middleware/verifyJWT')
 const {PythonShell} = require('python-shell')
 const {spawn} = require('child_process')
 const path = require('path');
+const fs = require("fs");
+const { fstat } = require('fs');
 
 const db = mysql.createPool({
     host: "localhost",
@@ -27,7 +29,7 @@ const getAllTournaments = async({id}) => {
 }
 
 const updateJudgeList = async({t_id, j_url}) => {
-    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
     const args = ["update_judge_list", t_id, j_url]
 
     return new Promise((resolve, reject) => {
@@ -37,7 +39,6 @@ const updateJudgeList = async({t_id, j_url}) => {
         pythonProcess.stderr.on('data', (data) => {
             try {
                 const jsonData = JSON.parse(data);
-                console.log(jsonData);
             } catch (error) {
                 console.error("Error parsing JSON from Python:", error);
                 reject(new Error("Error parsing JSON"));
@@ -46,7 +47,6 @@ const updateJudgeList = async({t_id, j_url}) => {
 
         pythonProcess.on('close', (code) => {
             resolve("Success")
-            console.log("success")
         })
     })
 }
@@ -92,7 +92,7 @@ const getJudges = async({u_id, t_id}) => {
 
 const scrapeTournament = async({url, u_id}) => {
 
-    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
     const args = ['tournament', url, u_id]
 
     return new Promise((resolve, reject) => {
@@ -111,18 +111,53 @@ const scrapeTournament = async({url, u_id}) => {
 
         pythonProcess.on('close', (code) => {
             try {
-                console.log(output)
                 const parsedOutput = JSON.parse(output);
                 const tourn_id = parsedOutput.data.tourn_id;
 
                 resolve(tourn_id);
             } catch (err) {
-                console.log(err)
+                console.error(err)
                 reject(new Error('Error parsing Python output: ' + err.message))
             }
         })
     })
 
+}
+
+const exportPrefsToCSV = async({t_id, u_id, filename}) => {
+    const filePath = path.join(__dirname, "..", "public", "client", "exports", filename);
+    const scriptPath = path.join(__dirname, '..', '..','scripts', 'api.py')
+    const args = ['pref_csv', t_id, u_id, filePath]
+
+    return new Promise((resolve, reject) => {
+        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+
+        pythonProcess.stdout.on('data', (data) => {
+            try {
+                const result = JSON.parse(data.toString().trim());
+                
+                if (result.status === "success" && fs.existsSync(result.filename)) {
+                    resolve({status: "success", filePath: result.filename})
+                } else {
+                    reject(new Error("CSV file was not generated correctly."))
+                }
+            } catch (err) {
+                reject(new Error('Error parsing Python output: ' + err.message))
+            }
+        });
+
+        pythonProcess.stderr.on('data', (data) => {
+            console.error(`Error from Python: ${data}`)
+            reject(new Error(data.toString()));
+        })
+
+        pythonProcess.on("close", (code) => {
+            if (code !== 0) {
+                reject(new Error(`Python process exited with code ${code}`));
+            }
+        });
+
+    })
 }
 
 module.exports = {
@@ -132,5 +167,6 @@ module.exports = {
     getNumJudges,
     getJudges,
     getTournamentById,
-    scrapeTournament
+    scrapeTournament,
+    exportPrefsToCSV,
 }

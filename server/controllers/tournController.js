@@ -1,4 +1,6 @@
 const tournService = require('../services/tournService')
+const fs = require("fs")
+const path = require("path")
 
 const getMyTournaments = async(req, res) => {
     const u_id = req.id;
@@ -51,10 +53,44 @@ const scrapeTournament = async (req, res) => {
     }
 }
 
+const exportPrefsToCSV = async (req, res) => {
+    const t_id = req.params.id
+    const u_id = req.query.u_id;
+    const filename = req.query.filename || "export.csv";
+
+    try {
+        const result = await tournService.exportPrefsToCSV({t_id, u_id, filename})
+
+        if (result.status === "success") {
+            if (!fs.existsSync(result.filePath)) {
+                return res.status(404).json({ error: "File not found" });
+            }
+
+            res.download(result.filePath, filename, (err) => {
+                if (err) {
+                    console.error("Error downloading file:", err)
+                    res.status(500).json({error: "Error downloading file"})
+                }
+
+                fs.unlink(result.filePath, (err) => {
+                    if (err) console.error("Error deleting file: ", err)
+                })
+            })
+        } else {
+            res.status(500).json({error: "Error exporting prefs to CV"})
+        }
+    } catch (error) {
+        console.error("Export Error: ", error)
+        return res.status(500).json({error: "Error exporting prefs to CSV"})
+    }
+
+}
+
 module.exports = {
     getMyTournaments,
     getAllTournaments,
     getTournamentById,
     getJudgesAtTourn,
     scrapeTournament,
+    exportPrefsToCSV,
 }

@@ -12,6 +12,7 @@ import Back from '../Back';
 import PrefPreview from './PrefPreview';
 import Search from '../Search'
 import SidePanel from '../SidePanel';
+import ExportCSV from './ExportCSV';
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -102,6 +103,8 @@ function TournPage() {
 
     }
 
+    var defaultFileName = (tournData.name || "").toLowerCase().replace(/ /g, "_");
+    console.log(defaultFileName)
     
     return (
         <div className="page">
@@ -111,13 +114,18 @@ function TournPage() {
                 <h1> {tournData.name} </h1>
 
                 <div className="h-between" style={{alignItems: "center"}}>
-                    <h2> Prefs </h2>
-                    <div style={{marginBottom: 8}}>
-                        <span style={{marginRight: 4, fontWeight: 500}}> {numRated} / {totalJudges} </span>
-                        {status === "pending" ? 
-                        <FontAwesomeIcon icon={faSpinner} size="lg" style={{color: "#f3a72d"}}/>
-                        : 
-                        <FontAwesomeIcon icon={faCheck} size="lg" style={{color: "#148943"}}/>}
+                    <h2 style={{marginBottom: 0}}> Prefs </h2>
+
+                    <div style={{display: "flex", alignItems: "center"}}>
+                        <div style={{marginRight: 12}}>
+                            <span style={{marginRight: 4, fontWeight: 500}}> {numRated} / {totalJudges} </span>
+                            {status === "pending" ? 
+                            <FontAwesomeIcon icon={faSpinner} size="lg" style={{color: "#f3a72d"}}/>
+                            : 
+                            <FontAwesomeIcon icon={faCheck} size="lg" style={{color: "#148943"}}/>}
+                        </div>
+
+                        <ExportCSV tournId={tournId} defaultFileName={defaultFileName}/>
                     </div>
                 </div>
 

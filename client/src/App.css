@@ -73,6 +73,15 @@ h5 {
   width: 100%;
 }
 
+.h-center {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.align-center {
+  align-items: center;
+}
+
 #navbar {
   position: sticky;
   top: 0;
@@ -191,6 +200,8 @@ h5 {
   left: 50%;
   transform: translate(-50%, -50%);
 
+  min-width: 400px;
+
   background-color: #fff;
   padding: 24px 20px;
 
@@ -279,6 +290,24 @@ button {
   padding-bottom: 4px; 
 
   border-radius: 20px;
+}
+
+.pill-default {
+  color: #2680FF;
+
+  font-size: 12pt;
+  font-weight: 600;
+
+  border: 1px #2680FF solid;
+  border-radius: 20px;
+
+  padding: 0px 16px;
+}
+
+.pill-default:hover {
+  background-color: #2680FF;
+  color: #fff;
+  font-weight: 600;
 }
 
 .oneRate {
@@ -371,9 +400,9 @@ button {
   color: #6a6a6a;
 
   padding-left: 16px;
-  margin-bottom: 8px;
+  margin: 8px 0;
   
-  border: solid rgba(217, 217, 217, 0.5);
+  border: solid rgba(217, 217, 217, 0.5) 1px;
 
   border-radius: 4px;
 
@@ -619,4 +648,49 @@ a {
 
 .hidden {
   display: none;
+}
+
+.form-vert {
+  display: flex;
+  flex-direction: column;
+
+}
+
+input {
+  height: 32px;
+  margin-top: 2px;
+
+  background-color: #F5F5F5;
+  border-color: #d9d9d9;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+
+  padding: 16px 12px;
+}
+
+#csv-unchangable {
+  height: 100%;
+
+  background-color: #d9d9d9;
+  border-color: #d9d9d9;
+
+  padding: 0px 12px;
+
+  text-align: center;
+  align-items: center;
+  line-height: 200%;
+
+  font-weight: 600;
+}
+
+input#filename {
+  flex-grow: 1;
+  border: none;
+  margin-top: 0;
+}
+
+#export-pref-filename-field {
+  border: #d9d9d9 1px solid;
+  border-radius: 4px;
 }

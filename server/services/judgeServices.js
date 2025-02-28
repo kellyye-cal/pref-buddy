@@ -51,7 +51,7 @@ const saveNote = async({u_id, j_id, note}) => {
 
 
 const scrapeParadigm = async({j_id}) => {
-    const scriptPath = path.join(__dirname, '..', '..','scraper', 'scraper.py')
+    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
     const args = ['paradigm', j_id]
 
     return new Promise((resolve, reject) => {

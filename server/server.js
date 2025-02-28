@@ -49,6 +49,8 @@ const db = mysql.createConnection({
 app.use('/api/auth', authRoutes)
 app.use('/api/tournaments', tournRoutes)
 app.use('/api/judges', judgeRoutes)
+app.use("/exports", express.static("public/exports"));
+
 
 // Start server to respond to incoming requests
 app.listen(port, ()=>{
