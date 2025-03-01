@@ -679,3 +679,69 @@ input#filename {
   border: #d9d9d9 1px solid;
   border-radius: 4px;
 }
+
+.sort {
+  display: inline-flex;
+  align-items: center;
+}
+
+.sort:hover {
+  background-color: rgba(118, 118, 128, 0.1);
+
+}
+
+.sort.direction {
+  height: 30px;
+  width: 30px;
+
+  border-radius: 100px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #333;
+}
+
+.sort.pill {
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+
+}
+
+.overlay.transparent {
+  background-color: transparent;
+}
+
+.dropdown {
+  position: relative;
+  left: 0;
+
+  width: 200px;
+  background-color: #fff;
+
+  /* border: 1px solid rgba(128, 128, 128, 0.2); */
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+
+  padding: 20px;
+
+  border-radius: 4px;
+}
+
+.dropdown-item {
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(118, 118, 128, 0.1);
+}
+
+.dropdown-item.selected {
+  background-color: rgba(207, 225, 252, 0.5);
+}
+
+.dropdown-item.selected:hover {
+  background-color: rgba(118, 118, 128, 0.2);
+}

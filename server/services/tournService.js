@@ -29,7 +29,6 @@ const getAllTournaments = async({id}) => {
 }
 
 const updateJudgeList = async({t_id, j_url}) => {
-    console.log("updated judge list called")
     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
     const args = ["update_judge_list", t_id, j_url]
 

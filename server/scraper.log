@@ -1,6 +1,9 @@
-2025-02-28 16:00:11,985 - DEBUG - Starting authorization phase
-2025-02-28 16:00:11,985 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 16:00:11,985 - DEBUG - mysql_native_password completed succesfully
-2025-02-28 16:00:11,986 - DEBUG - Starting authorization phase
-2025-02-28 16:00:11,986 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 16:00:11,987 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 17:11:17,930 - DEBUG - Starting authorization phase
+2025-02-28 17:11:17,931 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-28 17:11:17,931 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 17:11:17,933 - DEBUG - Starting authorization phase
+2025-02-28 17:11:17,933 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-28 17:11:17,933 - DEBUG - mysql_native_password completed succesfully
+2025-02-28 17:11:17,934 - DEBUG - Called update tournament
+2025-02-28 17:11:17,971 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-28 17:11:18,526 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=87692&tourn_id=32877 HTTP/1.1" 200 None

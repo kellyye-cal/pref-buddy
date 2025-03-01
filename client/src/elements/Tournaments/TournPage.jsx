@@ -13,6 +13,7 @@ import PrefPreview from './PrefPreview';
 import Search from '../Search'
 import SidePanel from '../SidePanel';
 import ExportCSV from './ExportCSV';
+import Sort from '../Sort';
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -25,6 +26,9 @@ function TournPage() {
     const [numRated, setNumRated] = useState(0)
     const [totalJudges, setTotalJudges] = useState(0)
     const [status, setStatus] = useState(["pending"])
+
+    const [category, setCategory] = useState("Rating")
+    const [asc, setAsc] = useState(true)
 
     useEffect(()=>{
         // Get the tournament information
@@ -85,11 +89,30 @@ function TournPage() {
         }
     }
 
-    const sortedJudges = [...filteredJudges].sort((a, b) => {
-        if (b.rating === a.rating) {
-            return (a.name).localeCompare(b.name)
+    function sortJudges(a, b) {
+        let sort = 0;
+
+        if (category === "Rating") {
+            if (b.rating === a.rating) {
+                sort = (a.name).localeCompare(b.name)
+            }
+
+            sort = a.rating - b.rating;
         }
-        return a.rating - b.rating
+
+        if (category === "Name") {
+            sort = (a.name).localeCompare(b.name)
+        }
+
+        if (asc) {
+            return sort;
+        } else {
+            return sort * -1;
+        }
+    }
+
+    const sortedJudges = [...filteredJudges].sort((a, b) => {
+       return sortJudges(a, b)
     })
 
     const [selectedJudge, setSelectedJudge] = useState(null)
@@ -104,7 +127,6 @@ function TournPage() {
     }
 
     var defaultFileName = (tournData.name || "").toLowerCase().replace(/ /g, "_");
-    console.log(defaultFileName)
     
     return (
         <div className="page">
@@ -130,6 +152,8 @@ function TournPage() {
                 </div>
 
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
+                <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
+
                 <div className="v-scroll">
                     {sortedJudges.map((judge, index) => (
                         <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
