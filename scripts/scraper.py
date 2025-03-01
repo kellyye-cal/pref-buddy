@@ -122,9 +122,19 @@ def scrape_tourn(t_url, judges_url):
 def scrape_tourn_api(url, user_id):
     """URL input should be list of judges for the tournament"""
     if not url:
-        return json.dumps({"error": "URL is required"}), 400
+        sys.stderr.write(json.dumps({"error": "URL is requirfed"}), 400)
+        sys.stderr.flush()
+        cursor.close()
+        cnx.close()
+        sys.exit(1)
+
     if not user_id:
-        return json.dumps({"error": "User ID is required"}), 400
+        sys.stderr.write(json.dumps({"error": "User ID is required"}), 400)
+        sys.stderr.flush()
+        cursor.close()
+        cnx.close()
+        sys.exit(1)
+
     
     tourn_id = re.search(r"tourn_id=(\d+)", url).group(1)
     tourn_url = "https://www.tabroom.com/index/tourn/index.mhtml?tourn_id=" + tourn_id
@@ -149,10 +159,7 @@ def scrape_tourn_api(url, user_id):
             "data": {"tourn_id": tourn_id}
         }
 
-        sys.stdout.write(json.dumps(result) + "\n")
-        sys.stdout.flush()
-        cursor.close()
-        cnx.close()
+        return result
 
     except Exception as e:
         sys.stderr.write(f"Error: {str(e)}\n")
@@ -165,14 +172,15 @@ def scrape_tourn_api(url, user_id):
 
 def scrape_paradigm(id):
     should_scrape = utils.check_scrape_paradigm(id)
-    logging.debug(should_scrape)
 
     if (not should_scrape):
-        sys.stdout.write(json.dumps({"status": "success", "message": "Success"}))
-        sys.stdout.flush()
-        cursor.close()
-        cnx.close()
-        return
+        result = {
+            "status": "success",
+            "message": f"No need to scrape, recently updated",
+            "data": {"paradigm": utils.get_paradigm(id)}
+        }
+
+        return result
 
     login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
     login_payload = {
@@ -223,10 +231,7 @@ def scrape_paradigm(id):
             "data": {"paradigm": paradigm}
         }
 
-        sys.stdout.write(json.dumps(result) + "\n")
-        sys.stdout.flush()
-        cursor.close()
-        cnx.close()
+        return result
         
     except Exception as e:
         logging.error(e)
@@ -330,10 +335,20 @@ if __name__ == '__main__':
     if scrape_type == "tournament":
         url = sys.argv[2]
         user_id = sys.argv[3]
-        scrape_tourn_api(url, user_id)
+        result = scrape_tourn_api(url, user_id)
+
+        sys.stdout.write(json.dumps(result) + "\n")
+        sys.stdout.flush()
+        cursor.close()
+        cnx.close()
     elif scrape_type == "paradigm":
         id = sys.argv[2]
-        scrape_paradigm(id)
+        result = scrape_paradigm(id)
+
+        sys.stdout.write(json.dumps(result) + "\n")
+        sys.stdout.flush()
+        cursor.close()
+        cnx.close()
     elif scrape_type == "all":
         scrape_all()
     elif scrape_type == "update_judge_list":

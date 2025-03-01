@@ -331,6 +331,13 @@ def get_paradigm_ts(id):
 
     return last_updated
 
+def get_paradigm(id):
+    sql = "SELECT paradigm FROM judge_info WHERE id = (%s)"
+    cursor.execute(sql, (id,))
+    paradigm = cursor.fetchone()
+
+    return paradigm
+
 def check_scrape_paradigm(id):
     last_updated = get_paradigm_ts(id)
     week_ago = datetime.now() - timedelta(weeks=1)

@@ -70,7 +70,6 @@ const scrapeParadigm = async({j_id}) => {
 
         pythonProcess.on('close', (code) => {
             try {
-                console.log(output)
                 const parsedOutput = JSON.parse(output);
                 resolve(parsedOutput.paradigm);
             } catch (err) {

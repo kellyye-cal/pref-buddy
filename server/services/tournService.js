@@ -29,6 +29,7 @@ const getAllTournaments = async({id}) => {
 }
 
 const updateJudgeList = async({t_id, j_url}) => {
+    console.log("updated judge list called")
     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
     const args = ["update_judge_list", t_id, j_url]
 
@@ -102,6 +103,7 @@ const scrapeTournament = async({url, u_id}) => {
 
         pythonProcess.stdout.on('data', (data) => {
             output += data.toString();
+            console.log(output)
         });
 
         pythonProcess.stderr.on('data', (data) => {
