@@ -1,9 +1,16 @@
-2025-02-28 17:11:17,930 - DEBUG - Starting authorization phase
-2025-02-28 17:11:17,931 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 17:11:17,931 - DEBUG - mysql_native_password completed succesfully
-2025-02-28 17:11:17,933 - DEBUG - Starting authorization phase
-2025-02-28 17:11:17,933 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 17:11:17,933 - DEBUG - mysql_native_password completed succesfully
-2025-02-28 17:11:17,934 - DEBUG - Called update tournament
-2025-02-28 17:11:17,971 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-02-28 17:11:18,526 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=87692&tourn_id=32877 HTTP/1.1" 200 None
+2025-03-01 16:07:01,430 - DEBUG - Starting authorization phase
+2025-03-01 16:07:01,430 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-01 16:07:01,431 - DEBUG - mysql_native_password completed succesfully
+2025-03-01 16:07:01,437 - DEBUG - Starting authorization phase
+2025-03-01 16:07:01,437 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-01 16:07:01,437 - DEBUG - mysql_native_password completed succesfully
+2025-03-01 16:07:01,438 - DEBUG - Called update tournament
+2025-03-01 16:07:01,469 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-03-01 16:07:01,785 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=87692&tourn_id=32877 HTTP/1.1" 200 None
+2025-03-01 16:07:01,862 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-03-01 16:07:02,152 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-03-01 16:07:02,653 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 303
+2025-03-01 16:07:02,800 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/panels.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-03-01 16:07:03,184 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=731027 HTTP/1.1" 200 None
+ex/paradigm.mhtml?judge_person_id=731027 HTTP/1.1" 302 336
+2025-03-01 16:07:02,531 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None

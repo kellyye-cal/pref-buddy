@@ -14,6 +14,7 @@ import Search from '../Search'
 import SidePanel from '../SidePanel';
 import ExportCSV from './ExportCSV';
 import Sort from '../Sort';
+import JudgeFilters from '../Judges/JudgeFilters';
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -29,6 +30,8 @@ function TournPage() {
 
     const [category, setCategory] = useState("Rating")
     const [asc, setAsc] = useState(true)
+
+    const [filters, setFilters] = useState([])
 
     useEffect(()=>{
         // Get the tournament information
@@ -123,7 +126,6 @@ function TournPage() {
 
     const closeSidePanel = () => {
         setSelectedJudge(null)
-
     }
 
     var defaultFileName = (tournData.name || "").toLowerCase().replace(/ /g, "_");
@@ -152,7 +154,12 @@ function TournPage() {
                 </div>
 
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
+
                 <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
+                <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
+                <div>
+                    
+                </div>
 
                 <div className="v-scroll">
                     {sortedJudges.map((judge, index) => (

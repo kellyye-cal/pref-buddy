@@ -11,7 +11,7 @@ const Dropdown = ({ isOpen, closeFunc, buttonRef, children }) => {
             const rect = buttonRef.current.getBoundingClientRect();
             setPosition({
                 top: rect.bottom + window.scrollY,
-                left: rect.right + window.scrollX,
+                left: rect.left + window.scrollX,
                 width: rect.width,
             });
         }
@@ -38,7 +38,7 @@ const Dropdown = ({ isOpen, closeFunc, buttonRef, children }) => {
                 position: "absolute",
                 top: `${position.top + 4}px`,
                 left: `${position.left}px`,
-                transform: "translateX(-100%)"
+                // transform: "translateX(-100%)"
             }}>
             {/* <button className="close-button" onClick={closeFunc}>×</button> */}
             {children}

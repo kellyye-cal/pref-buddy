@@ -643,7 +643,7 @@ a {
 
 input {
   height: 32px;
-  margin-top: 2px;
+  /* margin-top: 2px; */
 
   background-color: #F5F5F5;
   border-color: #d9d9d9;
@@ -703,7 +703,7 @@ input#filename {
   color: #333;
 }
 
-.sort.pill {
+.pill {
   padding: 2px 8px;
   border-radius: 20px;
   font-weight: 600;
@@ -715,13 +715,9 @@ input#filename {
 }
 
 .dropdown {
-  position: relative;
-  left: 0;
-
   width: 200px;
   background-color: #fff;
 
-  /* border: 1px solid rgba(128, 128, 128, 0.2); */
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
 
   padding: 20px;
@@ -744,4 +740,46 @@ input#filename {
 
 .dropdown-item.selected:hover {
   background-color: rgba(118, 118, 128, 0.2);
+}
+
+.dropdown-filter {
+  display: flex;
+  flex-direction: column;
+
+  margin: 8px 12px;
+}
+
+.dropdown-filter > label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-weight: 500;
+}
+
+.reset-filters {
+  text-align: center;
+
+  font-size: 10pt;
+  font-weight: 600;
+
+  color: #6A6A6A;
+}
+
+.filter.pill {
+  color: #6a6a6a;
+
+  border: #C2C2C3 1.5px dashed;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter.pill.selected {
+  background-color: rgba(256, 256, 256, 0.4);
+  border-style: solid;
+}
+
+.filter-display {
+  color: #2680FF;
 }
