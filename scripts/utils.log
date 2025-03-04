@@ -1,4 +1,4 @@
-2025-02-28 12:39:39,442 - DEBUG - Starting authorization phase
-2025-02-28 12:39:39,442 - DEBUG - The provided initial strategy is mysql_native_password
-2025-02-28 12:39:39,443 - DEBUG - mysql_native_password completed succesfully
-2025-03-01 08:26:56,440 - DEBUG - Running job Job(interval=1, unit=days, do=daily_judge_scrape, args=(), kwargs={})
+2025-03-02 19:04:42,931 - DEBUG - Starting authorization phase
+2025-03-02 19:04:42,931 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-02 19:04:42,931 - DEBUG - mysql_native_password completed succesfully
+2025-03-03 08:00:59,297 - DEBUG - Running job Job(interval=1, unit=days, do=daily_judge_scrape, args=(), kwargs={})

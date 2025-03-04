@@ -683,11 +683,11 @@ input#filename {
 .sort {
   display: inline-flex;
   align-items: center;
+  background-color: rgba(118, 118, 128, 0.1);
 }
 
 .sort:hover {
-  background-color: rgba(118, 118, 128, 0.1);
-
+  background-color: rgba(118, 118, 128, 0.2);
 }
 
 .sort.direction {
@@ -782,4 +782,9 @@ input#filename {
 
 .filter-display {
   color: #2680FF;
+}
+
+.sort-filter-option {
+  font-weight: 600;
+  color: #6a6a6a;
 }

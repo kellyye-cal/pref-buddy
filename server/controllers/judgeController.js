@@ -6,7 +6,7 @@ const getJudgeById = async(req, res) => {
     const u_id = req.query.u_id;
 
     var judgeInfo;
-    var paradigm = "No paradigm found."
+    var paradigm = ""
 
     try {
         judgeInfo = await judgeServices.getJudgeById({j_id, u_id});

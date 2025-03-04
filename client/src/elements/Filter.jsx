@@ -18,7 +18,7 @@ function Filter({categoryName, children, resetFunc, display}) {
 
     return (
         <div>
-            <div style={{display: "inline-block", position: "relative"}}>
+            <div style={{display: "inline-flex", position: "relative", alignItems: "center", gap: 8}}>
                 <button className={`filter pill ${display ? "selected" : ""}`}
                         ref={buttonRef} onClick={reverseOpen}>
                             <FontAwesomeIcon

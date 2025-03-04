@@ -155,8 +155,11 @@ function TournPage() {
 
                 <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
 
-                <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
-                <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
+                <div style={{display: "flex", alignItems: "center", gap: 4}}>
+                    <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
+                    <div className="sort-filter-option"> | </div>
+                    <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
+                </div>
                 <div>
                     
                 </div>

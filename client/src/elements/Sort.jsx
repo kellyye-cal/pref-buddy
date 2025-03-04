@@ -24,8 +24,8 @@ function Sort({category, setCategory, asc, setAsc}) {
     }
 
     return (
-        <div style={{display: "flex", gap: 2, alignItems: "center", margin: "4px 0"}}>
-            <div style={{fontWeight: 600}}> Sort: </div>
+        <div style={{display: "flex", gap: 4, alignItems: "center", margin: "4px 0"}}>
+            <div className="sort-filter-option"> Sort: </div>
             <button onClick={reverseSort} className="sort direction"> {asc ? <FontAwesomeIcon icon={faArrowUp} /> : <FontAwesomeIcon icon={faArrowDown}/>} </button>
 
             <div style={{display: "inline-block", position: "relative"}}>
