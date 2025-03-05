@@ -8,7 +8,14 @@ const jwt = require('jsonwebtoken')
 const verifyJWT = require('../middleware/verifyJWT')
 const cookieParser = require('cookie-parser')
 const { verify } = require('crypto')
+
 require('dotenv').config({path: '../.env'});
+const env = process.env.NODE_ENV || 'development';
+if (env === 'development') {
+    require('dotenv').config({path: '../.env.development'});
+} else {
+    require('dotenv').config({path: '../.env.production'});
+}
 
 const authRoutes = require('./routes/authRoutes')
 const tournRoutes = require('./routes/tournRoutes')
@@ -39,11 +46,11 @@ const port = 4000
 
 // Establish connection to MySQL database to ensure it interacts effectively
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: '',
-    database: "pref-buddy",
-    port: 3306
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
 })
 
 app.use('/api/auth', authRoutes)

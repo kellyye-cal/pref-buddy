@@ -11,7 +11,7 @@ import AddTournament from './AddTournament';
 
 
 function Tournaments() {
-    const {auth, setAuth} = useContext(AuthContext);
+    const {auth} = useContext(AuthContext);
     const [tournaments, setTournaments] = useState([]);
     const [filteredRecords, setFilteredRecords] = useState([]);
 
@@ -31,7 +31,7 @@ function Tournaments() {
 
     useEffect(() => {
         fetchTournaments();
-    }, []);
+    });
 
     filteredPast = filteredRecords.filter((tourn) => {
         const end = new Date(tourn.end_date)

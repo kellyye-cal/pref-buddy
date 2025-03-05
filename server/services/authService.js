@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const verifyJWT = require('../../middleware/verifyJWT')
-require('dotenv').config({path: '../../.env'});
+// require('dotenv').config({path: '../../.env'});
 
 const db = mysql.createPool({
     host: "localhost",
