@@ -788,3 +788,9 @@ input#filename {
   font-weight: 600;
   color: #6a6a6a;
 }
+
+.judge-notes.editing > div > button:hover {
+  background-color: rgba(118, 118, 128, 0.2);
+  border-radius: 4px;
+
+}

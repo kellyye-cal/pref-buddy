@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-// import ReactQuill from "react-quill";
 import axios from 'axios'
 
 import AuthContext from '../../context/AuthProvider';
@@ -34,6 +33,7 @@ function JudgeNotes({judgeId}) {
         }}).then((res) => {
             setEditing(false)
             setNote(newNote)
+
         })
         .catch((err)=>console.log(err))
     }
@@ -41,6 +41,28 @@ function JudgeNotes({judgeId}) {
     const cancel = () => {
         setNewNote(note)
         setEditing(false)
+    }
+
+    const insertText = (prefix, suffix = "") => {
+        const textarea = document.getElementById("note");
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = newNote;
+
+        const before = text.substring(0, start);
+        const selected = text.substring(start, end);
+        const after = text.substring(end);
+
+        const newText = `${before}${prefix}${selected}${suffix}${after}`
+        setNewNote(newText)
+
+        setTimeout(() => {
+            textarea.focus();
+            textarea.selectionStart = start + prefix.length;
+            textarea.selectionEnd = end + prefix.length;
+        }, 10);
     }
 
     return (
@@ -58,19 +80,16 @@ function JudgeNotes({judgeId}) {
                     <div style={{height: "100%"}}>
                         <div className="judge-notes editing">
                             <div>
-                                <button> <FontAwesomeIcon icon={faBold} /> </button>
-                                <button> <FontAwesomeIcon icon={faItalic} /> </button>
-                                <button> <FontAwesomeIcon icon={faList} /> </button>
+                                <button onClick={() => insertText("**", "**")}> <FontAwesomeIcon icon={faBold} /> </button>
+                                <button onClick={() => insertText("_", "_")}> <FontAwesomeIcon icon={faItalic} /> </button>
+                                <button onClick={() => insertText("\n- ")}> <FontAwesomeIcon icon={faList} /> </button>
                             </div>
                             <textarea
+                                id="note"
                                 value = {newNote}
                                 onChange={(e) => setNewNote(e.target.value)}
                                 placeholder="Start typing..."
                             />
-                            {/* <ReactQuill
-                                value={newNote}
-                                onChange={setNewNote}
-                            /> */}
                         </div>
 
                         <div style={{display: "flex", justifyContent: "space-between"}}>
