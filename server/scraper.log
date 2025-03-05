@@ -1,6 +1,6 @@
-2025-03-05 13:48:59,735 - DEBUG - Starting authorization phase
-2025-03-05 13:48:59,735 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-05 13:48:59,742 - DEBUG - mysql_native_password completed succesfully
-2025-03-05 13:48:59,747 - DEBUG - Starting authorization phase
-2025-03-05 13:48:59,747 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-05 13:48:59,747 - DEBUG - mysql_native_password completed succesfully
+2025-03-05 14:05:53,000 - DEBUG - Starting authorization phase
+2025-03-05 14:05:53,000 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-05 14:05:53,000 - DEBUG - mysql_native_password completed succesfully
+2025-03-05 14:05:53,002 - DEBUG - Starting authorization phase
+2025-03-05 14:05:53,002 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-05 14:05:53,002 - DEBUG - mysql_native_password completed succesfully

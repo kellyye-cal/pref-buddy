@@ -11,6 +11,8 @@ import AuthContext from '../../context/AuthProvider';
 import JudgeNotes from './JudgeNotes';
 
 import ReactMarkdown from 'react-markdown';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 
 function JudgeProfile() {
@@ -18,6 +20,8 @@ function JudgeProfile() {
 
     const [judgeData, setJudgeData] = useState([]); //to store fetched data
     const [paradigm, setParadigm] = useState(["No paradigm."]);
+
+    const [editingNotes, setEditingNotes] = useState(false);
     const [judgeNotes, setJudgeNotes] = useState(["..."])
 
     const { id } = useParams();
@@ -111,8 +115,18 @@ function JudgeProfile() {
                                             </div>
                                         </div>
                                     </div>
-
-                                    <JudgeNotes judgeId={id} notes={judgeNotes}/>
+                                    
+                                    <div className="container container-spacing">
+                                        <div className="h-between" style={{alignItems: "center"}}>
+                                            <h3> Notes </h3>
+                                            <button className={`edit-button ${editingNotes ? "hidden" : ""}`}
+                                                    style={{marginBottom: 8}}
+                                                    onClick={() => {setEditingNotes(true)}}>
+                                                <FontAwesomeIcon icon={faPen} size="xs"/> Edit
+                                            </button>
+                                        </div>
+                                        <JudgeNotes judgeId={id} notes={judgeNotes} setEditing={setEditingNotes} editing={editingNotes}/>
+                                    </div>
                                 </div>
 
                                 <div className="container container-spacing">

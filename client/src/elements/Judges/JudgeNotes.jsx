@@ -9,14 +9,12 @@ import ReactMarkdown from 'react-markdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faItalic, faList, faPen } from "@fortawesome/free-solid-svg-icons";
 
-function JudgeNotes({judgeId}) {
+function JudgeNotes({judgeId, editing, setEditing}) {
 
     const {auth, setAuth} = useContext(AuthContext);
 
     const [note, setNote] = useState('');
     const [newNote, setNewNote] = useState('');
-    const [editing, setEditing] = useState(false);
-
 
     useEffect(()=>{
         axios.get('http://localhost:4000/api/judges/get_notes', {params:{u_id: auth.userId, j_id: judgeId}, headers: {
@@ -67,44 +65,34 @@ function JudgeNotes({judgeId}) {
     }
 
     return (
-        <div className="container container-spacing">
-            <div className="h-between" style={{alignItems: "center"}}>
-                <h3> Notes </h3>
-                <button className={`edit-button ${editing ? "hidden" : ""}`}
-                        style={{marginBottom: 8}}
-                        onClick={() => {setEditing(true)}}>
-                    <FontAwesomeIcon icon={faPen} size="xs"/> Edit
-                </button>
-            </div>
-            <div style={{height: "calc(100% - 78px)"}}>
-                {editing ?
-                    <div style={{height: "100%"}}>
-                        <div className="judge-notes editing">
-                            <div>
-                                <button onClick={() => insertText("**", "**")}> <FontAwesomeIcon icon={faBold} /> </button>
-                                <button onClick={() => insertText("_", "_")}> <FontAwesomeIcon icon={faItalic} /> </button>
-                                <button onClick={() => insertText("\n- ")}> <FontAwesomeIcon icon={faList} /> </button>
-                            </div>
-                            <textarea
-                                id="note"
-                                value = {newNote}
-                                onChange={(e) => setNewNote(sanitizeJudgeNotes(e.target.value))}
-                                placeholder="Start typing..."
-                            />
+        <div style={{height: "calc(100% - 78px)"}}>
+            {editing ?
+                <div style={{height: "100%"}}>
+                    <div className="judge-notes editing">
+                        <div>
+                            <button onClick={() => insertText("**", "**")}> <FontAwesomeIcon icon={faBold} /> </button>
+                            <button onClick={() => insertText("_", "_")}> <FontAwesomeIcon icon={faItalic} /> </button>
+                            <button onClick={() => insertText("\n- ")}> <FontAwesomeIcon icon={faList} /> </button>
                         </div>
-
-                        <div style={{display: "flex", justifyContent: "space-between"}}>
-                            <button className="edit-button" onClick={cancel}> Cancel </button>
-                            <button onClick={handleSave} className="pillButton save-note"> Save </button>
-                        </div>
-
+                        <textarea
+                            id="note"
+                            value = {newNote}
+                            onChange={(e) => setNewNote(sanitizeJudgeNotes(e.target.value))}
+                            placeholder="Start typing..."
+                        />
                     </div>
-                    :
-                    <div className="judge-notes">
-                        {note ? <ReactMarkdown children={note}/> : <p> ... </p>}
+
+                    <div style={{display: "flex", justifyContent: "space-between"}}>
+                        <button className="edit-button" onClick={cancel}> Cancel </button>
+                        <button onClick={handleSave} className="pillButton save-note"> Save </button>
                     </div>
-                }
-            </div>
+
+                </div>
+                :
+                <div className="judge-notes">
+                    {note ? <ReactMarkdown children={note}/> : <p> ... </p>}
+                </div>
+            }
 
         </div>
     )
