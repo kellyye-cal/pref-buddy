@@ -78,7 +78,7 @@ function AddTournament({onAdd}) {
                 <div className="h-between">
                     <h3> Link Tournament </h3>
                     <button onClick={closeModal}>
-                    <FontAwesomeIcon icon={faTimes} size="small" style={{paddingRight: "8px"}}/>
+                    <FontAwesomeIcon icon={faTimes} size="sm" style={{paddingRight: "8px"}}/>
                     </button>
                 </div>
 

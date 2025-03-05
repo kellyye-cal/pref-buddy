@@ -44,7 +44,6 @@ function App() {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
-      console.log(auth)
       if (auth?.loggedOut || !auth?.accessToken) {
         return;
       }

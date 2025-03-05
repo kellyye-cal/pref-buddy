@@ -26,7 +26,7 @@ function NavBar() {
             <hr className="nav-line" style={{padding: 0}}/>
 
             <p style={styles.menuSection}> Prefs </p>
-            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/judges"> Judges </NavLink>
+            {/* <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/judges"> Judges </NavLink> */}
             <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/tournaments"> Tournaments </NavLink>
 
             <hr className="nav-line" style={{padding: 0}}/>

@@ -1,4 +1,5 @@
 import React, {useContext, useEffect} from 'react'
+import axios from 'axios';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import AuthContext from './context/AuthProvider'
@@ -33,6 +34,34 @@ function AppRoutes() {
 
       }, [auth?.accessToken, navigate]);
 
+    useEffect(() => {
+        const refreshAccessToken = async () => {
+        if (auth?.loggedOut || !auth?.accessToken) {
+            return;
+        }
+
+            try {
+            const response = await axios.post('/api/auth/refresh', {}, {
+                withCredentials: true, // Send cookies with the request
+            });
+
+            const newAccessToken = response.data.accessToken;
+
+            if (newAccessToken !== auth.accessToken) {
+                setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
+                sessionStorage.setItem('accessToken', newAccessToken);
+            }
+            } catch (err) {
+                console.error("Error refreshing access token:", err);
+            }
+        }
+
+        if (auth?.accessToken) {
+            refreshAccessToken();
+        }
+
+    }, [location.pathname]);
+
     const ProtectedRoute = ({children}) => {
         const location = useLocation();
 
@@ -59,7 +88,7 @@ function AppRoutes() {
 
             <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
 
-            <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/>
+            {/* <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/> */}
             <Route path='/judges/JudgeProfile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
 
             <Route path="/tournaments" element={auth.accessToken ? <ProtectedRoute> <Tournaments />  </ProtectedRoute> : <Navigate to="/login" />}/>
