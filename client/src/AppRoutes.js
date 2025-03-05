@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react'
-import axios from 'axios';
+import axios, { useAxiosInterceptors } from './api/axios'
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import AuthContext from './context/AuthProvider'
@@ -10,12 +10,14 @@ import Logout from './elements/Auth/Logout'
 
 import Home from './elements/Home'
 import JudgeProfile from './elements/Judges/JudgeProfile'
-import Judges from './elements/Judges/Judges'
+// import Judges from './elements/Judges/Judges'
 import Tournaments from './elements/Tournaments/Tournaments'
 import TournPage from './elements/Tournaments/TournPage'
 import CreateAccount from './elements/Auth/CreateAccounts'
 
 function AppRoutes() {
+    useAxiosInterceptors();
+
     const {auth, setAuth} = useContext(AuthContext);
 
     const location = useLocation();
@@ -36,21 +38,21 @@ function AppRoutes() {
 
     useEffect(() => {
         const refreshAccessToken = async () => {
-        if (auth?.loggedOut || !auth?.accessToken) {
-            return;
-        }
+            if (auth?.loggedOut || !auth?.accessToken) {
+                return;
+            }
 
             try {
-            const response = await axios.post('/api/auth/refresh', {}, {
-                withCredentials: true, // Send cookies with the request
-            });
+                const response = await axios.post('/api/auth/refresh', {}, {
+                    withCredentials: true, // Send cookies with the request
+                });
 
-            const newAccessToken = response.data.accessToken;
+                const newAccessToken = response.data.accessToken;
 
-            if (newAccessToken !== auth.accessToken) {
-                setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
-                sessionStorage.setItem('accessToken', newAccessToken);
-            }
+                if (newAccessToken !== auth.accessToken) {
+                    setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
+                    sessionStorage.setItem('accessToken', newAccessToken);
+                }
             } catch (err) {
                 console.error("Error refreshing access token:", err);
             }

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {Link, useParams} from "react-router-dom";
-import axios from 'axios'
+import React, {useState } from 'react';
 import '../App.css';
 
 var filteredRecords;
 
 function handleSearchChange(event, [search, setSearch], data, keys, updateFilteredRecords) {
     const searchTerm = event.target.value.toLowerCase()
-    setSearch(searchTerm)
 
     filteredRecords = data.filter((record) => {
         var contains = false;

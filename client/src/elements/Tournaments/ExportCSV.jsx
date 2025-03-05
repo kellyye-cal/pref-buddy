@@ -3,6 +3,7 @@ import AuthContext from '../../context/AuthProvider';
 
 import axios from 'axios';
 import FloatingModal from '../FloatingModal';
+import { sanitizeFilename } from '../Utils';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
@@ -19,17 +20,17 @@ function ExportCSV({tournId, defaultFileName}) {
     }, [defaultFileName]);
 
     async function downloadCSV(filePath) {
-        if (!fileName) return;
+        if (!filePath) return;
 
         const url = `http://localhost:4000/api/tournaments/${tournId}/judges/export_csv`
         
         try {
-            const response = await axios.get(url, {params: {u_id: auth?.userId, filename: fileName}, headers: {Authorization: `Bearer ${auth?.accessToken}`}, responseType: "blob"})
+            const response = await axios.get(url, {params: {u_id: auth?.userId, filename: filePath}, headers: {Authorization: `Bearer ${auth?.accessToken}`}, responseType: "blob"})
 
             const blob = new Blob([response.data], {type: "text/csv"});
             const link = document.createElement("a");
             link.href=window.URL.createObjectURL(blob);
-            link.setAttribute("download", fileName)
+            link.setAttribute("download", filePath)
             document.body.appendChild(link)
             link.click()
             document.body.removeChild(link)
@@ -64,7 +65,7 @@ function ExportCSV({tournId, defaultFileName}) {
                         <input
                             type="text"
                             id="filename"
-                            onChange={(e) => setFilename(e.target.value)}
+                            onChange={(e) => setFilename(sanitizeFilename(e.target.value))}
                             // placeholder={defaultFileName || "export.csv"}
                             value={fileName}
                             required

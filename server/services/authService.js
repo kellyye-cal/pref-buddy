@@ -43,7 +43,7 @@ const login = async({email, pwd}) => {
     if (result.length < 1) throw new Error('No account with that username');
 
     // Verify password match
-    var match = bcrypt.compare(pwd, result[0].password)
+    var match = await bcrypt.compare(pwd, result[0].password)
     const userId = result[0].id;
 
     // If there is a match, need to create JWTs

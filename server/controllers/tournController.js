@@ -1,6 +1,7 @@
 const tournService = require('../services/tournService')
 const fs = require("fs")
 const path = require("path")
+const validator = require('validator');
 
 const getMyTournaments = async(req, res) => {
     const u_id = req.id;
@@ -20,6 +21,10 @@ const getTournamentById = async (req, res) => {
     const t_id = req.params.id;
     const u_id = req.id
 
+    if (!validator.isNumeric(t_id)) {
+        return res.status(400).json({ error: "Invalid tournament ID" });
+    }
+
 
     const tournament = await tournService.getTournamentById({t_id})
 
@@ -32,6 +37,10 @@ const getTournamentById = async (req, res) => {
 const getJudgesAtTourn = async (req, res) => {
     const t_id = req.params.id
     const u_id = req.query.u_id;
+
+    if (!validator.isNumeric(t_id)) {
+        return res.status(400).json({ error: "Invalid tournament ID" });
+    }
 
     try {
         const judges = await tournService.getJudges({u_id, t_id})
@@ -57,6 +66,11 @@ const exportPrefsToCSV = async (req, res) => {
     const t_id = req.params.id
     const u_id = req.query.u_id;
     const filename = req.query.filename || "export.csv";
+
+    if (!validator.isNumeric(t_id)) {
+        return res.status(400).json({ error: "Invalid tournament ID" });
+    }
+
 
     try {
         const result = await tournService.exportPrefsToCSV({t_id, u_id, filename})

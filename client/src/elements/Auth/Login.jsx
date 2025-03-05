@@ -2,6 +2,7 @@ import React from 'react'
 import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "../../context/AuthProvider"
 import {Link, useNavigate} from 'react-router-dom'
+import { sanitizeInput } from '../Utils';
 
 import './Auth.css';
 
@@ -85,7 +86,7 @@ function Login() {
                             type="email"
                             id="email"
                             ref={userRef}
-                            onChange={(e) => setUser(e.target.value)}
+                            onChange={(e) => setUser(sanitizeInput(e.target.value))}
                             value={email}
                             required
                         />
@@ -96,7 +97,7 @@ function Login() {
                         <input
                             type="password"
                             id="password"
-                            onChange={(e) => setPwd(e.target.value)}
+                            onChange={(e) => setPwd(sanitizeInput(e.target.value))}
                             value={pwd}
                             required
                         />

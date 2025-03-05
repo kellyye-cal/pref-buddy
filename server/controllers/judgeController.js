@@ -1,9 +1,14 @@
 const judgeServices = require('../services/judgeServices')
+const validator = require('validator');
 
 const getJudgeById = async(req, res) => {
 
     const j_id = req.params.id;
     const u_id = req.query.u_id;
+
+    if (!validator.isNumeric(j_id)) {
+        return res.status(400).json({ error: "Invalid tournament ID" });
+    }
 
     var judgeInfo;
     var paradigm = ""

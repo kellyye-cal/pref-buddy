@@ -3,16 +3,6 @@ import {BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate} from '
 import axios, { useAxiosInterceptors } from './api/axios'
 
 import AuthContext from './context/AuthProvider'
-import Register from './elements/Auth/Register'
-import Login from './elements/Auth/Login'
-import Logout from './elements/Auth/Logout'
-
-import Home from './elements/Home'
-import JudgeProfile from './elements/Judges/JudgeProfile'
-import Judges from './elements/Judges/Judges'
-import Tournaments from './elements/Tournaments/Tournaments'
-import TournPage from './elements/Tournaments/TournPage'
-import CreateAccount from './elements/Auth/CreateAccounts'
 import AppRoutes from './AppRoutes'
 
 

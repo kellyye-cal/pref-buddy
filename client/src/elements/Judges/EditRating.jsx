@@ -115,7 +115,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
                 <div className="h-between">
                     <h3 style={{margin: 0}}> Edit Judge Rating </h3>
                     <button onClick={closeModal}>
-                        <FontAwesomeIcon icon={faTimes} size="s"/>
+                        <FontAwesomeIcon icon={faTimes} size="sm"/>
                     </button>
                 </div>
 

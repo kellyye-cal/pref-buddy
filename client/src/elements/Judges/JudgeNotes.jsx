@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios'
 
 import AuthContext from '../../context/AuthProvider';
+import { sanitizeJudgeNotes } from '../Utils';
 
 
 import ReactMarkdown from 'react-markdown';
@@ -87,7 +88,7 @@ function JudgeNotes({judgeId}) {
                             <textarea
                                 id="note"
                                 value = {newNote}
-                                onChange={(e) => setNewNote(e.target.value)}
+                                onChange={(e) => setNewNote(sanitizeJudgeNotes(e.target.value))}
                                 placeholder="Start typing..."
                             />
                         </div>
