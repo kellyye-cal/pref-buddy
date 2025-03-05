@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+// import ReactQuill from "react-quill";
 import axios from 'axios'
 
 import AuthContext from '../../context/AuthProvider';
@@ -15,6 +16,7 @@ function JudgeNotes({judgeId}) {
     const [note, setNote] = useState('');
     const [newNote, setNewNote] = useState('');
     const [editing, setEditing] = useState(false);
+
 
     useEffect(()=>{
         axios.get('http://localhost:4000/api/judges/get_notes', {params:{u_id: auth.userId, j_id: judgeId}, headers: {
@@ -65,6 +67,10 @@ function JudgeNotes({judgeId}) {
                                 onChange={(e) => setNewNote(e.target.value)}
                                 placeholder="Start typing..."
                             />
+                            {/* <ReactQuill
+                                value={newNote}
+                                onChange={setNewNote}
+                            /> */}
                         </div>
 
                         <div style={{display: "flex", justifyContent: "space-between"}}>
