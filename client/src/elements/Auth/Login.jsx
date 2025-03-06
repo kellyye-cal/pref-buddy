@@ -8,6 +8,7 @@ import './Auth.css';
 
 import axios from '../../api/axios';
 
+const API_URL = process.env.BACKEND_URL;
 
 
 function Login() {
@@ -34,7 +35,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/auth/login', JSON.stringify({email, pwd}), 
+            const response = await axios.post(`${API_URL}/api/auth/login`, JSON.stringify({email, pwd}), 
                 {
                     headers: {'Content-Type': 'application/json'},
                     withCredentials: true
