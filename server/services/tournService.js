@@ -45,12 +45,8 @@ const updateJudgeList = async({t_id, j_url}) => {
 
 
         pythonProcess.stderr.on('data', (data) => {
-            try {
-                const jsonData = JSON.parse(data);
-            } catch (error) {
-                console.error("Error parsing JSON from Python:", error);
-                reject(new Error("Error parsing JSON"));
-            }
+            console.error(`Error from Python: ${data}`)
+            reject(new Error(data.toString()));
         })
 
         pythonProcess.on('close', (code) => {
