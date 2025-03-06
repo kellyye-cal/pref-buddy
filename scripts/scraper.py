@@ -30,16 +30,6 @@ cnx = mysql.connector.connect(
     )
 # cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 cursor = cnx.cursor()
-cursor.execute("SHOW PROCESSLIST")
-connections = cursor.fetchall()
-
-for connection in connections:
-    connection_id = connection[0]
-    if connection_id != cnx.connection_id:
-        cursor.execute(f"KILL CONNECTION {connection_id}")
-
-cursor.close()
-cnx.close()
 
 logging.basicConfig(
     level=logging.DEBUG,
