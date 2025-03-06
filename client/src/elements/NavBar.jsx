@@ -1,9 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
-import {NavLink, useParams} from "react-router-dom";
-import axios from 'axios'
+import React, {useContext} from 'react';
+import {NavLink} from "react-router-dom";
 import '../App.css';
 
-import Logout from './Auth/Logout';
 import AuthContext from '../context/AuthProvider';
 
 function NavBar() {

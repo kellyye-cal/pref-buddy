@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import {Link, useParams} from "react-router-dom";
-import axios from 'axios'
+import React, {useContext } from 'react';
+import {useParams} from "react-router-dom";
 import '../App.css';
 import AuthContext from '../context/AuthProvider';
 

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useRef} from 'react';
-import axios from 'axios'
+import React, { useState, useRef} from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown, faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons'
