@@ -30,6 +30,17 @@ cnx = mysql.connector.connect(
     )
 # cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 cursor = cnx.cursor()
+cursor.execute("SHOW PROCESSLIST")
+connections = cursor.fetchall()
+
+for connection in connections:
+    connection_id = connection[0]
+    if connection_id != cnx.thread_id:  # Don't kill your own connection
+        cursor.execute(f"KILL CONNECTION {connection_id}")
+        print(f"Killed connection {connection_id}")
+
+cursor.close()
+cnx.close()
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -320,6 +331,7 @@ def scrape_all():
         try:
             cursor.execute(save_sql, p)
             cnx.commit()
+
         except mysql.connector.Error as err:
             logging.error(err)
             cnx.rollback()
@@ -366,6 +378,3 @@ if __name__ == '__main__':
         t_id = sys.argv[2]
         j_url = sys.argv[3]
         update_tournament(t_id, j_url)
-
-    # scrape_tourn_api("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=92129&tourn_id=34410", 0)
-    # save_to_attending(0, 34410)

@@ -50,6 +50,9 @@ def extract_ids(judge_data):
     except mysql.connector.Error as err:
         cnx.rollback()
 
+    cursor.close()
+    cnx.close()
+
     return ids
 
 
@@ -78,6 +81,8 @@ def save_judges_to_users(judge_info):
     try:
         cursor.executemany(sql, judge_info)
         cnx.commit()
+        cursor.close()
+        cnx.close()
     except mysql.connector.Error as err:
         cnx.rollback()
         logging.error(err)
@@ -108,6 +113,9 @@ def save_judges_to_ranks(judge_data, ranker_id):
         for id in ids:
             cursor.execute(insert_ids, (id, ranker_id))
             cnx.commit()
+            cursor.close()
+            cnx.close()
+
 
     except mysql.connector.Error as err:
         logging.error(err)
@@ -136,6 +144,8 @@ def save_judge_to_tourn(judge_data, t_id):
         for id in ids:
             cursor.execute(sql, (id, t_id))
             cnx.commit()
+            cursor.close()
+            cnx.close()
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
@@ -164,7 +174,10 @@ def save_to_judge_info(judge_data):
         for judge in judge_data:
             scraper.scrape_paradigm(int(judge["tab_id"]))
             cursor.execute(sql, (int(judge["tab_id"]),)) 
-            cnx.commit()   
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+   
     except mysql.connector.Error as err:
         cnx.rollback()
         
@@ -198,7 +211,9 @@ def save_tourn(tournament):
 
     try:
         cursor.execute(sql, tournament) 
-        cnx.commit()           
+        cnx.commit()
+        cursor.close()
+        cnx.close()   
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
@@ -224,6 +239,8 @@ def save_to_attending(u_id, t_id):
     try:
         cursor.execute(sql, (u_id, t_id))
         cnx.commit()
+        cursor.close()
+        cnx.close()
     except mysql.connector.Error as err:
         cnx.rollback()
 
@@ -252,6 +269,9 @@ def save_paradigm(id, paradigm):
     try:
         cursor.execute(sql, {'id': id, 'paradigm': paradigm, 'updated': datetime.now()})
         cnx.commit()
+        cursor.close()
+        cnx.close()
+
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
@@ -271,6 +291,8 @@ def get_upcoming_tournaments():
 
     cursor.execute(sql)
     upcoming = cursor.fetchall()
+    cursor.close()
+    cnx.close()
 
     return upcoming
 
@@ -292,6 +314,8 @@ def get_num_judges(t_id):
 
     cursor.execute(sql, (t_id, ))
     num_judges = cursor.fetchone()
+    cursor.close()
+    cnx.close()
 
     return num_judges
 
@@ -327,6 +351,9 @@ def update_tourn_timestamp(t_id):
     try:
         cursor.execute(sql, (datetime.now(), t_id))
         cnx.commit()
+        cursor.close()
+        cnx.close()
+
 
     except mysql.connector.Error as err:
         logging.error(err)
@@ -336,6 +363,9 @@ def get_paradigm_ts(id):
     sql = "SELECT updated FROM judge_info WHERE id = (%s)"
     cursor.execute(sql, (id,))
     last_updated = cursor.fetchone()
+    cursor.close()
+    cnx.close()
+
 
     return last_updated
 
@@ -343,6 +373,10 @@ def get_paradigm(id):
     sql = "SELECT paradigm FROM judge_info WHERE id = (%s)"
     cursor.execute(sql, (id,))
     paradigm = cursor.fetchone()
+
+    cursor.close()
+    cnx.close()
+
 
     return paradigm
 
@@ -371,6 +405,10 @@ def get_prefs(t_id, u_id):
 
     cursor.execute(sql, (t_id, u_id))
     prefs = cursor.fetchall()
+
+    cursor.close()
+    cnx.close()
+
 
     return prefs
 
