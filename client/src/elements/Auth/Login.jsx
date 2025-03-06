@@ -8,9 +8,6 @@ import './Auth.css';
 
 import axios from '../../api/axios';
 
-const API_URL = process.env.BACKEND_URL;
-
-
 function Login() {
     const {setAuth} = useContext(AuthContext);
     const userRef = useRef();
@@ -33,6 +30,7 @@ function Login() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        console.log(axios)
 
         try {
             const response = await axios.post(`/api/auth/login`, JSON.stringify({email, pwd}), 
