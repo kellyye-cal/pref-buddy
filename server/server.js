@@ -36,7 +36,12 @@ app.use(cookieParser());
 //     credentials: true,
 //     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
 // }))
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
+}));
 
 // Parse JSON data from HTTP requests to process data sent from the client
 app.use(express.json())
