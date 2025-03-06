@@ -66,6 +66,7 @@ function Login() {
             } else {
                 setErrMsg('Login Failed')
             }
+            console.error(err)
             errRef.current.focus();
         }
     }

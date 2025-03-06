@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../context/AuthProvider';
 import {Link, useParams} from "react-router-dom";
-import axios from 'axios'
+import axios from '../api/axios';
 import '../App.css';
 
 import TournamentCard from './TournamentCard';
@@ -17,7 +17,7 @@ function TournCardContainer({userID}) {
     useEffect(()=>{
         if (!auth?.accessToken) return;
         
-        axios.get(`http://localhost:4000/api/tournaments/mytournaments`, {
+        axios.get(`/api/tournaments/mytournaments`, {
             headers: {
                 Authorization: `Bearer ${auth?.accessToken}`,
             },

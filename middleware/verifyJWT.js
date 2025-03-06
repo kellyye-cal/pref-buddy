@@ -2,6 +2,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const verifyJWT = (req, res, next) => {
+    if (req.method === 'OPTIONS') {
+        return next(); // Skip JWT verification for OPTIONS requests
+    }
+    
     const authHeader = req.headers['authorization'];
     if (!authHeader) return res.sendStatus(401);
 
