@@ -60,5 +60,5 @@ app.use("/exports", express.static("public/exports"));
 
 // Start server to respond to incoming requests
 app.listen(port, ()=>{
-    console.log('listening')
+    console.log(`listening on port ${port}`)
 })
