@@ -2,10 +2,10 @@ import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 
 const apiClient = axios.create({
-    baseURL: process.env.BACKEND_URL || 'http://localhost:4000'
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000'
 })
 
-console.log(process.env.BACKEND_URL)
+console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
 
 export const useAxiosInterceptors = () => {
     const {clearAuthState} = useAuth();
