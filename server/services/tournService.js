@@ -100,7 +100,8 @@ const scrapeTournament = async({url, u_id}) => {
     const args = ['tournament', url, u_id]
 
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
 
         let output = '';
 
@@ -135,8 +136,9 @@ const exportPrefsToCSV = async({t_id, u_id, filename}) => {
     const args = ['pref_csv', t_id, u_id, filePath]
 
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-
+        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+        
         pythonProcess.stdout.on('data', (data) => {
             try {
                 const result = JSON.parse(data.toString().trim());

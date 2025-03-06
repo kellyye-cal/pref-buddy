@@ -63,8 +63,9 @@ const scrapeParadigm = async({j_id}) => {
     const args = ['paradigm', j_id]
 
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-
+        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+        
         let output = '';
 
         pythonProcess.stdout.on('data', (data) => {
