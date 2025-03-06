@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthProvider';
-import axios from 'axios'
+import axios from '../api/axios';
 import '../App.css';
 
 import ProgressRing from './ProgressRing';
+
 
 const styles = {
     tournName: {
@@ -45,7 +46,7 @@ function TournamentCard({userID, tourn}) {
     const [prefData, setData] = useState([])
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/tournaments/${tourn.tournament_id}`, {
+        axios.get(`api/tournaments/${tourn.tournament_id}`, {
                 headers: {
                     Authorization: `Bearer ${auth?.accessToken}`,
                 },
