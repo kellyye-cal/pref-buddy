@@ -30,6 +30,7 @@ function Login() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        console.log(axios)
 
         try {
             const response = await axios.post(`/api/auth/login`, JSON.stringify({email, pwd}), 
