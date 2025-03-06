@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import axios from 'axios';
+import axios from '../../api/axios';
 import AuthContext from "../../context/AuthProvider"
 
 
@@ -37,7 +37,7 @@ function AddTournament({onAdd}) {
         setSubmit(true)
 
         try {
-            const res = await axios.post('http://localhost:4000/api/tournaments/scrape',
+            const res = await axios.post('/api/tournaments/scrape',
                 {
                     u_id: auth.userId,
                     url: url

@@ -361,6 +361,9 @@ if __name__ == '__main__':
     elif scrape_type == "update_judge_list":
         t_id = sys.argv[2]
         j_url = sys.argv[3]
+        print("DB_HOST:", os.getenv("DB_HOST"))
+        print("DB_USER:", os.getenv("DB_USER"))
+        print("DB_NAME:", os.getenv("DB_NAME"))
         update_tournament(t_id, j_url)
 
     # scrape_tourn_api("https://www.tabroom.com/index/tourn/judges.mhtml?category_id=92129&tourn_id=34410", 0)

@@ -1,21 +1,9 @@
-import React, {useContext, useState, useRef} from "react";
-import { Link } from "react-router-dom";
-
-import AuthContext from "../../context/AuthProvider";
-import axios from "../../api/axios";
-
+import React from "react";
 import Rating from "../Judges/Rating";
-import EditRating from "../Judges/EditRating";
-import SidePanel from "../SidePanel";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
-
-import ReactMarkdown from 'react-markdown';
 
 
 function PrefPreview({judgeData, updateFunc, onSelect, isSelected}) {
-    const {auth, setAuth} = useContext(AuthContext)
 
  return (
     <div>

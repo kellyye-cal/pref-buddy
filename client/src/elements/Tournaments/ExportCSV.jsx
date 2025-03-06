@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import AuthContext from '../../context/AuthProvider';
 
-import axios from 'axios';
+import axios from '../../api/axios';
 import FloatingModal from '../FloatingModal';
 import { sanitizeFilename } from '../Utils';
 
@@ -22,7 +22,7 @@ function ExportCSV({tournId, defaultFileName}) {
     async function downloadCSV(filePath) {
         if (!filePath) return;
 
-        const url = `http://localhost:4000/api/tournaments/${tournId}/judges/export_csv`
+        const url = `/api/tournaments/${tournId}/judges/export_csv`
         
         try {
             const response = await axios.get(url, {params: {u_id: auth?.userId, filename: filePath}, headers: {Authorization: `Bearer ${auth?.accessToken}`}, responseType: "blob"})

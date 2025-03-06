@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect} from "react";
 import AuthContext from "../../context/AuthProvider";
-import axios from "axios";
+import axios from '../../api/axios';
 
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,7 @@ function TournPreview({tournament, index}) {
     const [status, setStatus] = useState(["notAttending"])
 
     useEffect(()=>{
-      axios.get(`http://localhost:4000/api/tournaments/${tournament.id}`, {
+      axios.get(`/api/tournaments/${tournament.id}`, {
               headers: {
                   Authorization: `Bearer ${auth?.accessToken}`,
               },

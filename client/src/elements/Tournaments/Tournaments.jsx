@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import axios from 'axios'
+import axios from '../../api/axios';
 
 
 import AuthContext from '../../context/AuthProvider';
@@ -20,7 +20,7 @@ function Tournaments() {
     const now = new Date();
 
     const fetchTournaments = async () => {
-        axios.get(`http://localhost:4000/api/tournaments/mytournaments`, {headers: {
+        axios.get(`/api/tournaments/mytournaments`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}
         ).then((res) => {
