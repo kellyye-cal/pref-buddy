@@ -35,9 +35,8 @@ connections = cursor.fetchall()
 
 for connection in connections:
     connection_id = connection[0]
-    if connection_id != cnx.thread_id:  # Don't kill your own connection
+    if connection_id != cnx.connection_id:
         cursor.execute(f"KILL CONNECTION {connection_id}")
-        print(f"Killed connection {connection_id}")
 
 cursor.close()
 cnx.close()
