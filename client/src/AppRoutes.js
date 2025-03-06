@@ -68,7 +68,7 @@ function AppRoutes() {
         const location = useLocation();
 
         if (!auth?.accessToken) {
-        return <Navigate to="/" replace />
+            return <Navigate to="/" replace />
         }
         return children;
     };

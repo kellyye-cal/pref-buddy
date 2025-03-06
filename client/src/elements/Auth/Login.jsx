@@ -15,6 +15,7 @@ function Login() {
 
     const [email, setUser] = useState('');
     const [pwd, setPwd] = useState('');
+    const [userID, setUserID] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setsuccess] = useState('');
 
@@ -42,7 +43,7 @@ function Login() {
             
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
-            const userID = response?.data.userId;
+            setUserID(response?.data.userId)
             const name = response?.data.name
 
             sessionStorage.setItem('accessToken', accessToken);
@@ -51,13 +52,9 @@ function Login() {
 
             setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
 
-            console.log("auth")
-
             setUser('');
             setPwd('');
             setsuccess(true);
-
-            navigate(`/home/${userID}`, {replace: true})
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -72,6 +69,13 @@ function Login() {
             errRef.current.focus();
         }
     }
+
+    useEffect(() => {
+        if (success) {
+            console.log(`/home/${userID}`);
+            navigate(`/home/${userID}`, {replace: true})
+        }
+    }, [success, userID, navigate])
 
     return (
         <>
