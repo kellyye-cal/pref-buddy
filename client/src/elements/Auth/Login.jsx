@@ -51,6 +51,8 @@ function Login() {
 
             setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
 
+            console.log("auth")
+
             setUser('');
             setPwd('');
             setsuccess(true);
