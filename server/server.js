@@ -30,12 +30,13 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(cookieParser());
 
 // Cross-Origin Resource Sharing to manage and control web security
-app.use(cors({
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST'],
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
-}))
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST'],
+//     credentials: true,
+//     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cookie']
+// }))
+app.use(cors());
 
 // Parse JSON data from HTTP requests to process data sent from the client
 app.use(express.json())
