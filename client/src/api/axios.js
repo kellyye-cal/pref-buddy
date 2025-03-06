@@ -18,6 +18,8 @@ export const useAxiosInterceptors = () => {
           return Promise.reject(error);
         }
       );
+
+    return apiClient;
 }
 
 export default apiClient; 
