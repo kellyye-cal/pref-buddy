@@ -41,7 +41,7 @@ app.use(cors({
 app.use(express.json())
 
 // Configure the application port to specify where server listens for incoming requests
-const port = 4000
+const port = process.env.PORT || 4000
 
 // Establish connection to MySQL database to ensure it interacts effectively
 const db = mysql.createConnection({
