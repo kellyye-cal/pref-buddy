@@ -17,7 +17,14 @@ load_dotenv()
 USERNAME = os.getenv("TABROOM_USERNAME")
 PASSWORD = os.getenv("TABROOM_PASSWORD")
 
-cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
+cnx = mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASS"),
+        database=os.getenv("DB_NAME"),
+        port=os.getenv("DB_PORT")
+    )
+# cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 cursor = cnx.cursor()
 
 logging.basicConfig(

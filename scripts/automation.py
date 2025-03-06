@@ -10,6 +10,9 @@ import os
 import requests
 import json
 
+from dotenv import load_dotenv
+load_dotenv()
+
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -20,7 +23,14 @@ logging.basicConfig(
 
 
 def setup_connection():
-    return mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
+    return mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASS"),
+        database=os.getenv("DB_NAME"),
+        port=os.getenv("DB_PORT")
+    )
+    # return mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
 
 ### Function for daily scraping of judges from upcoming tournaments.
 def daily_judge_scrape():
