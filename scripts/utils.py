@@ -1,27 +1,39 @@
-import mysql.connector
 import logging
 from datetime import datetime, timedelta
+
 import os
+
+import mysql.connector
+from mysql.connector import pooling
 
 import scraper
 
-
 # cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
-cnx = mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASS"),
-        database=os.getenv("DB_NAME"),
-        port=os.getenv("DB_PORT")
-    )
-cursor = cnx.cursor()
-
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     filename='utils.log',
     filemode='w'
 )
+
+db_config = {
+    'host': os.getenv("DB_HOST"),
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASS"),
+    'database': os.getenv("DB_NAME"),
+    'port': os.getenv("DB_PORT")
+}
+
+db_pool = pooling.MySQLConnectionPool(pool_name="scraperpool", pool_size=5, **db_config)
+
+def get_connection():
+    return db_pool.get_connection()
+
+def close_connection(cnx, cursor):
+    if cursor:
+        cursor.close()
+    if cnx:
+        cnx.close()
 
 
 def extract_ids(judge_data):
@@ -40,6 +52,9 @@ def extract_ids(judge_data):
     )
 
     ids = []
+    
+    cnx = get_connection()
+    cursor = cnx.cursor()
 
     try:
         for judge in judge_data:
@@ -50,8 +65,7 @@ def extract_ids(judge_data):
     except mysql.connector.Error as err:
         cnx.rollback()
 
-    cursor.close()
-    cnx.close()
+    close_connection(cnx, cursor)
 
     return ids
 
@@ -78,15 +92,19 @@ def save_judges_to_users(judge_info):
         """
     )
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     try:
+
         cursor.executemany(sql, judge_info)
         cnx.commit()
-        cursor.close()
-        cnx.close()
+
     except mysql.connector.Error as err:
         cnx.rollback()
         logging.error(err)
 
+    close_connection(cnx, cursor)
     return
 
 def save_judges_to_ranks(judge_data, ranker_id):
@@ -107,20 +125,21 @@ def save_judges_to_ranks(judge_data, ranker_id):
         """
     )
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     try:
         ids = extract_ids(judge_data)
         
         for id in ids:
             cursor.execute(insert_ids, (id, ranker_id))
             cnx.commit()
-            cursor.close()
-            cnx.close()
-
 
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
 
+    close_connection(cnx, cursor)
     return
 
 def save_judge_to_tourn(judge_data, t_id):
@@ -138,17 +157,20 @@ def save_judge_to_tourn(judge_data, t_id):
         VALUES(%s, %s)
         """
     )
+    cnx = get_connection()
+    cursor = cnx.cursor()
 
     try:
         ids = extract_ids(judge_data)
+
         for id in ids:
             cursor.execute(sql, (id, t_id))
             cnx.commit()
-            cursor.close()
-            cnx.close()
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
+
+    close_connection(cnx, cursor)
     return
 
 
@@ -170,17 +192,20 @@ def save_to_judge_info(judge_data):
         """
     )
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+    
     try:
         for judge in judge_data:
             scraper.scrape_paradigm(int(judge["tab_id"]))
+
             cursor.execute(sql, (int(judge["tab_id"]),)) 
             cnx.commit()
-            cursor.close()
-            cnx.close()
    
     except mysql.connector.Error as err:
         cnx.rollback()
         
+    close_connection(cnx, cursor)
     return
 
 
@@ -209,14 +234,17 @@ def save_tourn(tournament):
 
     tournament['last_updated'] = datetime.now()
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     try:
         cursor.execute(sql, tournament) 
         cnx.commit()
-        cursor.close()
-        cnx.close()   
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
+
+    close_connection(cnx, cursor)
         
     return
 
@@ -235,14 +263,16 @@ def save_to_attending(u_id, t_id):
     INSERT IGNORE INTO attending (user_id, tournament_id)
     VALUES (%s, %s)
     """)
+    cnx = get_connection()
+    cursor = cnx.cursor()
 
     try:
         cursor.execute(sql, (u_id, t_id))
         cnx.commit()
-        cursor.close()
-        cnx.close()
     except mysql.connector.Error as err:
         cnx.rollback()
+
+    close_connection(cnx, cursor)
 
     return
 
@@ -265,16 +295,17 @@ def save_paradigm(id, paradigm):
         paradigm = VALUES(paradigm),
         updated = VALUES(updated)
     """)
-    
+    cnx = get_connection()
+    cursor = cnx.cursor()
     try:
         cursor.execute(sql, {'id': id, 'paradigm': paradigm, 'updated': datetime.now()})
         cnx.commit()
-        cursor.close()
-        cnx.close()
 
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
+
+    close_connection(cnx, cursor)
 
     return
 
@@ -289,10 +320,13 @@ def get_upcoming_tournaments():
 
     sql = "SELECT id, j_url FROM tournaments WHERE CURRENT_DATE < end_date"
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     cursor.execute(sql)
     upcoming = cursor.fetchall()
-    cursor.close()
-    cnx.close()
+
+    close_connection(cnx, cursor)
 
     return upcoming
 
@@ -312,10 +346,13 @@ def get_num_judges(t_id):
 
     sql = "SELECT COUNT(*) FROM judging_at WHERE tournament_id = %s"
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     cursor.execute(sql, (t_id, ))
     num_judges = cursor.fetchone()
-    cursor.close()
-    cnx.close()
+
+    close_connection(cnx, cursor)
 
     return num_judges
 
@@ -348,35 +385,43 @@ def update_judge_list(t_id, t_url):
 def update_tourn_timestamp(t_id):
     sql = "UPDATE tournaments SET last_updated = (%s) WHERE id = (%s)"
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     try:
         cursor.execute(sql, (datetime.now(), t_id))
         cnx.commit()
-        cursor.close()
-        cnx.close()
-
 
     except mysql.connector.Error as err:
         logging.error(err)
         cnx.rollback()
+    
+    close_connection(cnx, cursor)
+    return
 
 def get_paradigm_ts(id):
     sql = "SELECT updated FROM judge_info WHERE id = (%s)"
+
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     cursor.execute(sql, (id,))
     last_updated = cursor.fetchone()
-    cursor.close()
-    cnx.close()
 
+    close_connection(cnx, cursor)
 
     return last_updated
 
 def get_paradigm(id):
     sql = "SELECT paradigm FROM judge_info WHERE id = (%s)"
+    
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     cursor.execute(sql, (id,))
     paradigm = cursor.fetchone()
 
-    cursor.close()
-    cnx.close()
-
+    close_connection(cnx, cursor)
 
     return paradigm
 
@@ -403,12 +448,13 @@ def get_prefs(t_id, u_id):
         WHERE j.tournament_id = %s AND r.ranker_id = %s) AS prefs on prefs.judge_id = u.id;
     """)
 
+    cnx = get_connection()
+    cursor = cnx.cursor()
+
     cursor.execute(sql, (t_id, u_id))
     prefs = cursor.fetchall()
 
-    cursor.close()
-    cnx.close()
-
+    close_connection(cnx, cursor)
 
     return prefs
 

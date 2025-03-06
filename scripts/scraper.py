@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import mysql.connector
+from mysql.connector import pooling
 from datetime import datetime
 import json
 import logging
@@ -17,19 +18,8 @@ load_dotenv()
 USERNAME = os.getenv("TABROOM_USERNAME")
 PASSWORD = os.getenv("TABROOM_PASSWORD")
 
-# print("DB_HOST:", os.getenv("DB_HOST"))
-# print("DB_USER:", os.getenv("DB_USER"))
-# print("DB_NAME:", os.getenv("DB_NAME"))
-
-cnx = mysql.connector.connect(
-        host=os.getenv("DB_HOST"),
-        user=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASS"),
-        database=os.getenv("DB_NAME"),
-        port=os.getenv("DB_PORT")
-    )
 # cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
-cursor = cnx.cursor()
+
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -135,16 +125,15 @@ def scrape_tourn_api(url, user_id):
     if not url:
         sys.stderr.write(json.dumps({"error": "URL is requirfed"}), 400)
         sys.stderr.flush()
-        cursor.close()
-        cnx.close()
         sys.exit(1)
 
     if not user_id:
         sys.stderr.write(json.dumps({"error": "User ID is required"}), 400)
         sys.stderr.flush()
-        cursor.close()
-        cnx.close()
         sys.exit(1)
+
+    cnx = utils.get_connection()
+    cursor = cnx.cursor()
 
     
     tourn_id = re.search(r"tourn_id=(\d+)", url).group(1)
@@ -180,6 +169,8 @@ def scrape_tourn_api(url, user_id):
         sys.exit(1)
         
         logging.error("Error in scrape_tourn: {e}")
+    finally:
+        utils.close_connection(cnx, cursor)
 
 def scrape_paradigm(id):
     should_scrape = utils.check_scrape_paradigm(id)
@@ -209,16 +200,12 @@ def scrape_paradigm(id):
             logging.error("Can't log into Tabroom with given credentials")
             sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
             sys.stderr.flush()
-            cursor.close()
-            cnx.close()
             sys.exit(1)
         
         response = session.get(url)
         if response.status_code != 200:
             sys.stderr.write(f"Error: Failed to get judge page \n")
             sys.stderr.flush()
-            cursor.close()
-            cnx.close()
             sys.exit(1)
 
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -248,86 +235,8 @@ def scrape_paradigm(id):
         logging.error(e)
         sys.stderr.write(f"Error \n")
         sys.stderr.flush()
-        cursor.close()
-        cnx.close()
         sys.exit(1)
     
-    return
-
-def scrape_all():
-    cnx = mysql.connector.connect(user='root', password='', host='localhost', database='pref-buddy', port=3306)
-    cursor = cnx.cursor()
-
-    get_ids = (
-        """
-        SELECT id FROM judge_info
-        """
-    )
-
-    ids = []
-
-    try:
-        cursor.execute(get_ids)
-        ids = cursor.fetchall()
-    except mysql.connector.Error as err:
-        logging.error(err)
-
-    login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
-    login_payload = {
-        "username": USERNAME,
-        "password": PASSWORD
-    }
-
-    session = requests.Session()
-    login_res = session.post(login_url, data=login_payload)
-    if login_res.status_code != 200:
-        logging.error("Can't log into Tabroom with given credentials")
-        sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
-        sys.stderr.flush()
-        cursor.close()
-        cnx.close()
-        sys.exit(1)
-
-    text_maker = html2text.HTML2Text()
-    text_maker.body_width = 0
-    text_maker.ignore_links = False
-    text_maker.single_line_break = False
-
-    save_sql = (
-        """
-        INSERT INTO judge_info (id, paradigm, updated)
-        VALUES (%(id)s, %(paradigm)s, %(updated)s)
-        ON DUPLICATE KEY UPDATE
-            paradigm = VALUES(paradigm),
-            updated = VALUES(updated)
-        """
-    )
-
-    for id in ids:
-        url = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + str(id[0])
-        response = session.get(url)
-
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        paradigm_html = soup.find_all('div', class_="paradigm")
-        paradigm = "No paradigm found."
-
-        if len(paradigm_html) > 1:
-            paradigm = text_maker.handle(str(paradigm_html[1])).strip()
-
-        p = {'id': id[0], 'paradigm': paradigm, 'updated': datetime.now()}
-    
-        try:
-            cursor.execute(save_sql, p)
-            cnx.commit()
-
-        except mysql.connector.Error as err:
-            logging.error(err)
-            cnx.rollback()
-    
-    cursor.close()
-    cnx.close()
-
     return
 
 def update_tournament(t_id, j_url):
@@ -337,8 +246,6 @@ def update_tournament(t_id, j_url):
 
     sys.stdout.write(json.dumps({"status": "success", "message": "Success"}))
     sys.stdout.flush()
-    cursor.close()
-    cnx.close()
     return
 
 if __name__ == '__main__':    
@@ -351,18 +258,16 @@ if __name__ == '__main__':
 
         sys.stdout.write(json.dumps(result) + "\n")
         sys.stdout.flush()
-        cursor.close()
-        cnx.close()
+
     elif scrape_type == "paradigm":
         id = sys.argv[2]
         result = scrape_paradigm(id)
 
         sys.stdout.write(json.dumps(result) + "\n")
         sys.stdout.flush()
-        cursor.close()
-        cnx.close()
-    elif scrape_type == "all":
-        scrape_all()
+
+    # elif scrape_type == "all":
+    #     scrape_all()
     elif scrape_type == "update_judge_list":
         t_id = sys.argv[2]
         j_url = sys.argv[3]
