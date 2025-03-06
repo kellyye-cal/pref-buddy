@@ -3,7 +3,7 @@ import useAuth from '../hooks/useAuth';
 
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:4000'
+    baseURL: process.env.BACKEND_URL || 'http://localhost:4000'
 })
 
 export const useAxiosInterceptors = () => {
