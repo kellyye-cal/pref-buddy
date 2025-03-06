@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../api/axios';
 
 export const RatingContext = createContext();
 
@@ -9,7 +9,7 @@ export function RatingProvider({ children }) {
     // Fetch all ratings initially
     useEffect(() => {
         axios
-            .get('http://localhost:4000/api/ratings')
+            .get('/api/ratings')
             .then((res) => {
                 const ratingsMap = res.data.reduce((acc, rating) => {
                     const key = `${rating.u_id}-${rating.j_id}`;
@@ -26,7 +26,7 @@ export function RatingProvider({ children }) {
     // Function to update a rating
     const updateRating = (userID, judgeID, newRating) => {
         axios
-            .post('http://localhost:4000/api/set_rating/', {
+            .post('/api/set_rating/', {
                 u_id: userID,
                 j_id: judgeID,
                 rating: newRating,

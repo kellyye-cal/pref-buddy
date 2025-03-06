@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AuthContext from '../../context/AuthProvider';
-import axios from 'axios'
+import axios from '../../api/axios';
 import '../../App.css';
-import ReactDOM from 'react-dom';
 import FloatingModal from '../FloatingModal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -89,7 +88,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
 
     function saveRating() {
         //send new post request to server
-        axios.post('http://localhost:4000/api/judges/set_rating', {
+        axios.post('/api/judges/set_rating', {
             u_id: userID,
             j_id: judgeID,
             rating: rating

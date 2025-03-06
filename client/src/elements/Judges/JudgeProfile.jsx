@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import {useParams} from "react-router-dom";
-import axios from 'axios'
+import axios from '../../api/axios';
 import '../../App.css';
 import './JudgeProfile.css';
 
@@ -27,7 +27,7 @@ function JudgeProfile() {
     const { id } = useParams();
 
     useEffect(()=>{
-        axios.get(`http://localhost:4000/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
+        axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
             setJudgeData(res.data.judgeInfo);
@@ -40,7 +40,7 @@ function JudgeProfile() {
     }, []);
 
     function updateRating(judgeID, newRating) {
-        axios.post(`http://localhost:4000/api/judges/set_rating`, {
+        axios.post(`/api/judges/set_rating`, {
             u_id: auth.userId,
             j_id: judgeID,
             rating: newRating
@@ -52,7 +52,7 @@ function JudgeProfile() {
             ));
         }).catch((err) => console.error("Error saving rating:", err));
 
-        axios.get(`http://localhost:4000/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
+        axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
             setJudgeData(res.data);

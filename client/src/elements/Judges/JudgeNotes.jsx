@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios'
+import axios from '../../api/axios';
 
 import AuthContext from '../../context/AuthProvider';
 import { sanitizeJudgeNotes } from '../Utils';
@@ -17,7 +17,7 @@ function JudgeNotes({judgeId, editing, setEditing}) {
     const [newNote, setNewNote] = useState('');
 
     useEffect(()=>{
-        axios.get('http://localhost:4000/api/judges/get_notes', {params:{u_id: auth.userId, j_id: judgeId}, headers: {
+        axios.get('/api/judges/get_notes', {params:{u_id: auth.userId, j_id: judgeId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
             setNote(res.data[0].notes)
@@ -27,7 +27,7 @@ function JudgeNotes({judgeId, editing, setEditing}) {
     }, []);
 
     const handleSave = () => {
-        axios.post(`http://localhost:4000/api/judges/save_note`, {u_id: auth.userId, j_id: judgeId, note: newNote}, {headers: {
+        axios.post(`/api/judges/save_note`, {u_id: auth.userId, j_id: judgeId, note: newNote}, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
             setEditing(false)

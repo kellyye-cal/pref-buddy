@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useNavigate } from 'react';
-import {Link, useParams} from "react-router-dom";
-import axios from 'axios'
+import React from 'react';
+import {Link} from "react-router-dom";
 import '../../App.css';
 
 import Rating from './Rating'
