@@ -5,6 +5,9 @@ import axios, { useAxiosInterceptors } from './api/axios'
 import AuthContext from './context/AuthProvider'
 import AppRoutes from './AppRoutes'
 
+if (typeof window !== 'undefined') {
+  console.log('NEXT_PUBLIC_BACKEND_URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
+}
 
 function App() {
   useAxiosInterceptors();
