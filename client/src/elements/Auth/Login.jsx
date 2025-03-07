@@ -31,7 +31,6 @@ function Login() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log(axios)
 
         try {
             const response = await axios.post(`/api/auth/login`, JSON.stringify({email, pwd}), 
@@ -52,6 +51,8 @@ function Login() {
 
             setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
 
+            console.log("userid state before success:", userID)
+
             setUser('');
             setPwd('');
             setsuccess(true);
@@ -71,6 +72,8 @@ function Login() {
     }
 
     useEffect(() => {
+        console.log("success:", success)
+        console.log("userID: ", userID)
         if (success) {
             console.log(`/home/${userID}`);
             navigate(`/home/${userID}`, {replace: true})
