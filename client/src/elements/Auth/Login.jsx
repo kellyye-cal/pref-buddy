@@ -15,7 +15,6 @@ function Login() {
 
     const [email, setUser] = useState('');
     const [pwd, setPwd] = useState('');
-    const [userID, setUserID] = useState('');
     const [errMsg, setErrMsg] = useState('');
     const [success, setsuccess] = useState('');
 
@@ -42,7 +41,7 @@ function Login() {
             
             const accessToken = response?.data?.accessToken;
             // const roles = response?.data?.roles;
-            setUserID(response?.data.userId)
+            const userID = response?.data.userId
             const name = response?.data.name
 
             sessionStorage.setItem('accessToken', accessToken);
@@ -55,9 +54,7 @@ function Login() {
             setPwd('');
             setsuccess(true);
 
-            setTimeout(() => {
-                navigate(`/home/${response?.data.userId}`);
-            }, 1000);
+            navigate(`/home/${userID}`);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -72,8 +69,6 @@ function Login() {
             errRef.current.focus();
         }
     }
-
-    console.log("Rendering Login component -- success: ", success)
 
     return (
         <>
