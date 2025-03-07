@@ -46,7 +46,7 @@ function Login() {
             const name = response?.data.name
 
             sessionStorage.setItem('accessToken', accessToken);
-            sessionStorage.setItem('userId', userID);
+            sessionStorage.setItem('userId', response?.data.userId);
             sessionStorage.setItem('name', name)
 
             setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
@@ -78,7 +78,9 @@ function Login() {
             console.log(`/home/${userID}`);
             navigate(`/home/${userID}`, {replace: true})
         }
-    }, )
+    }, [userID])
+
+    console.log("Rendering Login component -- success: ", success)
 
     return (
         <>
