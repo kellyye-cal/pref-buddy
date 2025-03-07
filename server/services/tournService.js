@@ -40,8 +40,8 @@ const updateJudgeList = async({t_id, j_url}) => {
     const args = ["update_judge_list", t_id, j_url]
 
     return new Promise((resolve, reject) => {
-        const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        // const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
 
 
         pythonProcess.stderr.on('data', (data) => {
