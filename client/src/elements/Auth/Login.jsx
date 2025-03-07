@@ -51,13 +51,14 @@ function Login() {
 
             setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
 
-            console.log("userid state before success:", userID)
-
             setUser('');
             setPwd('');
             setsuccess(true);
 
-            navigate(`/home/${userID}`, {replace: true})
+            setTimeout(() => {
+                console.log("in timeout")
+                navigate(`/home/${userID}`);
+            }, 1000);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
