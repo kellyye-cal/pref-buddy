@@ -71,7 +71,7 @@ const scrapeParadigm = async({j_id}) => {
 
         pythonProcess.on('close', (code) => {
             if (code !== 0) {
-                reject(new Error(`Python script failed with exit code ${code}: ${errorOutput}`));
+                reject(new Error(`Python script failed with exit code ${code}: ${errOutput}`));
             } else {
                 try {
                     const parsedOutput = JSON.parse(output);
