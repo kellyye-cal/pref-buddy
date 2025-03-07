@@ -73,6 +73,10 @@ function TournPage() {
             setJudgeData(prevJudges => prevJudges.map(judge => 
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
+
+            if (selectedJudge && selectedJudge.j_id === judgeID) {
+                setSelectedJudge(prev => ({ ...prev, rating: newRating }));
+            }
         }).catch((err) => console.error("Error saving rating:", err));
     
         axios.get(`/api/tournaments/${tournId}/judges`,
