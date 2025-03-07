@@ -42,6 +42,7 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
+    console.log("inside the login controller")
     //Verify Input
     const {email, pwd} = req.body;
     if (!email || !pwd) return res.status(400).json({'message': 'Email and password are required.'})

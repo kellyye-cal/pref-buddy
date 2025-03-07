@@ -373,7 +373,6 @@ def update_judge_list(t_id, t_url):
     Returns: nothing
     """
 
-
     scraped_judges = scraper.scrape_judges(t_url)
     num_judges = len(scraped_judges)
 
@@ -387,7 +386,6 @@ def update_judge_list(t_id, t_url):
     return
 
 def update_tourn_timestamp(t_id):
-    logging.debug("called utils.update_tourn_timestamp")
     sql = "UPDATE tournaments SET last_updated = (%s) WHERE id = (%s)"
 
     cnx = get_connection()
@@ -397,12 +395,11 @@ def update_tourn_timestamp(t_id):
         cursor.execute(sql, (datetime.now(), t_id))
         cnx.commit()
 
-    except mysql.connector.Error as err:
+    except Exception as err:
         logging.error(err)
         cnx.rollback()
     
     close_connection(cnx, cursor)
-    return
 
 def get_paradigm_ts(id):
     sql = "SELECT updated FROM judge_info WHERE id = (%s)"

@@ -4,20 +4,7 @@ const jwt = require('jsonwebtoken')
 const verifyJWT = require('../../middleware/verifyJWT')
 require('dotenv').config({path: '../../.env.development'});
 
-// const db = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: '',
-//     database: "pref-buddy",
-//     port: 3306
-// })
-const db = mysql.createPool({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "",
-    database: process.env.DB_NAME || "pref-buddy",
-    port: process.env.DB_PORT || 3306,
-})
+const {db} = require('./utils');
 
 const registerUser = async({email, fname, lname, pwd}) => {
     try {
@@ -44,37 +31,41 @@ const registerUser = async({email, fname, lname, pwd}) => {
 }
 
 const login = async({email, pwd}) => {
-    // Query database for login credentials
+    // Query database for login credentials    
     const sql = "SELECT id, password, f_name, l_name, admin FROM users WHERE `email` = ?"
-    const [result] = await db.query(sql, [email]);
-    if (result.length < 1) throw new Error('No account with that username');
 
-    // Verify password match
-    var match = await bcrypt.compare(pwd, result[0].password)
-    const userId = result[0].id;
+    try {
+        const [result] = await db.execute(sql, [email]);
+        if (result.length < 1) throw new Error('No account with that username');
 
-    // If there is a match, need to create JWTs
-    if (match) {
-        // create JWTs
-        const accessToken = jwt.sign(
-            {"id":result[0].id},
-            process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '1h'}
-        );
+        // Verify password match
+        var match = await bcrypt.compare(pwd, result[0].password)
+        const userId = result[0].id;
 
-        const refreshToken = jwt.sign(
-            {"id":result[0].id},
-            process.env.REFRESH_TOKEN_SECRET,
-            {expiresIn: '7d'}
-        );
+        // If there is a match, need to create JWTs
+        if (match) {
+            // create JWTs
+            const accessToken = jwt.sign(
+                {"id":result[0].id},
+                process.env.ACCESS_TOKEN_SECRET,
+                {expiresIn: '1h'}
+            );
 
-        // Add refresh token to database
-        const refreshTokenSQL = "UPDATE users SET `refresh_token` = ? WHERE `email` = ?"
-        const [insertResult] = await db.query(refreshTokenSQL, [refreshToken, email])
+            const refreshToken = jwt.sign(
+                {"id":result[0].id},
+                process.env.REFRESH_TOKEN_SECRET,
+                {expiresIn: '7d'}
+            );
 
-        const name = result[0].f_name + " " + result[0].l_name
-        // Send cookie with refreshToken and return accessToken & userId
-        return {refreshToken, accessToken, userId, name: name, admin: result[0].admin};
+            // Add refresh token to database
+            const refreshTokenSQL = "UPDATE users SET `refresh_token` = ? WHERE `email` = ?"
+            const [insertResult] = await db.execute(refreshTokenSQL, [refreshToken, email])
+            const name = result[0].f_name + " " + result[0].l_name
+            // Send cookie with refreshToken and return accessToken & userId
+            return {refreshToken, accessToken, userId, name: name, admin: result[0].admin};
+        }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -144,9 +135,9 @@ const verifyRefreshToken = async({refreshToken, id}) => {
     if (tokenResult.length === 0) throw new Error("No matching refresh token found")
 }
 
-const removeToken = async({id}) => {
+const removeToken = async({id}) => {    
     const removeToken = "UPDATE users SET `refresh_token` = '' WHERE `id` = ?"
-    const [removed] = await db.query(removeToken, [id])
+    const [removed] = await db.query(removeToken, [id]);
 }
 
 module.exports = {

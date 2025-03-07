@@ -3,15 +3,16 @@ const {PythonShell} = require('python-shell')
 const {spawn} = require('child_process')
 const path = require('path');
 
-const utils = require('./utils')
+const {db} = require('./utils');
 
-const db = mysql.createPool({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASS || "",
-    database: process.env.DB_NAME || "pref-buddy",
-    port: process.env.DB_PORT || 3306,
-})
+// const dbPool = mysql.createPool({
+//     host: process.env.DB_HOST || "localhost",
+//     user: process.env.DB_USER || "root",
+//     password: process.env.DB_PASS || "",
+//     database: process.env.DB_NAME || "pref-buddy",
+//     port: process.env.DB_PORT || 3306,
+//     connectionLimit: 5
+// })
 
 const getJudgeById = async({j_id, u_id}) => {
     const sql = "SELECT judge_id, rating, email, affiliation, paradigm,  CONCAT(u.f_name, ' ', u.l_name) AS name, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
@@ -28,21 +29,25 @@ const getAllJudges = async({u_id}) => {
 }
 
 const updateRating = async({u_id, j_id, rating}) => {
+
     const sql = "INSERT INTO ranks (judge_id, ranker_id, rating) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE rating = VALUES(rating)"
     const [postResult] = await db.query(sql, [j_id, u_id, rating])
+
+    return;
 }
 
 const getNotes = async({u_id, j_id}) => {
     const sql = "SELECT notes FROM ranks WHERE judge_id = ? AND ranker_id = ?"
-    const [notes] = await db.query(sql, [j_id, u_id])
 
+    const [notes] = await db.query(sql, [j_id, u_id])
     return {notes}
+
 }
 
 const saveNote = async({u_id, j_id, note}) => {
     const sql = 'INSERT into ranks (judge_id, ranker_id, notes) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE notes = VALUES(notes)'
-    const [postResult] = await db.query(sql, [j_id, u_id, note])
 
+    const [postResult] = await db.query(sql, [j_id, u_id, note]);
     return {postResult}
 }
 
@@ -87,6 +92,7 @@ const scrapeParadigm = async({j_id}) => {
 
 const getParadigm = async({j_id}) => {
     const sql = "SELECT paradigm, updated FROM judge_info WHERE `id` = ?"
+
     const [judgeInfo] = await db.query(sql, [j_id])
 
     let paradigm = judgeInfo[0].paradigm;
@@ -99,9 +105,10 @@ const getParadigm = async({j_id}) => {
 
     //     return newParadigm[0].paradigm
     // }
-    scrapeParadigm({j_id})
 
-    return paradigm
+    // scrapeParadigm({j_id})
+
+    return paradigm;
 }
 
 module.exports = {

@@ -3,13 +3,17 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
-from mysql.connector import pooling
 from datetime import datetime
 import json
 import logging
 import html2text
 from dotenv import load_dotenv
-from pathlib import Path
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import utils
 
@@ -173,16 +177,16 @@ def scrape_tourn_api(url, user_id):
         utils.close_connection(cnx, cursor)
 
 def scrape_paradigm(id):
-    # should_scrape = utils.check_scrape_paradigm(id)
+    should_scrape = utils.check_scrape_paradigm(id)
 
-    # if (not should_scrape):
-    #     result = {
-    #         "status": "success",
-    #         "message": f"No need to scrape, recently updated",
-    #         "data": {"paradigm": utils.get_paradigm(id)}
-    #     }
+    if (not should_scrape):
+        result = {
+            "status": "success",
+            "message": f"No need to scrape, recently updated",
+            "data": {"paradigm": utils.get_paradigm(id)}
+        }
 
-    #     return result
+        return result
 
     login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
     login_payload = {
@@ -191,18 +195,21 @@ def scrape_paradigm(id):
     }
 
     session = requests.Session()
-
-    url = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + str(id)
-
+    
     try:
-        login_res = session.post(login_url, data=login_payload)
+        login_res = session.post(login_url, data=login_payload, headers=headers, allow_redirects=True)
+
+
         if login_res.status_code != 200:
             logging.error("Can't log into Tabroom with given credentials")
             sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
             sys.stderr.flush()
             return
-        
-        response = session.get(url)
+    
+
+        response = session.get(url, headers=headers)
+
+
         if response.status_code != 200:
             sys.stderr.write(f"Error: Failed to get judge page \n")
             sys.stderr.flush()
@@ -217,7 +224,6 @@ def scrape_paradigm(id):
 
         paradigm_html = soup.find_all('div', class_="paradigm")
         paradigm = utils.get_paradigm(id)[0]
-        logging.debug(paradigm_html)
 
         if len(paradigm_html) > 1:
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()
@@ -238,7 +244,6 @@ def scrape_paradigm(id):
         sys.stderr.flush()
         return
     
-    return
 
 def update_tournament(t_id, j_url):
     logging.debug("Called update tournament")
