@@ -57,22 +57,28 @@ const scrapeParadigm = async({j_id}) => {
         // const pythonProcess = spawn(process.env.PYTHON_VERSION, ['-u', scriptPath, ...args])
         
         let output = '';
+        let errOutput = '';
 
         pythonProcess.stdout.on('data', (data) => {
             output += data.toString();
         });
 
         pythonProcess.stderr.on('data', (data) => {
-            console.error(`Error from Python: ${data}`)
-            reject(new Error(data.toString()));
+            errOutput += data.toString();
+            // console.error(`Error from Python: ${data}`)
+            // reject(new Error(data.toString()));
         })
 
         pythonProcess.on('close', (code) => {
-            try {
-                const parsedOutput = JSON.parse(output);
-                resolve(parsedOutput.paradigm);
-            } catch (err) {
-                reject(new Error('Error parsing Python output: ' + err.message))
+            if (code !== 0) {
+                reject(new Error(`Python script failed with exit code ${code}: ${errorOutput}`));
+            } else {
+                try {
+                    const parsedOutput = JSON.parse(output);
+                    resolve(parsedOutput.paradigm);
+                } catch (err) {
+                    reject(new Error('Error parsing Python output: ' + err.message))
+                }
             }
         })
     })

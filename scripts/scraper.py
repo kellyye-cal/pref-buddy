@@ -125,12 +125,12 @@ def scrape_tourn_api(url, user_id):
     if not url:
         sys.stderr.write(json.dumps({"error": "URL is requirfed"}), 400)
         sys.stderr.flush()
-        sys.exit(1)
-
+        return
+    
     if not user_id:
         sys.stderr.write(json.dumps({"error": "User ID is required"}), 400)
         sys.stderr.flush()
-        sys.exit(1)
+        return
 
     cnx = utils.get_connection()
     cursor = cnx.cursor()
@@ -166,7 +166,7 @@ def scrape_tourn_api(url, user_id):
         sys.stderr.flush()
         cursor.close()
         cnx.close()
-        sys.exit(1)
+        return {"status": "error", "message": str(e)}
         
         logging.error("Error in scrape_tourn: {e}")
     finally:
@@ -200,13 +200,13 @@ def scrape_paradigm(id):
             logging.error("Can't log into Tabroom with given credentials")
             sys.stderr.write(f"Error: Can't log into Tabroom with given credentials \n")
             sys.stderr.flush()
-            sys.exit(1)
+            return
         
         response = session.get(url)
         if response.status_code != 200:
             sys.stderr.write(f"Error: Failed to get judge page \n")
             sys.stderr.flush()
-            sys.exit(1)
+            return
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
@@ -236,7 +236,7 @@ def scrape_paradigm(id):
         logging.error(e)
         sys.stderr.write(f"Error \n")
         sys.stderr.flush()
-        sys.exit(1)
+        return
     
     return
 
