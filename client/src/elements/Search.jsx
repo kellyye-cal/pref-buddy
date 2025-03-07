@@ -4,7 +4,8 @@ import '../App.css';
 var filteredRecords;
 
 function handleSearchChange(event, [search, setSearch], data, keys, updateFilteredRecords) {
-    const searchTerm = event.target.value.toLowerCase()
+    setSearch(event.target.value);
+    const searchTerm = event.target.value.toLowerCase();
 
     filteredRecords = data.filter((record) => {
         var contains = false;
