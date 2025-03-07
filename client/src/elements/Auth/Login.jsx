@@ -78,7 +78,7 @@ function Login() {
             console.log(`/home/${userID}`);
             navigate(`/home/${userID}`, {replace: true})
         }
-    }, [success, userID, navigate])
+    }, )
 
     return (
         <>
