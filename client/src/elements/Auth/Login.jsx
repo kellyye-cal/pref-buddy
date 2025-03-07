@@ -54,7 +54,9 @@ function Login() {
             setPwd('');
             setsuccess(true);
 
-            navigate(`/home/${response?.data.userId}`);
+            setTimeout(() => {
+                navigate(`/home/${response?.data.userId}`);
+            }, 1000);
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
