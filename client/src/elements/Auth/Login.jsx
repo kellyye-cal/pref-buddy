@@ -16,7 +16,8 @@ function Login() {
     const [email, setUser] = useState('');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
-    const [success, setsuccess] = useState('');
+    const [success, setsuccess] = useState(false);
+    const [loggingIn, setLoggingIn] = useState(false);
 
     const navigate = useNavigate();
     
@@ -30,6 +31,7 @@ function Login() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
+        setLoggingIn(true);
 
         try {
             const response = await axios.post(`/api/auth/login`, JSON.stringify({email, pwd}), 
@@ -74,6 +76,7 @@ function Login() {
 
     return (
         <>
+        {!loggingIn ?
             <div className="auth-page">
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
                 <h1> Welcome to PrefBuddy! </h1>
@@ -111,6 +114,16 @@ function Login() {
                     </span> </p> */}
                 </form>
             </div>
+        : 
+            <div className="auth-page">
+                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
+                <h1> Welcome to PrefBuddy! </h1>
+
+                <form className="auth-form">
+                        <h3> Logging in... </h3>
+                </form>
+            </div>
+        }
         </>
     )
 }
