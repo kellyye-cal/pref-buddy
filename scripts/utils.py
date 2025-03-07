@@ -17,11 +17,11 @@ logging.basicConfig(
 )
 
 db_config = {
-    'host': os.getenv("DB_HOST") or "localhost",
-    'user': os.getenv("DB_USER") or "root",
-    'password': os.getenv("DB_PASS") or "",
-    'database': os.getenv("DB_NAME") or "pref-buddy",
-    'port': os.getenv("DB_PORT") or 3306
+    'host': os.getenv("DB_HOST"),
+    'user': os.getenv("DB_USER"),
+    'password': os.getenv("DB_PASS"),
+    'database': os.getenv("DB_NAME"),
+    'port': os.getenv("DB_PORT")
 }
 
 db_pool = pooling.MySQLConnectionPool(pool_name="scraperpool", pool_size=5, **db_config)
