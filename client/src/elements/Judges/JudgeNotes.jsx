@@ -23,8 +23,8 @@ function JudgeNotes({judgeId, editing, setEditing}) {
             setNote(res.data[0].notes)
             setNewNote(res.data[0].notes)
         })
-        .catch((err)=>console.log(err))
-    }, []);
+        .catch((err)=>console.err(err))
+    }, [judgeId]);
 
     const handleSave = () => {
         axios.post(`/api/judges/save_note`, {u_id: auth.userId, j_id: judgeId, note: newNote}, {headers: {
@@ -34,7 +34,7 @@ function JudgeNotes({judgeId, editing, setEditing}) {
             setNote(newNote)
 
         })
-        .catch((err)=>console.log(err))
+        .catch((err)=>console.err(err))
     }
 
     const cancel = () => {

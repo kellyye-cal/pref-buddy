@@ -54,7 +54,7 @@ const scrapeParadigm = async({j_id}) => {
     return new Promise((resolve, reject) => {
         // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
         // const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn(process.env.PYTHON_VERSION)
+        const pythonProcess = spawn(process.env.PYTHON_VERSION, ['-u', scriptPath, ...args])
         
         let output = '';
 
@@ -85,14 +85,15 @@ const getParadigm = async({j_id}) => {
 
     let paradigm = judgeInfo[0].paradigm;
 
-    const lastUpdated = new Date(judgeInfo[0].updated);
-    if (utils.isOlderThanWeek(lastUpdated)) {
-        scrapeParadigm({j_id})
-        const getUpdatedParadigm = "SELECT paradigm FROM judge_info WHERE `id` = ?"
-        const [newParadigm] = await db.query(getUpdatedParadigm, [j_id])
+    // const lastUpdated = new Date(judgeInfo[0].updated);
+    // if (utils.isOlderThanWeek(lastUpdated)) {
+    //     scrapeParadigm({j_id})
+    //     const getUpdatedParadigm = "SELECT paradigm FROM judge_info WHERE `id` = ?"
+    //     const [newParadigm] = await db.query(getUpdatedParadigm, [j_id])
 
-        return newParadigm[0].paradigm
-    }
+    //     return newParadigm[0].paradigm
+    // }
+    scrapeParadigm({j_id})
 
     return paradigm
 }

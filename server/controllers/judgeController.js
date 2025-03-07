@@ -56,8 +56,7 @@ const setRating = async(req, res) => {
 }
 
 const getNotes = async(req, res) => {
-    const {u_id, j_id} = req.query;
-    
+    const {u_id, j_id} = req.query;    
     try {
         const result = await judgeServices.getNotes({u_id, j_id});
         return res.json(result.notes)

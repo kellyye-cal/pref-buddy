@@ -9,11 +9,12 @@ import json
 import logging
 import html2text
 from dotenv import load_dotenv
+from pathlib import Path
 
 import utils
 
+load_dotenv()
 
-load_dotenv("../.env.development")
 USERNAME = os.getenv("TABROOM_USERNAME")
 PASSWORD = os.getenv("TABROOM_PASSWORD")
 
@@ -172,16 +173,16 @@ def scrape_tourn_api(url, user_id):
         utils.close_connection(cnx, cursor)
 
 def scrape_paradigm(id):
-    should_scrape = utils.check_scrape_paradigm(id)
+    # should_scrape = utils.check_scrape_paradigm(id)
 
-    if (not should_scrape):
-        result = {
-            "status": "success",
-            "message": f"No need to scrape, recently updated",
-            "data": {"paradigm": utils.get_paradigm(id)}
-        }
+    # if (not should_scrape):
+    #     result = {
+    #         "status": "success",
+    #         "message": f"No need to scrape, recently updated",
+    #         "data": {"paradigm": utils.get_paradigm(id)}
+    #     }
 
-        return result
+    #     return result
 
     login_url = "https://www.tabroom.com/user/login/login_save.mhtml"
     login_payload = {
@@ -215,7 +216,8 @@ def scrape_paradigm(id):
         text_maker.single_line_break = False
 
         paradigm_html = soup.find_all('div', class_="paradigm")
-        paradigm = "No paradigm found."
+        paradigm = utils.get_paradigm(id)[0]
+        logging.debug(paradigm_html)
 
         if len(paradigm_html) > 1:
             paradigm = text_maker.handle(str(paradigm_html[1])).strip()

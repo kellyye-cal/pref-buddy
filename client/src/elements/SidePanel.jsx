@@ -16,7 +16,6 @@ const SidePanel = ({judgeData, updateFunc, closeFunc}) => {
     const {auth, setAuth} = useContext(AuthContext)
     const [editingNotes, setEditingNotes] = useState(false);
 
-
     return (
         <div className={`side-panel ${judgeData ? "open": ""}`}>
             <button onClick={closeFunc}>

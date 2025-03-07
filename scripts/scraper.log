@@ -1,23 +1,23 @@
-2025-03-06 17:34:43,692 - DEBUG - Starting authorization phase
-2025-03-06 17:34:43,692 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:34:43,692 - INFO - package: mysql.connector.plugins
-2025-03-06 17:34:43,692 - INFO - plugin_name: mysql_native_password
-2025-03-06 17:34:43,692 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
-2025-03-06 17:34:43,692 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:34:43,694 - DEBUG - Starting authorization phase
-2025-03-06 17:34:43,694 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:34:43,694 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:34:43,694 - DEBUG - Starting authorization phase
-2025-03-06 17:34:43,694 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:34:43,694 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:34:43,695 - DEBUG - Starting authorization phase
-2025-03-06 17:34:43,695 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:34:43,695 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:34:43,696 - DEBUG - Starting authorization phase
-2025-03-06 17:34:43,696 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:34:43,696 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:34:43,697 - DEBUG - Called update tournament
-2025-03-06 17:34:43,697 - DEBUG - called utils.update_tourn_timestamp
-2025-03-06 17:34:43,703 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:34:43,964 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=92129&tourn_id=34410 HTTP/1.1" 200 None
-2025-03-06 17:34:44,058 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-03-06 18:38:23,004 - DEBUG - Starting authorization phase
+2025-03-06 18:38:23,004 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:38:23,004 - INFO - package: mysql.connector.plugins
+2025-03-06 18:38:23,004 - INFO - plugin_name: mysql_native_password
+2025-03-06 18:38:23,004 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2025-03-06 18:38:23,005 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:38:23,006 - DEBUG - Starting authorization phase
+2025-03-06 18:38:23,006 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:38:23,006 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:38:23,007 - DEBUG - Starting authorization phase
+2025-03-06 18:38:23,007 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:38:23,007 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:38:23,009 - DEBUG - Starting authorization phase
+2025-03-06 18:38:23,009 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:38:23,009 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:38:23,010 - DEBUG - Starting authorization phase
+2025-03-06 18:38:23,010 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:38:23,010 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:38:23,015 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-03-06 18:38:28,271 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
+2025-03-06 18:38:28,366 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=83696 HTTP/1.1" 302 336
+2025-03-06 18:38:28,440 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
+2025-03-06 18:38:28,457 - DEBUG - []

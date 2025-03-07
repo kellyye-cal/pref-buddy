@@ -1,59 +1,18 @@
-2025-03-06 17:43:07,562 - DEBUG - Starting authorization phase
-2025-03-06 17:43:07,562 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:43:07,562 - INFO - package: mysql.connector.plugins
-2025-03-06 17:43:07,562 - INFO - plugin_name: mysql_native_password
-2025-03-06 17:43:07,563 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
-2025-03-06 17:43:07,563 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:43:07,586 - DEBUG - Starting authorization phase
-2025-03-06 17:43:07,586 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:43:07,588 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:43:07,595 - DEBUG - Starting authorization phase
-2025-03-06 17:43:07,595 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:43:07,595 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:43:07,598 - DEBUG - Starting authorization phase
-2025-03-06 17:43:07,598 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:43:07,598 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:43:07,601 - DEBUG - Starting authorization phase
-2025-03-06 17:43:07,601 - DEBUG - The provided initial strategy is mysql_native_password
-2025-03-06 17:43:07,601 - DEBUG - mysql_native_password completed succesfully
-2025-03-06 17:43:07,603 - DEBUG - Called update tournament
-2025-03-06 17:43:07,603 - DEBUG - called utils.update_tourn_timestamp
-2025-03-06 17:43:07,623 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:07,933 - DEBUG - https://www.tabroom.com:443 "GET /index/tourn/judges.mhtml?category_id=87692&tourn_id=32877 HTTP/1.1" 200 None
-2025-03-06 17:43:07,999 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:13,202 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:13,294 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=288335 HTTP/1.1" 302 336
-2025-03-06 17:43:13,369 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:13,385 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:18,579 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:18,665 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=701122 HTTP/1.1" 302 336
-2025-03-06 17:43:18,773 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:18,791 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:23,988 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:24,061 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=21548 HTTP/1.1" 302 336
-2025-03-06 17:43:24,169 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:24,183 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:29,372 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:29,450 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=574373 HTTP/1.1" 302 336
-2025-03-06 17:43:29,534 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:29,572 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:34,873 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:34,990 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=215985 HTTP/1.1" 302 336
-2025-03-06 17:43:35,077 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:35,089 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:40,341 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:40,432 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=61361 HTTP/1.1" 302 336
-2025-03-06 17:43:40,519 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:40,560 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:45,794 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:45,880 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=172012 HTTP/1.1" 302 336
-2025-03-06 17:43:45,968 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:45,997 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:51,185 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:51,256 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=188332 HTTP/1.1" 302 336
-2025-03-06 17:43:51,338 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:51,355 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
-2025-03-06 17:43:56,545 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 200 None
-2025-03-06 17:43:56,641 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=83696 HTTP/1.1" 302 336
-2025-03-06 17:43:56,727 - DEBUG - https://www.tabroom.com:443 "GET /user/login/login.mhtml?msg=%22Please%20login%20to%20view%20paradigms!%22 HTTP/1.1" 200 None
-2025-03-06 17:43:56,736 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-03-06 18:25:43,558 - DEBUG - Starting authorization phase
+2025-03-06 18:25:43,558 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:25:43,558 - INFO - package: mysql.connector.plugins
+2025-03-06 18:25:43,558 - INFO - plugin_name: mysql_native_password
+2025-03-06 18:25:43,558 - INFO - AUTHENTICATION_PLUGIN_CLASS: MySQLNativePasswordAuthPlugin
+2025-03-06 18:25:43,558 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:25:43,560 - DEBUG - Starting authorization phase
+2025-03-06 18:25:43,560 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:25:43,561 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:25:43,563 - DEBUG - Starting authorization phase
+2025-03-06 18:25:43,563 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:25:43,563 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:25:43,566 - DEBUG - Starting authorization phase
+2025-03-06 18:25:43,566 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:25:43,566 - DEBUG - mysql_native_password completed succesfully
+2025-03-06 18:25:43,568 - DEBUG - Starting authorization phase
+2025-03-06 18:25:43,568 - DEBUG - The provided initial strategy is mysql_native_password
+2025-03-06 18:25:43,569 - DEBUG - mysql_native_password completed succesfully
