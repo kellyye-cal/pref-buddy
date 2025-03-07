@@ -56,6 +56,8 @@ function Login() {
             setUser('');
             setPwd('');
             setsuccess(true);
+
+            navigate(`/home/${userID}`, {replace: true})
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');
@@ -78,7 +80,7 @@ function Login() {
             console.log(`/home/${userID}`);
             navigate(`/home/${userID}`, {replace: true})
         }
-    }, [userID])
+    }, [])
 
     console.log("Rendering Login component -- success: ", success)
 
