@@ -9,7 +9,7 @@ import './Auth.css';
 import axios from '../../api/axios';
 
 function Login() {
-    const {setAuth} = useContext(AuthContext);
+    const {auth, setAuth} = useContext(AuthContext);
     const userRef = useRef();
     const errRef = useRef();
 
@@ -56,8 +56,7 @@ function Login() {
             setsuccess(true);
 
             setTimeout(() => {
-                console.log("in timeout")
-                navigate(`/home/${userID}`);
+                navigate(`/home/${response?.data.userId}`);
             }, 1000);
         } catch (err) {
             if (!err?.response) {
@@ -73,15 +72,6 @@ function Login() {
             errRef.current.focus();
         }
     }
-
-    useEffect(() => {
-        console.log("success:", success)
-        console.log("userID: ", userID)
-        if (success) {
-            console.log(`/home/${userID}`);
-            navigate(`/home/${userID}`, {replace: true})
-        }
-    }, [])
 
     console.log("Rendering Login component -- success: ", success)
 
