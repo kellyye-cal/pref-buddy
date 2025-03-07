@@ -17,17 +17,21 @@ logging.basicConfig(
 )
 
 db_config = {
-    'host': os.getenv("DB_HOST"),
-    'user': os.getenv("DB_USER"),
-    'password': os.getenv("DB_PASS"),
-    'database': os.getenv("DB_NAME"),
-    'port': os.getenv("DB_PORT")
+    'host': os.getenv("DB_HOST") or "localhost",
+    'user': os.getenv("DB_USER") or "root",
+    'password': os.getenv("DB_PASS") or "",
+    'database': os.getenv("DB_NAME") or "pref-buddy",
+    'port': os.getenv("DB_PORT") or 3306
 }
 
 db_pool = pooling.MySQLConnectionPool(pool_name="scraperpool", pool_size=5, **db_config)
 
 def get_connection():
-    return db_pool.get_connection()
+    try:
+        return db_pool.get_connection()
+    except mysql.connector.Error as err:
+        logging.error(f"Database connection error: {err}")
+        raise
 
 def close_connection(cnx, cursor):
     if cursor:
@@ -383,6 +387,7 @@ def update_judge_list(t_id, t_url):
     return
 
 def update_tourn_timestamp(t_id):
+    logging.debug("called utils.update_tourn_timestamp")
     sql = "UPDATE tournaments SET last_updated = (%s) WHERE id = (%s)"
 
     cnx = get_connection()

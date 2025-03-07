@@ -2,7 +2,7 @@ const mysql = require('mysql2/promise')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const verifyJWT = require('../../middleware/verifyJWT')
-// require('dotenv').config({path: '../../.env'});
+require('dotenv').config({path: '../../.env.development'});
 
 // const db = mysql.createPool({
 //     host: "localhost",
@@ -12,11 +12,11 @@ const verifyJWT = require('../../middleware/verifyJWT')
 //     port: 3306
 // })
 const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASS || "",
+    database: process.env.DB_NAME || "pref-buddy",
+    port: process.env.DB_PORT || 3306,
 })
 
 const registerUser = async({email, fname, lname, pwd}) => {

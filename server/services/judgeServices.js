@@ -5,26 +5,15 @@ const path = require('path');
 
 const utils = require('./utils')
 
-
-// const db = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: '',
-//     database: "pref-buddy",
-//     port: 3306
-// })
-
 const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER || "root",
+    password: process.env.DB_PASS || "",
+    database: process.env.DB_NAME || "pref-buddy",
+    port: process.env.DB_PORT || 3306,
 })
 
 const getJudgeById = async({j_id, u_id}) => {
-    // Determine if paradigm has to be scraped by calling scraper.scrape_paradigm
-
     const sql = "SELECT judge_id, rating, email, affiliation, paradigm,  CONCAT(u.f_name, ' ', u.l_name) AS name, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
     const [judge] = await db.query(sql, [j_id, u_id]);
 
@@ -64,7 +53,8 @@ const scrapeParadigm = async({j_id}) => {
 
     return new Promise((resolve, reject) => {
         // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+        // const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+        const pythonProcess = spawn(process.env.PYTHON_VERSION)
         
         let output = '';
 
@@ -90,12 +80,19 @@ const scrapeParadigm = async({j_id}) => {
 
 
 const getParadigm = async({j_id}) => {
-    await scrapeParadigm({j_id})
-
-    const sql = "SELECT paradigm FROM judge_info WHERE `id` = ?"
+    const sql = "SELECT paradigm, updated FROM judge_info WHERE `id` = ?"
     const [judgeInfo] = await db.query(sql, [j_id])
 
-    const paradigm = judgeInfo[0].paradigm;
+    let paradigm = judgeInfo[0].paradigm;
+
+    const lastUpdated = new Date(judgeInfo[0].updated);
+    if (utils.isOlderThanWeek(lastUpdated)) {
+        scrapeParadigm({j_id})
+        const getUpdatedParadigm = "SELECT paradigm FROM judge_info WHERE `id` = ?"
+        const [newParadigm] = await db.query(getUpdatedParadigm, [j_id])
+
+        return newParadigm[0].paradigm
+    }
 
     return paradigm
 }

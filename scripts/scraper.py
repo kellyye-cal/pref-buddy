@@ -3,7 +3,6 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
-import mysql.connector
 from mysql.connector import pooling
 from datetime import datetime
 import json
@@ -14,7 +13,7 @@ from dotenv import load_dotenv
 import utils
 
 
-load_dotenv()
+load_dotenv("../.env.development")
 USERNAME = os.getenv("TABROOM_USERNAME")
 PASSWORD = os.getenv("TABROOM_PASSWORD")
 
@@ -73,7 +72,7 @@ def scrape_judges(url):
             paradigm_link = cols[0].find('a').get('href')
 
 
-            tab_id = int(re.search("judge_person_id=(\d+)", paradigm_link).group(1))
+            tab_id = int(re.search(r"judge_person_id=(\d+)", paradigm_link).group(1))
 
             data = {
                 'f_name': f_name,
@@ -271,4 +270,12 @@ if __name__ == '__main__':
     elif scrape_type == "update_judge_list":
         t_id = sys.argv[2]
         j_url = sys.argv[3]
-        update_tournament(t_id, j_url)
+        try:
+            update_tournament(t_id, j_url)
+        except Exception as e:
+            sys.stderr.write(f"Error: {str(e)}\n")
+            sys.stderr.flush()
+            sys.exit(1)
+
+        sys.stdout.write(json.dumps({"status": "success", "message": "Success"}))
+        sys.stdout.flush()
