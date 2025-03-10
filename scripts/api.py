@@ -8,6 +8,8 @@ import csv
 import sys
 import os
 
+import time
+
 # def setup_connection():
 #     return mysql.connector.connect(
 #         host=os.getenv("DB_HOST"),
@@ -50,3 +52,4 @@ if __name__ == '__main__':
         export_prefs_csv(cursor, t_id, u_id, filepath)
 
         utils.close_connection(cnx, cursor)
+
