@@ -4,9 +4,11 @@ const {PythonShell} = require('python-shell')
 const {spawn} = require('child_process')
 const path = require('path');
 const fs = require("fs");
+const { format } = require('fast-csv');
 const { fstat } = require('fs');
 
-const {db} = require('./utils');
+const tabroomAPI = require('../../tabroom/tabroomAPI')
+const {db, getPrefs} = require('./utils');
 
 // const db = mysql.createPool({
 //     host: "localhost",
@@ -109,7 +111,6 @@ const scrapeTournament = async({url, u_id}) => {
 
         pythonProcess.stdout.on('data', (data) => {
             output += data.toString();
-            console.log(output)
         });
 
         pythonProcess.stderr.on('data', (data) => {
@@ -133,40 +134,25 @@ const scrapeTournament = async({url, u_id}) => {
 }
 
 const exportPrefsToCSV = async({t_id, u_id, filename}) => {
-    const filePath = path.join(__dirname, "..", "public", "client", "exports", filename);
-    const scriptPath = path.join(__dirname, '..', '..','scripts', 'api.py')
-    const args = ['pref_csv', t_id, u_id, filePath]
+    const filePath = path.join(__dirname, "..", "..", "client", "public", "exports", filename);
 
-    return new Promise((resolve, reject) => {
-        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
-        
-        pythonProcess.stdout.on('data', (data) => {
-            try {
-                const result = JSON.parse(data.toString().trim());
-                
-                if (result.status === "success" && fs.existsSync(result.filename)) {
-                    resolve({status: "success", filePath: result.filename})
-                } else {
-                    reject(new Error("CSV file was not generated correctly."))
-                }
-            } catch (err) {
-                reject(new Error('Error parsing Python output: ' + err.message))
-            }
-        });
+    try {
+        const [prefs] = await getPrefs({t_id, u_id})
 
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`Error from Python: ${data}`)
-            reject(new Error(data.toString()));
-        })
+        fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
-        pythonProcess.on("close", (code) => {
-            if (code !== 0) {
-                reject(new Error(`Python process exited with code ${code}`));
-            }
-        });
+        const ws = fs.createWriteStream(filePath);
+        const csvStream = format({ headers: true });
 
-    })
+        csvStream.pipe(ws);
+        prefs.forEach(row => csvStream.write(row));
+        csvStream.end();
+
+        return {status: "success", fileName: filePath}
+    } catch (error) {
+        console.error("Error exporting CSV: ", error);
+        return {status: 'error', message: error.message}
+    }
 }
 
 module.exports = {

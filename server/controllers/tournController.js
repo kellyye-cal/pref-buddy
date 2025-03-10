@@ -76,17 +76,17 @@ const exportPrefsToCSV = async (req, res) => {
         const result = await tournService.exportPrefsToCSV({t_id, u_id, filename})
 
         if (result.status === "success") {
-            if (!fs.existsSync(result.filePath)) {
+            if (!fs.existsSync(result.fileName)) {
                 return res.status(404).json({ error: "File not found" });
             }
 
-            res.download(result.filePath, filename, (err) => {
+            res.download(result.fileName, (err) => {
                 if (err) {
                     console.error("Error downloading file:", err)
-                    res.status(500).json({error: "Error downloading file"})
+                    return res.status(500).json({error: "Error downloading file"})
                 }
 
-                fs.unlink(result.filePath, (err) => {
+                fs.unlink(result.fileName, (err) => {
                     if (err) console.error("Error deleting file: ", err)
                 })
             })
