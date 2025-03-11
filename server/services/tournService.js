@@ -1,9 +1,7 @@
 // const mysql = require('mysql2/promise')
-const {spawn} = require('child_process')
 const path = require('path');
 const fs = require("fs");
 const { format } = require('fast-csv');
-const { fstat } = require('fs');
 
 const {db, getPrefs} = require('./utils');
 const scraper = require('../../tabroom/scraper')

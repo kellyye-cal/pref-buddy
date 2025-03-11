@@ -1,7 +1,5 @@
-const mysql = require('mysql2/promise')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const verifyJWT = require('../../middleware/verifyJWT')
 require('dotenv').config({path: '../../.env.development'});
 
 const {db} = require('./utils');

@@ -1,8 +1,3 @@
-const mysql = require('mysql2/promise')
-const {PythonShell} = require('python-shell')
-const {spawn} = require('child_process')
-const path = require('path');
-
 const {db, isOlderThanWeek} = require('./utils');
 const scraper = require('../../tabroom/scraper')
 
