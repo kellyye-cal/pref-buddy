@@ -30,6 +30,6 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "postinstall": "npx playwright install"
+    "postinstall": "npx playwright install chromium"
   }
 }
