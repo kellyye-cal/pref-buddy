@@ -55,6 +55,7 @@ const scrapeTournament = async (req, res) => {
 
     try {
         const tourn_id = await tournService.scrapeTournament({url, u_id})
+        console.log(tourn_id)
         return res.json({tourn_id})
 
     } catch (error) {

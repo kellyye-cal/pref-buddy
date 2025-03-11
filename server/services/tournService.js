@@ -1,14 +1,12 @@
-const mysql = require('mysql2/promise')
-const verifyJWT = require('../../middleware/verifyJWT')
-const {PythonShell} = require('python-shell')
+// const mysql = require('mysql2/promise')
 const {spawn} = require('child_process')
 const path = require('path');
 const fs = require("fs");
 const { format } = require('fast-csv');
 const { fstat } = require('fs');
 
-const tabroomAPI = require('../../tabroom/tabroomAPI')
 const {db, getPrefs} = require('./utils');
+const scraper = require('../../tabroom/scraper')
 
 // const db = mysql.createPool({
 //     host: "localhost",
@@ -39,39 +37,38 @@ const getAllTournaments = async({id}) => {
     return tournaments
 }
 
-const updateJudgeList = async({t_id, j_url}) => {
-    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
-    const args = ["update_judge_list", t_id, j_url]
+// const updateJudgeList = async({t_id, j_url}) => {
+//     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
+//     const args = ["update_judge_list", t_id, j_url]
 
-    return new Promise((resolve, reject) => {
-        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+//     return new Promise((resolve, reject) => {
+//         // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+//         const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
 
 
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`Error from Python: ${data}`)
-            reject(new Error(data.toString()));
-        })
+//         pythonProcess.stderr.on('data', (data) => {
+//             console.error(`Error from Python: ${data}`)
+//             reject(new Error(data.toString()));
+//         })
 
-        pythonProcess.on('close', (code) => {
-            resolve("Success")
-        })
-    })
-}
+//         pythonProcess.on('close', (code) => {
+//             resolve("Success")
+//         })
+//     })
+// }
 
 const getTournamentById = async({t_id}) => {
     const sql = "SELECT * FROM tournaments WHERE `id` = ?"
     const [tournaments] = await db.query(sql, [t_id])
 
+    const now = new Date()
+    const end = new Date(tournaments[0].end_date)
+    const last_updated = new Date(tournaments[0].last_updated)
+    const since_updated = now - last_updated
 
-    // const now = new Date()
-    // const end = new Date(tournaments[0].end_date)
-    // const last_updated = new Date(tournaments[0].last_updated)
-    // const since_updated = now - last_updated
-
-    // if (end > now && since_updated > 2 * 60 * 60 * 1000) {
-    //     updateJudgeList({t_id, j_url: tournaments[0].j_url})
-    // }
+    if (end > now && since_updated > 2 * 60 * 60 * 1000) {
+        updateJudgeList({t_id, j_url: tournaments[0].j_url})
+    }
 
     return tournaments[0];
 }
@@ -99,39 +96,44 @@ const getJudges = async({u_id, t_id}) => {
 }
 
 const scrapeTournament = async({url, u_id}) => {
-
-    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
-    const args = ['tournament', url, u_id]
-
-    return new Promise((resolve, reject) => {
-        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
-
-        let output = '';
-
-        pythonProcess.stdout.on('data', (data) => {
-            output += data.toString();
-        });
-
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`Error from Python: ${data}`)
-            reject(new Error(data.toString()));
-        })
-
-        pythonProcess.on('close', (code) => {
-            try {
-                const parsedOutput = JSON.parse(output);
-                const tourn_id = parsedOutput.data.tourn_id;
-
-                resolve(tourn_id);
-            } catch (err) {
-                console.error(err)
-                reject(new Error('Error parsing Python output: ' + err.message))
-            }
-        })
-    })
-
+    const result = await scraper.scrapeTourn({url, u_id});
+    return result.data.tourn_id;
 }
+
+// const scrapeTournament = async({url, u_id}) => {
+
+//     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
+//     const args = ['tournament', url, u_id]
+
+//     return new Promise((resolve, reject) => {
+//         // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+//         const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+
+//         let output = '';
+
+//         pythonProcess.stdout.on('data', (data) => {
+//             output += data.toString();
+//         });
+
+//         pythonProcess.stderr.on('data', (data) => {
+//             console.error(`Error from Python: ${data}`)
+//             reject(new Error(data.toString()));
+//         })
+
+//         pythonProcess.on('close', (code) => {
+//             try {
+//                 const parsedOutput = JSON.parse(output);
+//                 const tourn_id = parsedOutput.data.tourn_id;
+
+//                 resolve(tourn_id);
+//             } catch (err) {
+//                 console.error(err)
+//                 reject(new Error('Error parsing Python output: ' + err.message))
+//             }
+//         })
+//     })
+
+// }
 
 const exportPrefsToCSV = async({t_id, u_id, filename}) => {
     const filePath = path.join(__dirname, "..", "..", "client", "public", "exports", filename);
