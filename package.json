@@ -15,7 +15,6 @@
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
     "mysql2": "^3.11.5",
-    "nodemon": "^3.1.7",
     "playwright": "^1.51.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
@@ -23,9 +22,12 @@
     "react-markdown": "^9.1.0",
     "react-router-dom": "^7.0.2",
     "showdown": "^2.1.0",
-    "ts-node": "^10.9.2",
     "turndown": "^7.2.0",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2"
   },
   "scripts": {
     "start": "node server/server.js",
