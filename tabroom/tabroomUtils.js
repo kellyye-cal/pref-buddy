@@ -1,8 +1,6 @@
-const { chromium } = require('playwright');
 require('dotenv').config({ path: '../.env.development' });
 const {db} = require('../server/services/utils');
 const TurndownService = require('turndown');
-const { query } = require('express');
 
 const getTimestamp = () => {
    return new Date().toISOString().slice(0, 19).replace('T', ' ');
