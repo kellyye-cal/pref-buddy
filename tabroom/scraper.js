@@ -4,7 +4,7 @@ require('dotenv').config({ path: '../.env.development' });
 const tabroomUtils = require('./tabroomUtils')
 
 async function scrapeTournInfo({tournURL, judgesURL}) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
 
     await page.goto(tournURL);
@@ -42,7 +42,7 @@ async function scrapeTournInfo({tournURL, judgesURL}) {
 }
 
 async function scrapeJudges({url}) {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
 
     await page.goto(url);
@@ -113,7 +113,7 @@ async function scrapeTourn({url, u_id}) {
 
 async function scrapeParadigm(id) {
     const paradigmLink = "https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=" + id
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
 
     await page.goto("https://www.tabroom.com/user/login/login.mhtml");
