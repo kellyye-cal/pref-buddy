@@ -1,9 +1,6 @@
 client/
 node_modules/
-.git/
-tests/
-logs/
-.env
+.env.development
 scraper/
 scripts/
 data_upload/
