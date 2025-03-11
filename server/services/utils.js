@@ -18,7 +18,15 @@ function isOlderThanWeek(date) {
     return date < weekAgo
 }
 
+async function getPrefs({t_id, u_id}) {
+    const sql = "SELECT CONCAT(u.f_name, ' ', u.l_name) AS name, rating FROM users as u INNER JOIN (SELECT r.judge_id, r.rating FROM ranks AS r INNER JOIN judging_at as j ON r.judge_id = j.user_id WHERE j.tournament_id = ? AND r.ranker_id = ?) AS prefs on prefs.judge_id = u.id;"
+    const prefs = await db.query(sql, [t_id, u_id]); 
+    
+    return prefs;
+}
+
 module.exports = {
     isOlderThanWeek,
+    getPrefs,
     db
 }

@@ -3,7 +3,9 @@ const {PythonShell} = require('python-shell')
 const {spawn} = require('child_process')
 const path = require('path');
 
-const {db} = require('./utils');
+const {db, isOlderThanWeek} = require('./utils');
+const scraper = require('../../tabroom/scraper')
+
 
 // const dbPool = mysql.createPool({
 //     host: process.env.DB_HOST || "localhost",
@@ -52,63 +54,70 @@ const saveNote = async({u_id, j_id, note}) => {
 }
 
 
-const scrapeParadigm = async({j_id}) => {
-    const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
-    const args = ['paradigm', j_id]
+// const scrapeParadigm = async({j_id}) => {
+//     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
+//     const args = ['paradigm', j_id]
 
-    return new Promise((resolve, reject) => {
-        // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
-        const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
-        // const pythonProcess = spawn(process.env.PYTHON_VERSION, ['-u', scriptPath, ...args])
+//     return new Promise((resolve, reject) => {
+//         // const pythonProcess = spawn('/Library/Frameworks/Python.framework/Versions/3.10/bin/python3', ['-u', scriptPath, ...args])
+//         const pythonProcess = spawn('python3', ['-u', scriptPath, ...args])
+//         // const pythonProcess = spawn(process.env.PYTHON_VERSION, ['-u', scriptPath, ...args])
         
-        let output = '';
-        let errOutput = '';
+//         let output = '';
+//         let errOutput = '';
 
-        pythonProcess.stdout.on('data', (data) => {
-            output += data.toString();
-        });
+//         pythonProcess.stdout.on('data', (data) => {
+//             output += data.toString();
+//         });
 
-        pythonProcess.stderr.on('data', (data) => {
-            errOutput += data.toString();
-            // console.error(`Error from Python: ${data}`)
-            // reject(new Error(data.toString()));
-        })
+//         pythonProcess.stderr.on('data', (data) => {
+//             errOutput += data.toString();
+//             // console.error(`Error from Python: ${data}`)
+//             // reject(new Error(data.toString()));
+//         })
 
-        pythonProcess.on('close', (code) => {
-            if (code !== 0) {
-                reject(new Error(`Python script failed with exit code ${code}: ${errOutput}`));
-            } else {
-                try {
-                    const parsedOutput = JSON.parse(output);
-                    resolve(parsedOutput.paradigm);
-                } catch (err) {
-                    reject(new Error('Error parsing Python output: ' + err.message))
-                }
-            }
-        })
-    })
-}
+//         pythonProcess.on('close', (code) => {
+//             if (code !== 0) {
+//                 reject(new Error(`Python script failed with exit code ${code}: ${errOutput}`));
+//             } else {
+//                 try {
+//                     const parsedOutput = JSON.parse(output);
+//                     resolve(parsedOutput.paradigm);
+//                 } catch (err) {
+//                     reject(new Error('Error parsing Python output: ' + err.message))
+//                 }
+//             }
+//         })
+//     })
+// }
 
+const scrapeCache = new Map();
 
 const getParadigm = async({j_id}) => {
     const sql = "SELECT paradigm, updated FROM judge_info WHERE `id` = ?"
 
     const [judgeInfo] = await db.query(sql, [j_id])
+    const lastUpdated = new Date(judgeInfo[0].updated);
+    if (isOlderThanWeek(lastUpdated)) {
+        if (scrapeCache.has(j_id)) {
+            return scrapeCache.get(j_id);
+        }
+        
+        const scrapePromise = scraper.scrapeParadigm(j_id)
+        .then(scrapedParadigm => {
+            scrapeCache.delete(j_id); // Remove from cache once done
+            return scrapedParadigm;
+        })
+        .catch(err => {
+            scrapeCache.delete(j_id); // Ensure it gets removed even if there's an error
+            throw err;
+        });
 
-    let paradigm = judgeInfo[0].paradigm;
-
-    // const lastUpdated = new Date(judgeInfo[0].updated);
-    // if (utils.isOlderThanWeek(lastUpdated)) {
-    //     scrapeParadigm({j_id})
-    //     const getUpdatedParadigm = "SELECT paradigm FROM judge_info WHERE `id` = ?"
-    //     const [newParadigm] = await db.query(getUpdatedParadigm, [j_id])
-
-    //     return newParadigm[0].paradigm
-    // }
-
-    // scrapeParadigm({j_id})
-
-    return paradigm;
+        scrapeCache.set(j_id, scrapePromise);
+        return scrapePromise;
+    } else {
+        return judgeInfo[0].paradigm;
+    }
 }
 
 module.exports = {
