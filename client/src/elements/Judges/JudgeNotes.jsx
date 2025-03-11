@@ -23,7 +23,7 @@ function JudgeNotes({judgeId, editing, setEditing}) {
             setNote(res.data[0].notes)
             setNewNote(res.data[0].notes)
         })
-        .catch((err)=>console.err(err))
+        .catch((err)=>console.error(err))
     }, [judgeId]);
 
     const handleSave = () => {
