@@ -22,7 +22,7 @@ const getJudgeById = async(req, res) => {
     try {
         paradigm = await judgeServices.getParadigm({j_id});
     } catch (error) {
-        console.log(error)
+        console.error(error)
     }
 
     return res.json({judgeInfo, paradigm})
