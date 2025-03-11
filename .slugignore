@@ -1,0 +1,10 @@
+client/
+node_modules/
+.git/
+tests/
+logs/
+.env
+scraper/
+scripts/
+data_upload/
+data/
