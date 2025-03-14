@@ -45,16 +45,14 @@ function TournamentCard({userID, tourn}) {
     
     const [prefData, setData] = useState([])
 
-    useEffect(()=>{
-        axios.get(`api/tournaments/${tourn.tournament_id}`, {
-                headers: {
-                    Authorization: `Bearer ${auth?.accessToken}`,
-                },
-                withCredentials: true,}).then((res) => {
-            setData(res.data);
-        })
-        .catch((err)=>console.log("Error getting all judges: ", err))
-    }, []);
+    axios.get(`api/tournaments/${tourn.tournament_id}`, {
+            headers: {
+                Authorization: `Bearer ${auth?.accessToken}`,
+            },
+            withCredentials: true,}).then((res) => {
+        setData(res.data);
+    })
+    .catch((err)=>console.log("Error getting all judges: ", err))
 
     // for each tournament, get number of judges attending and number of judges ranked using tourn.i
 
