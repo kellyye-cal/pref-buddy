@@ -50,6 +50,7 @@ function AddTournament({onAdd}) {
 
             closeModal();
             setSubmit(false);
+            window.location.reload();
 
             if (onAdd) {
                 onAdd();
@@ -61,8 +62,6 @@ function AddTournament({onAdd}) {
 
         setURL('')
         form.reset();
-
-
     }
 
     return (

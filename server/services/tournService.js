@@ -65,7 +65,7 @@ const getTournamentById = async({t_id}) => {
     const since_updated = now - last_updated
 
     if (end > now && since_updated > 2 * 60 * 60 * 1000) {
-        updateJudgeList({t_id, j_url: tournaments[0].j_url})
+        scraper.updateTournament({t_id, j_url: tournaments[0].j_url})
     }
 
     return tournaments[0];
@@ -96,6 +96,15 @@ const getJudges = async({u_id, t_id}) => {
 const scrapeTournament = async({url, u_id}) => {
     const result = await scraper.scrapeTourn({url, u_id});
     return result.data.tourn_id;
+}
+
+const saveRoundType = async ({t_id, round, j_id, type}) => {
+    const sql = `
+    UPDATE rounds
+    SET round_type = ?
+    WHERE tournament_id = ? AND number = ? AND judge_id = ?`
+    await db.query(sql, [type, t_id, round, j_id])
+    return
 }
 
 // const scrapeTournament = async({url, u_id}) => {
@@ -164,4 +173,5 @@ module.exports = {
     getTournamentById,
     scrapeTournament,
     exportPrefsToCSV,
+    saveRoundType
 }

@@ -9,6 +9,7 @@ router.get('/:id', verifyJWT, tournController.getTournamentById)
 router.get('/:id/judges', verifyJWT, tournController.getJudgesAtTourn)
 router.get('/:id/judges/export_csv', verifyJWT, tournController.exportPrefsToCSV)
 router.post('/scrape', verifyJWT, tournController.scrapeTournament)
+router.post('/saveRoundType', verifyJWT, tournController.saveRoundType)
 
 
 module.exports = router;

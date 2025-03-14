@@ -18,6 +18,30 @@ const getJudgeById = async({j_id, u_id}) => {
     return judge;
 }
 
+const getSpeaksById = async ({j_id}) => {
+    const sql = "SELECT s1, s2, s3, s4 FROM rounds WHERE judge_id = ?"
+    const [rounds] = await db.query(sql, [j_id])
+
+    let total = 0;
+    let num = 0;
+
+    for (let round = 0; round < rounds.length; round++) {
+        Object.values(rounds[round]).map(speak => {
+            if (speak) {
+                total += speak;
+                num += 1
+            }
+        })
+    }
+
+    if (num == 0) {
+        return "--";
+    }
+
+    return Math.round((total / num) * 10) / 10;
+
+}
+
 const getAllJudges = async({u_id}) => {
     const sql = "SELECT CONCAT(u.f_name, ' ', u.l_name) AS name, u.id, u.email, u.affiliation, r.rating FROM users as u LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON u.id = r.judge_id WHERE u.judge = 1 ORDER BY r.rating ASC"
 
@@ -46,6 +70,13 @@ const saveNote = async({u_id, j_id, note}) => {
 
     const [postResult] = await db.query(sql, [j_id, u_id, note]);
     return {postResult}
+}
+
+const getRoundsByJudge = async({j_id}) => {
+    const sql = "SELECT tournaments.name, tournament_id, judge_id, number, aff, neg, decision, elim_decision, round_type from rounds INNER JOIN tournaments ON tournament_id = tournaments. id WHERE judge_id = ?"
+
+    const [rounds] = await db.query(sql, j_id)
+    return rounds
 }
 
 
@@ -115,11 +146,43 @@ const getParadigm = async({j_id}) => {
     }
 }
 
+const getJudgeStats = async ({j_id}) => {
+    const sql = "SELECT round_type, decision FROM rounds WHERE judge_id = ?"
+    const [results] = await db.query(sql, j_id)
+
+    stats = {
+        PvP: {Aff: 0, Neg: 0},
+        PvK: {Aff: 0, Neg: 0},
+        KvP: {Aff: 0, Neg: 0},
+        KvK: {Aff: 0, Neg: 0},
+        T: {Aff: 0, Neg: 0},
+    }
+    
+    results.map(round => {
+        if (round.round_type === "Policy v. Policy") {
+            stats.PvP[round.decision] = stats.PvP[round.decision] + 1
+        } else if (round.round_type === "Policy v. K") {
+            stats.PvK[round.decision] = stats.PvK[round.decision] + 1
+        } else if (round.round_type === "K v. Policy") {
+            stats.KvP[round.decision] = stats.KvP[round.decision] + 1
+        } else if (round.round_type === "K v. K") {
+            stats.KvK[round.decision] = stats.KvK[round.decision] + 1
+        } else if (round.round_type === "T") {
+            stats.T[round.decision] = stats.T[round.decision] + 1
+        }
+    })
+
+    return stats;
+}
+
 module.exports = {
     getJudgeById,
+    getSpeaksById,
     getAllJudges,
     updateRating,
     getParadigm,
     saveNote,
     getNotes,
+    getRoundsByJudge,
+    getJudgeStats
 }

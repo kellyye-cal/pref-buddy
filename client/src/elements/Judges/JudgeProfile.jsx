@@ -13,13 +13,16 @@ import JudgeNotes from './JudgeNotes';
 import ReactMarkdown from 'react-markdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import RoundHistory from './RoundHistory';
 
 
 function JudgeProfile() {
     const {auth, setAuth} = useContext(AuthContext);
 
-    const [judgeData, setJudgeData] = useState([]); //to store fetched data
+    const [judgeData, setJudgeData] = useState([]);
+    const [judgeInfo, setJudgeInfo] = useState([]); //to store fetched data
     const [paradigm, setParadigm] = useState(["No paradigm."]);
+    const [stats, setStats] = useState([]);
 
     const [editingNotes, setEditingNotes] = useState(false);
     const [judgeNotes, setJudgeNotes] = useState(["..."])
@@ -30,11 +33,16 @@ function JudgeProfile() {
         axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data.judgeInfo);
+            setJudgeData(res.data)
+
+            setJudgeInfo(res.data.judgeInfo);
 
             setParadigm(res.data.paradigm)
 
             setJudgeNotes(res.data.judgeInfo[0].notes)
+
+            setStats(res.data.stats);
+            console.log(res.data.stats)
         })
         .catch((err)=>console.log(err))
     }, []);
@@ -47,7 +55,7 @@ function JudgeProfile() {
         }, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then(() => {
-            setJudgeData(prevJudges => prevJudges.map(judge => 
+            setJudgeInfo(prevJudges => prevJudges.map(judge => 
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
         }).catch((err) => console.error("Error saving rating:", err));
@@ -55,7 +63,7 @@ function JudgeProfile() {
         axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data);
+            setJudgeInfo(res.data);
         })
         .catch((err)=>console.log(err))
     }
@@ -65,8 +73,8 @@ function JudgeProfile() {
             <NavBar />
             <div className="main">
                 <div>
-                    {judgeData && judgeData.length > 0 ? (
-                        judgeData.map((judge, index) => (
+                    {judgeInfo && judgeInfo.length > 0 ? (
+                        judgeInfo.map((judge, index) => (
                             <div>
                                 <div className="judgeProfTitle">
                                     <div>
@@ -99,18 +107,18 @@ function JudgeProfile() {
 
                                             <div className="stat-instance">
                                                 <h5> Speaker Pt Avg </h5>
-                                                <p className="stat-text"> -- </p>
+                                                <p className="stat-text"> {judgeData.avg_speaks} </p>
                                             </div>
                                         </div>
 
                                         <div style={{marginTop: 8, marginBottom: 8}}>
                                         <div className="stat-instance">
                                                 <h5> 24-25 Topic Round Stats </h5>
-                                                <p className="stat-text"> <span> Policy v. Policy: </span> -- </p>
-                                                <p className="stat-text"> <span> Policy v. K: </span> -- </p>
-                                                <p className="stat-text"> <span> Clash: </span> -- </p>
-                                                <p className="stat-text"> <span> K v. K: </span> -- </p>
-                                                <p className="stat-text"> <span> T/Theory: </span> -- </p>
+                                                <p className="stat-text"> <span> Pol v. Pol ({stats.PvP.Aff}-{stats.PvP.Neg}) : </span> {stats.PvP.Aff / (stats.PvP.Aff + stats.PvP.Neg) * 100}% aff over {(stats.PvP.Aff + stats.PvP.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> Pol v. K ({stats.PvK.Aff}-{stats.PvK.Neg}) : </span> {stats.PvK.Aff / (stats.PvK.Aff + stats.PvK.Neg) * 100}% aff over {(stats.PvK.Aff + stats.PvK.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> K v. Pol ({stats.KvP.Aff}-{stats.KvP.Neg}) : </span> {stats.KvP.Aff / (stats.KvP.Aff + stats.KvP.Neg) * 100}% aff over {(stats.KvP.Aff + stats.KvP.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> K v. K ({stats.KvK.Aff}-{stats.KvK.Neg}) : </span> {stats.KvK.Aff / (stats.KvK.Aff + stats.KvK.Neg) * 100}% aff over {(stats.KvK.Aff + stats.KvK.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> T/Theory ({stats.T.Aff}-{stats.T.Neg}) : </span> {stats.T.Aff / (stats.T.Aff + stats.T.Neg) * 100}% aff over {(stats.T.Aff + stats.T.Neg)} rounds </p>
 
                                             </div>
                                         </div>
@@ -133,6 +141,10 @@ function JudgeProfile() {
                                     <h3> Paradigm </h3>
                                     <div className="v-scroll"> <ReactMarkdown children={paradigm}/> </div> 
                                 </div>
+
+                                <RoundHistory j_id={id}/>
+
+    
                             </div>
                         ))
                     ) : (
