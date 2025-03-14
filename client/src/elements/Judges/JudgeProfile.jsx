@@ -95,7 +95,7 @@ function JudgeProfile() {
                                         <h3 style={{margin: 0}}> Stats </h3>
 
                                         <div className="h-between" style={{marginTop: 8, marginBottom: 8, flexWrap: "wrap", gap: 8}}>
-                                            <div className="stat-instance">
+                                            {/* <div className="stat-instance">
                                                 <h5> Years Judging </h5>
                                                 <p className="stat-text"> {judge.yrs_judge} </p>
                                             </div>
@@ -103,7 +103,7 @@ function JudgeProfile() {
                                             <div className="stat-instance">
                                                 <h5> Years in Debate </h5>
                                                 <p className="stat-text"> {judge.yrs_dbt} </p>
-                                            </div>
+                                            </div> */}
 
                                             <div className="stat-instance">
                                                 <h5> Speaker Pt Avg </h5>
@@ -114,11 +114,12 @@ function JudgeProfile() {
                                         <div style={{marginTop: 8, marginBottom: 8}}>
                                         <div className="stat-instance">
                                                 <h5> 24-25 Topic Round Stats </h5>
-                                                <p className="stat-text"> <span> Pol v. Pol ({stats.PvP.Aff}-{stats.PvP.Neg}) : </span> {(stats.PvP.Aff / (stats.PvP.Aff + stats.PvP.Neg) * 100).toFixed(1)}% aff over {(stats.PvP.Aff + stats.PvP.Neg)} rounds </p>
-                                                <p className="stat-text"> <span> Pol v. K ({stats.PvK.Aff}-{stats.PvK.Neg}) : </span> {(stats.PvK.Aff / (stats.PvK.Aff + stats.PvK.Neg) * 100).toFixed(1)}% aff over {(stats.PvK.Aff + stats.PvK.Neg)} rounds </p>
-                                                <p className="stat-text"> <span> K v. Pol ({stats.KvP.Aff}-{stats.KvP.Neg}) : </span> {(stats.KvP.Aff / (stats.KvP.Aff + stats.KvP.Neg) * 100).toFixed(1)}% aff over {(stats.KvP.Aff + stats.KvP.Neg)} rounds </p>
-                                                <p className="stat-text"> <span> K v. K ({stats.KvK.Aff}-{stats.KvK.Neg}) : </span> {(stats.KvK.Aff / (stats.KvK.Aff + stats.KvK.Neg) * 100).toFixed(1)}% aff over {(stats.KvK.Aff + stats.KvK.Neg)} rounds </p>
-                                                <p className="stat-text"> <span> T/Theory ({stats.T.Aff}-{stats.T.Neg}) : </span> {(stats.T.Aff / (stats.T.Aff + stats.T.Neg) * 100).toFixed(1)}% aff over {(stats.T.Aff + stats.T.Neg)} rounds </p>
+
+                                                <p className="stat-text"> <span> Pol v. Pol ({stats.PvP.Aff}-{stats.PvP.Neg}) : </span> {Math.round(stats.PvP.Aff / (stats.PvP.Aff + stats.PvP.Neg) * 100)}% aff over {(stats.PvP.Aff + stats.PvP.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> Pol v. K ({stats.PvK.Aff}-{stats.PvK.Neg}) : </span> {Math.round(stats.PvK.Aff / (stats.PvK.Aff + stats.PvK.Neg) * 100)}% aff over {(stats.PvK.Aff + stats.PvK.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> K v. Pol ({stats.KvP.Aff}-{stats.KvP.Neg}) : </span> {Math.round(stats.KvP.Aff / (stats.KvP.Aff + stats.KvP.Neg) * 100)}% aff over {(stats.KvP.Aff + stats.KvP.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> K v. K ({stats.KvK.Aff}-{stats.KvK.Neg}) : </span> {Math.round(stats.KvK.Aff / (stats.KvK.Aff + stats.KvK.Neg) * 100)}% aff over {(stats.KvK.Aff + stats.KvK.Neg)} rounds </p>
+                                                <p className="stat-text"> <span> T/Theory ({stats.T.Aff}-{stats.T.Neg}) : </span> {Math.round(stats.T.Aff / (stats.T.Aff + stats.T.Neg) * 100)}% aff over {(stats.T.Aff + stats.T.Neg)} rounds </p>
 
                                             </div>
                                         </div>
