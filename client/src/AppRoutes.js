@@ -8,12 +8,14 @@ import Register from './elements/Auth/Register'
 import Login from './elements/Auth/Login'
 import Logout from './elements/Auth/Logout'
 
-import Home from './elements/Home'
+import Home from './elements/Home/Home'
 import JudgeProfile from './elements/Judges/JudgeProfile'
 // import Judges from './elements/Judges/Judges'
 import Tournaments from './elements/Tournaments/Tournaments'
 import TournPage from './elements/Tournaments/TournPage'
 import CreateAccount from './elements/Auth/CreateAccounts'
+import RoundHistory from './elements/Judges/RoundHistory'
+import JudgeHistory from './elements/Judges/JudgeHistory'
 
 function AppRoutes() {
     useAxiosInterceptors();
@@ -74,6 +76,21 @@ function AppRoutes() {
     };
 
 
+    /*
+        Current routes:
+            /login
+            /register
+            /logout
+
+            /home/:userid
+
+            /myprofile/:id
+            /judgehistory/:id
+
+            /judges/JudgeProfile/:id
+            /tournaments
+            /tournaments/:tournId
+    */
     return (
         <Routes>
             <Route
@@ -95,6 +112,9 @@ function AppRoutes() {
 
             <Route path="/tournaments" element={auth.accessToken ? <ProtectedRoute> <Tournaments />  </ProtectedRoute> : <Navigate to="/login" />}/>
             <Route path='/tournaments/:tournId' element={auth.accessToken ? <ProtectedRoute> <TournPage /> </ProtectedRoute> : <Navigate to="/login" />} />
+
+            <Route path='/myprofile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
+            <Route path='/judgehistory/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeHistory j_id={auth.userId}/> </ProtectedRoute> : <Navigate to="/login" />} />
 
         </Routes>
     )

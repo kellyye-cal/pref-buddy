@@ -8,19 +8,21 @@ import {faCheck, faSpinner} from '@fortawesome/free-solid-svg-icons'
 
 import AuthContext from '../../context/AuthProvider';
 import NavBar from '../NavBar';
-import Back from '../Back';
 import PrefPreview from './PrefPreview';
 import Search from '../Search'
 import SidePanel from '../SidePanel';
 import ExportCSV from './ExportCSV';
 import Sort from '../Sort';
 import JudgeFilters from '../Judges/JudgeFilters';
+import RoundHistory from '../Judges/RoundHistory';
+import RoundDisplay from './RoundDisplay';
 
 function TournPage() {
     const {auth, setAuth} = useContext(AuthContext);
     const { tournId } = useParams();
 
     const [tournData, setTournData] = useState([])
+    const [judgingData, setJudgingData] = useState([])
     const [judgeData, setJudgeData] = useState([])
     const [filteredJudges, setFilteredJudges] = useState([])
 
@@ -38,10 +40,10 @@ function TournPage() {
         axios.get(`/api/tournaments/${tournId}`, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`}}
         ).then((res) => {
-            setTournData(res.data.tournament)
-            setNumRated(res.data.numRated)
-            setTotalJudges(res.data.numTotal)
-            // setTournData(res.data.find((t) => String(t.t_id) === tournId));
+            setTournData(res.data.attending)
+            setJudgingData(res.data.judging)
+            setNumRated(res.data.attending.prefData.numRated)
+            setTotalJudges(res.data.attending.prefData.numTotal)
         })
         .catch((err)=>console.log(err))
 
@@ -137,9 +139,19 @@ function TournPage() {
     return (
         <div className="page">
             <NavBar />
-            <div className="main" style={{display: "flex", flexDirection: "column", overflow: "hidden"}}>
-                <Back link={"/tournaments"}> </Back>
+            <div className="main" style={{display: "flex", flexDirection: "column", overflow: ""}}>
                 <h1> {tournData.name} </h1>
+
+                {judgingData.judging && judgingData.roundHistory.length > 0 ?
+                    <div style={{marginBottom: 40}}>
+                        <h2> Rounds </h2>
+                        <RoundDisplay rounds={judgingData.roundHistory} displayTournament={false}/>
+                    </div>
+                    
+                    :
+
+                    <> </>
+                }
 
                 <div className="h-between" style={{alignItems: "center"}}>
                     <h2 style={{marginBottom: 0}}> Prefs </h2>
@@ -157,27 +169,25 @@ function TournPage() {
                     </div>
                 </div>
 
-                <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
-
-                <div style={{display: "flex", alignItems: "center", gap: 4}}>
-                    <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
-                    <div className="sort-filter-option"> | </div>
-                    <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
-                </div>
                 <div>
-                    
-                </div>
+                    <Search data={judgeData} keys={["name"]} onFilteredRecordChange={setFilteredJudges}/>
 
-                <div className="v-scroll">
-                    {sortedJudges.map((judge, index) => (
-                        <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
-                        isSelected={selectedJudge?.j_id === judge.j_id}/>
-                    ))}
-                </div>
+                    <div style={{display: "flex", alignItems: "center", gap: 4}}>
+                        <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
+                        <div className="sort-filter-option"> | </div>
+                        <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
+                    </div>    
+                    <div className="v-scroll" style={{height: 460}}>
+                        {sortedJudges.map((judge, index) => (
+                            <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
+                            isSelected={selectedJudge?.j_id === judge.j_id}/>
+                        ))}
+                    </div>
 
-                {selectedJudge && (
-                    <SidePanel judgeData={selectedJudge} updateFunc={updateRating} closeFunc={closeSidePanel} />
-                )}
+                    {selectedJudge && (
+                        <SidePanel judgeData={selectedJudge} updateFunc={updateRating} closeFunc={closeSidePanel} />
+                    )}
+                </div>
             </div>
         </div>
     )

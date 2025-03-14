@@ -10,6 +10,12 @@ const getMyTournaments = async(req, res) => {
     return res.json(myTournaments)
 }
 
+const getMyJudgingTourns = async(req, res) => {
+    const id = req.id;
+    const myTournaments = await tournService.getMyJudging({id})
+    return res.json(myTournaments)
+}
+
 const getAllTournaments = async(req, res) => {
     const u_id = req.id;
 
@@ -25,13 +31,16 @@ const getTournamentById = async (req, res) => {
         return res.status(400).json({ error: "Invalid tournament ID" });
     }
 
-
-    const tournament = await tournService.getTournamentById({t_id})
+    var attending = await tournService.getTournamentById({t_id})
 
     const numRated = await tournService.getNumRated({t_id, u_id})
     const numTotal = await tournService.getNumJudges({t_id})
 
-    res.json({numRated, numTotal, tournament})
+    attending.prefData = {numRated, numTotal}
+
+    var judging = await tournService.getTournamentByIdJudging({t_id, j_id: u_id})
+
+    res.json({attending, judging})
 }
 
 const getJudgesAtTourn = async (req, res) => {
@@ -120,4 +129,5 @@ module.exports = {
     scrapeTournament,
     exportPrefsToCSV,
     saveRoundType,
+    getMyJudgingTourns,
 }

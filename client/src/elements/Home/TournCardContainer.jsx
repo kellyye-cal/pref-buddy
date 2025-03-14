@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../../context/AuthProvider';
 import {Link, useParams} from "react-router-dom";
-import axios from '../api/axios';
-import '../App.css';
+import axios from '../../api/axios';
 
 import TournamentCard from './TournamentCard';
 
@@ -40,7 +39,7 @@ function TournCardContainer({userID}) {
                 ))
 
             ) : (
-                <div> No upcoming tournaments. </div>
+                <div className="container container-spacing" style={{textAlign: "center"}}> No upcoming tournaments. </div>
             )}
         </div>
     )

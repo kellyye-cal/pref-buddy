@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
-import axios from '../api/axios';
-import '../App.css';
+import AuthContext from '../../context/AuthProvider';
+import axios from '../../api/axios';
 
-import ProgressRing from './ProgressRing';
+import ProgressRing from '../ProgressRing';
 
 
 const styles = {
@@ -45,14 +44,16 @@ function TournamentCard({userID, tourn}) {
     
     const [prefData, setData] = useState([])
 
-    axios.get(`api/tournaments/${tourn.tournament_id}`, {
-            headers: {
-                Authorization: `Bearer ${auth?.accessToken}`,
-            },
-            withCredentials: true,}).then((res) => {
-        setData(res.data);
-    })
-    .catch((err)=>console.log("Error getting all judges: ", err))
+    useEffect(()=>{
+        axios.get(`api/tournaments/${tourn.tournament_id}`, {
+                headers: {
+                    Authorization: `Bearer ${auth?.accessToken}`,
+                },
+                withCredentials: true,}).then((res) => {
+            setData(res.data.attending.prefData);
+        })
+        .catch((err)=>console.log("Error getting all judges: ", err))
+    }, []);
 
     // for each tournament, get number of judges attending and number of judges ranked using tourn.i
 

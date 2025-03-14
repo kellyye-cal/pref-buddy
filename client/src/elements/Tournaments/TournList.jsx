@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import TournPreview from './TournPreview';
 
-function TournList({data, sortOrder}) {
+function TournList({data, sortOrder, view}) {
       const sortedData = [...data].sort((a, b) => {
         if (sortOrder === 'asc') {
           return new Date(a.end_date) - new Date(b.end_date)
@@ -11,6 +11,7 @@ function TournList({data, sortOrder}) {
         }
         return 0;
       });
+
 
       return (
         <table className="table">
@@ -23,7 +24,7 @@ function TournList({data, sortOrder}) {
           </thead>
           <tbody>
             {sortedData.map((tournament, index) => (
-              <TournPreview key={index} tournament={tournament}/>
+              <TournPreview key={index} tournament={tournament} view={view}/>
             ))}
           </tbody>
         </table>
