@@ -12,20 +12,16 @@ function TournCardContainer({userID}) {
     const {auth} = useContext(AuthContext);
     const [allTournaments, setData] = useState([]); //to store fetched data
     var upcoming;
-
-    useEffect(()=>{
-        if (!auth?.accessToken) return;
         
-        axios.get(`/api/tournaments/mytournaments`, {
-            headers: {
-                Authorization: `Bearer ${auth?.accessToken}`,
-            },
-            withCredentials: true,
-        }).then((res) => {
-            setData(res.data);
-        }).catch((err)=>console.log("Error getting all tournaments: ", err))
+    axios.get(`/api/tournaments/mytournaments`, {
+        headers: {
+            Authorization: `Bearer ${auth?.accessToken}`,
+        },
+        withCredentials: true,
+    }).then((res) => {
+        setData(res.data);
+    }).catch((err)=>console.log("Error getting all tournaments: ", err))
 
-    }, []);
 
     upcoming = allTournaments.filter((tourn) => {
         const now = new Date();

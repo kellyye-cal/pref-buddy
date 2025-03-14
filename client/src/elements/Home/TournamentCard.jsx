@@ -51,7 +51,6 @@ function TournamentCard({userID, tourn}) {
                 },
                 withCredentials: true,}).then((res) => {
             setData(res.data.attending.prefData);
-            console.log(res.data)
         })
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);
