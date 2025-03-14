@@ -1,11 +1,12 @@
 import React, {useContext } from 'react';
 import {useParams} from "react-router-dom";
-import '../App.css';
-import AuthContext from '../context/AuthProvider';
+import '../../App.css';
+import AuthContext from '../../context/AuthProvider';
 
-import NavBar from './NavBar'
+import NavBar from '../NavBar'
 import TournCardContainer from './TournCardContainer';
-import AddTournament from './Tournaments/AddTournament';
+import AddTournament from '../Tournaments/AddTournament';
+import UnspecifiedRoundHistory from './UnspecifiedRoundHistory';
 
 function Home() {
     const {auth} = useContext(AuthContext);
@@ -23,6 +24,9 @@ function Home() {
                     <AddTournament />
                 </div>
                 <TournCardContainer userID={userID}/>
+
+                <h2 style={{marginTop: 40}}> Unspecified Round Reports </h2>
+                <UnspecifiedRoundHistory j_id={userID}/>
             </div>
         </div>
     )

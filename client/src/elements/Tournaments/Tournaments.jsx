@@ -51,7 +51,7 @@ function Tournaments() {
             <NavBar />
             <div className="main v-scroll">
                 <div className="h-between" style={{alignItems: "center"}}>
-                    <h1> My Tournaments </h1>
+                    <h1> My Competing Tournaments </h1>
                     <AddTournament onAdd={fetchTournaments}/>
                 </div>
 
@@ -61,10 +61,10 @@ function Tournaments() {
 
 
                 <h2 style={{marginTop: 12}}> Upcoming </h2>
-                <TournList data={filteredUpcoming} sortOrder={"asc"}/>
+                <TournList data={filteredUpcoming} sortOrder={"asc"} view={"attending"}/>
 
                 <h2 style={{marginTop: 20}}> Past </h2> 
-                <TournList data={filteredPast} sortOrder={"dsc"}/>
+                <TournList data={filteredPast} sortOrder={"dsc"} view={"attending"}/>
             </div>
         </div>
     )

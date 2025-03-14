@@ -4,6 +4,7 @@ const tournController = require('../controllers/tournController');
 const verifyJWT = require('../../middleware/verifyJWT')
 
 router.get('/mytournaments', verifyJWT, tournController.getMyTournaments)
+router.get('/judgingat', verifyJWT, tournController.getMyJudgingTourns)
 router.get('/all', verifyJWT, tournController.getAllTournaments)
 router.get('/:id', verifyJWT, tournController.getTournamentById)
 router.get('/:id/judges', verifyJWT, tournController.getJudgesAtTourn)

@@ -28,6 +28,13 @@ const getMyTournaments = async({id}) => {
     return tournaments
 }
 
+const getMyJudging = async({id}) => {
+    const sql = "SELECT *, 1 as judging FROM judging_at AS j INNER JOIN tournaments AS t ON j.tournament_id = t.id WHERE `user_id` = ?"
+    const [tournaments] = await db.query(sql, [id])
+
+    return tournaments
+}
+
 const getAllTournaments = async({id}) => {
     const sql = "SELECT tournaments.id AS t_id, tournaments.link, tournaments.name, tournaments.name, tournaments.start_date, tournaments.end_date, CASE WHEN a.user_id IS NOT NULL THEN 1 ELSE 0 END AS attending, CASE WHEN j.user_id IS NOT NULL THEN 1 ELSE 0 END AS judging FROM tournaments LEFT JOIN (SELECT * FROM attending WHERE user_id = ?) AS a on a.tournament_id = tournaments.id LEFT JOIN (SELECT * FROM judging_at WHERE user_id = ?) AS j on j.tournament_id = tournaments.id"    
 
@@ -69,6 +76,39 @@ const getTournamentById = async({t_id}) => {
     }
 
     return tournaments[0];
+}
+
+const getTournamentByIdJudging = async({t_id, j_id}) => {
+    const check_judging = "SELECT * FROM judging_at WHERE `user_id` = ? AND `tournament_id` = ?"
+    const [attendance] = await db.query(check_judging, [j_id, t_id])
+    
+    var judging_at = {}
+    
+    if (attendance.length === 0) {
+        judging_at.judging = false
+        return judging_at
+    } else {
+        const getRoundHistory = "SELECT * FROM rounds WHERE `tournament_id` = ? AND `judge_id` = ?"
+        const [roundHistory] = await db.query(getRoundHistory, [t_id, j_id])
+
+        const totalRounds = roundHistory.length;
+        var specified = 0;
+
+        for (let i = 0; i < totalRounds; i++) {
+            if (roundHistory[i].round_type) {
+                specified += 1;
+            }
+        }
+
+        judging_at = {
+            judging: true,
+            specified,
+            totalRounds,
+            roundHistory
+        }
+
+        return judging_at;
+    }
 }
 
 const getNumRated = async({t_id, u_id}) => {
@@ -166,12 +206,14 @@ const exportPrefsToCSV = async({t_id, u_id, filename}) => {
 
 module.exports = {
     getMyTournaments,
+    getMyJudging,
     getAllTournaments,
     getNumRated,
     getNumJudges,
     getJudges,
     getTournamentById,
+    getTournamentByIdJudging,
     scrapeTournament,
     exportPrefsToCSV,
-    saveRoundType
+    saveRoundType,
 }

@@ -6,36 +6,45 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCheck, faSpinner, faBan} from '@fortawesome/free-solid-svg-icons'
 
-function TournPreview({tournament, index}) {
+function TournPreview({tournament, index, view}) {
     const {auth, setAuth} = useContext(AuthContext)
 
     // first value in prefData is how many are rated, second value is how many total judges
     const [prefData, setPrefData] = useState([])
+    const [judgingData, setJudgingData] = useState([])
 
     const [status, setStatus] = useState(["notAttending"])
 
     useEffect(()=>{
-      axios.get(`/api/tournaments/${tournament.id}`, {
-              headers: {
-                  Authorization: `Bearer ${auth?.accessToken}`,
-              },
-              withCredentials: true,}).then((res) => {
-            setPrefData(res.data)
-      })
-      .catch((err)=>console.log("Error getting all judges: ", err))
+        axios.get(`/api/tournaments/${tournament.id}`, {
+            headers: {
+                Authorization: `Bearer ${auth?.accessToken}`,
+            },
+            withCredentials: true,}).then((res) => {
+                setJudgingData(res.data.judging);
+                setPrefData(res.data.attending.prefData)
+        })
+        .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);
 
+
     useEffect(() => {
-        if (tournament.attending === 1 || tournament.judging === 1) {
+        if (view === "attending") {
             if (prefData.numRated === prefData.numTotal) {
                 setStatus("complete")
             } else {
                 setStatus("pending")
             }
+        } else if (view === "judging") {
+            if (judgingData.specified === judgingData.totalRounds) {
+                setStatus("complete");
+            } else {
+                setStatus("pending")
+            }
         } else {
-            setStatus("notAttending")
+            setStatus("notAttending");
         }
-    }, [prefData, tournament])
+    }, [prefData, view, judgingData])
 
     return (
         <tr key={index}>
