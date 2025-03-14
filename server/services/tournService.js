@@ -65,7 +65,7 @@ const getTournamentById = async({t_id}) => {
     const since_updated = now - last_updated
 
     if (end > now && since_updated > 2 * 60 * 60 * 1000) {
-        updateJudgeList({t_id, j_url: tournaments[0].j_url})
+        scraper.updateTournament({t_id, j_url: tournaments[0].j_url})
     }
 
     return tournaments[0];

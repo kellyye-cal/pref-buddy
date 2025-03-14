@@ -18,6 +18,30 @@ const getJudgeById = async({j_id, u_id}) => {
     return judge;
 }
 
+const getSpeaksById = async ({j_id}) => {
+    const sql = "SELECT s1, s2, s3, s4 FROM rounds WHERE judge_id = ?"
+    const [rounds] = await db.query(sql, [j_id])
+
+    let total = 0;
+    let num = 0;
+
+    for (let round = 0; round < rounds.length; round++) {
+        Object.values(rounds[round]).map(speak => {
+            if (speak) {
+                total += speak;
+                num += 1
+            }
+        })
+    }
+
+    if (num == 0) {
+        return "--";
+    }
+
+    return Math.round((total / num) * 10) / 10;
+
+}
+
 const getAllJudges = async({u_id}) => {
     const sql = "SELECT CONCAT(u.f_name, ' ', u.l_name) AS name, u.id, u.email, u.affiliation, r.rating FROM users as u LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON u.id = r.judge_id WHERE u.judge = 1 ORDER BY r.rating ASC"
 
@@ -117,9 +141,11 @@ const getParadigm = async({j_id}) => {
 
 module.exports = {
     getJudgeById,
+    getSpeaksById,
     getAllJudges,
     updateRating,
     getParadigm,
     saveNote,
     getNotes,
+    
 }

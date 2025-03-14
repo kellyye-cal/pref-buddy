@@ -18,7 +18,8 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 function JudgeProfile() {
     const {auth, setAuth} = useContext(AuthContext);
 
-    const [judgeData, setJudgeData] = useState([]); //to store fetched data
+    const [judgeData, setJudgeData] = useState([]);
+    const [judgeInfo, setJudgeInfo] = useState([]); //to store fetched data
     const [paradigm, setParadigm] = useState(["No paradigm."]);
 
     const [editingNotes, setEditingNotes] = useState(false);
@@ -30,7 +31,9 @@ function JudgeProfile() {
         axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data.judgeInfo);
+            setJudgeData(res.data)
+
+            setJudgeInfo(res.data.judgeInfo);
 
             setParadigm(res.data.paradigm)
 
@@ -47,7 +50,7 @@ function JudgeProfile() {
         }, {headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then(() => {
-            setJudgeData(prevJudges => prevJudges.map(judge => 
+            setJudgeInfo(prevJudges => prevJudges.map(judge => 
                 judge.id === judgeID ? {...judge, rating: newRating} : judge
             ));
         }).catch((err) => console.error("Error saving rating:", err));
@@ -55,7 +58,7 @@ function JudgeProfile() {
         axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data);
+            setJudgeInfo(res.data);
         })
         .catch((err)=>console.log(err))
     }
@@ -65,8 +68,8 @@ function JudgeProfile() {
             <NavBar />
             <div className="main">
                 <div>
-                    {judgeData && judgeData.length > 0 ? (
-                        judgeData.map((judge, index) => (
+                    {judgeInfo && judgeInfo.length > 0 ? (
+                        judgeInfo.map((judge, index) => (
                             <div>
                                 <div className="judgeProfTitle">
                                     <div>
@@ -99,7 +102,7 @@ function JudgeProfile() {
 
                                             <div className="stat-instance">
                                                 <h5> Speaker Pt Avg </h5>
-                                                <p className="stat-text"> -- </p>
+                                                <p className="stat-text"> {judgeData.avg_speaks} </p>
                                             </div>
                                         </div>
 
