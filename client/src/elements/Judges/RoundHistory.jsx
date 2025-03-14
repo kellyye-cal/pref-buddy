@@ -12,13 +12,17 @@ function RoundHistory({j_id}) {
             headers: {
                 Authorization: `Bearer ${auth?.accessToken}`,
             },
-            withCredentials: true,}).then((res) => {
-          setRounds(res.data)
-          console.log(res.data)
+            withCredentials: true}
+        ).then((res) => {
+            const sortedRounds = res.data.sort((a, b) => {
+                return new Date(b.start_date) - new Date(a.start_date); // for ascending order
+            });
+
+            setRounds(sortedRounds)
         }).catch((err)=>console.log("Error getting all judges: ", err))
     }, [])
 
-    console.log(rounds)
+    
 
     return (
         <div className="container container-spacing">

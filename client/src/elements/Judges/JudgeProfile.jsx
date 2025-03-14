@@ -114,6 +114,7 @@ function JudgeProfile() {
                                         <div style={{marginTop: 8, marginBottom: 8}}>
                                         <div className="stat-instance">
                                                 <h5> 24-25 Topic Round Stats </h5>
+
                                                 <p className="stat-text"> <span> Pol v. Pol ({stats.PvP.Aff}-{stats.PvP.Neg}) : </span> {Math.round(stats.PvP.Aff / (stats.PvP.Aff + stats.PvP.Neg) * 100)}% aff over {(stats.PvP.Aff + stats.PvP.Neg)} rounds </p>
                                                 <p className="stat-text"> <span> Pol v. K ({stats.PvK.Aff}-{stats.PvK.Neg}) : </span> {Math.round(stats.PvK.Aff / (stats.PvK.Aff + stats.PvK.Neg) * 100)}% aff over {(stats.PvK.Aff + stats.PvK.Neg)} rounds </p>
                                                 <p className="stat-text"> <span> K v. Pol ({stats.KvP.Aff}-{stats.KvP.Neg}) : </span> {Math.round(stats.KvP.Aff / (stats.KvP.Aff + stats.KvP.Neg) * 100)}% aff over {(stats.KvP.Aff + stats.KvP.Neg)} rounds </p>
