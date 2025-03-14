@@ -73,7 +73,7 @@ const saveNote = async({u_id, j_id, note}) => {
 }
 
 const getRoundsByJudge = async({j_id}) => {
-    const sql = "SELECT tournaments.name, tournament_id, judge_id, number, aff, neg, decision, elim_decision, round_type from rounds INNER JOIN tournaments ON tournament_id = tournaments. id WHERE judge_id = ?"
+    const sql = "SELECT tournaments.start_date, tournaments.name, tournament_id, judge_id, number, aff, neg, decision, elim_decision, round_type from rounds INNER JOIN tournaments ON tournament_id = tournaments. id WHERE judge_id = ?"
 
     const [rounds] = await db.query(sql, j_id)
     return rounds
@@ -167,7 +167,7 @@ const getJudgeStats = async ({j_id}) => {
             stats.KvP[round.decision] = stats.KvP[round.decision] + 1
         } else if (round.round_type === "K v. K") {
             stats.KvK[round.decision] = stats.KvK[round.decision] + 1
-        } else if (round.round_type === "T") {
+        } else if (round.round_type === "T/Theory") {
             stats.T[round.decision] = stats.T[round.decision] + 1
         }
     })
