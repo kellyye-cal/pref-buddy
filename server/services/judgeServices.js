@@ -72,6 +72,13 @@ const saveNote = async({u_id, j_id, note}) => {
     return {postResult}
 }
 
+const getRoundsByJudge = async({j_id}) => {
+    const sql = "SELECT tournaments.name, tournament_id, judge_id, number, aff, neg, decision, elim_decision, round_type from rounds INNER JOIN tournaments ON tournament_id = tournaments. id WHERE judge_id = ?"
+
+    const [rounds] = await db.query(sql, j_id)
+    return rounds
+}
+
 
 // const scrapeParadigm = async({j_id}) => {
 //     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
@@ -147,5 +154,5 @@ module.exports = {
     getParadigm,
     saveNote,
     getNotes,
-    
+    getRoundsByJudge,
 }

@@ -98,6 +98,15 @@ const scrapeTournament = async({url, u_id}) => {
     return result.data.tourn_id;
 }
 
+const saveRoundType = async ({t_id, round, j_id, type}) => {
+    const sql = `
+    UPDATE rounds
+    SET round_type = ?
+    WHERE tournament_id = ? AND number = ? AND judge_id = ?`
+    await db.query(sql, [type, t_id, round, j_id])
+    return
+}
+
 // const scrapeTournament = async({url, u_id}) => {
 
 //     const scriptPath = path.join(__dirname, '..', '..','scripts', 'scraper.py')
@@ -164,4 +173,5 @@ module.exports = {
     getTournamentById,
     scrapeTournament,
     exportPrefsToCSV,
+    saveRoundType
 }

@@ -794,3 +794,58 @@ input#filename {
   border-radius: 4px;
 
 }
+
+.round-history > thead > tr > th {
+  font-size: 10pt;
+}
+
+.round {
+  font-size: 10pt;
+  vertical-align: middle;
+}
+
+.unspecified {
+  background-color: rgba(118, 118, 128, 0.1);
+}
+
+.round-type {
+  width: 100%;
+  padding: 4px 12px;
+  display: flex;
+  justify-content: flex-start;
+
+  font-size: 10pt;
+}
+
+.round-type:hover {
+  background-color: rgba(219, 219, 237, 0.4);
+}
+
+.round-type>div {
+  padding: 2px 12px;
+  border-radius: 20px;
+}
+
+.unselected {
+  background-color: rgba(118, 118, 128, 0.1);
+}
+
+.pvp {
+  background-color: rgba(173, 207, 255, 0.6);
+}
+
+.pvk {
+  background-color: rgba(225, 201, 255, 0.6);
+}
+
+.kvp {
+  background-color: rgba(255, 196, 196, 0.6);
+}
+
+.kvk {
+  background-color: rgba(161, 255, 189, 0.6);
+}
+
+.theory {
+  background-color: rgba(255, 217, 197, 0.6);
+}

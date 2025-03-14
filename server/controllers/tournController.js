@@ -100,6 +100,18 @@ const exportPrefsToCSV = async (req, res) => {
 
 }
 
+const saveRoundType = async(req, res) => {
+    const {t_id, round, j_id, type} = req.body;
+
+    try {
+        await tournService.saveRoundType({t_id, round, j_id, type});
+        return res.status(200).json({type})
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({error: `Error getting round ${round} at ${t_id} for judge ${j_id}: `, err})
+    }
+}
+
 module.exports = {
     getMyTournaments,
     getAllTournaments,
@@ -107,4 +119,5 @@ module.exports = {
     getJudgesAtTourn,
     scrapeTournament,
     exportPrefsToCSV,
+    saveRoundType,
 }

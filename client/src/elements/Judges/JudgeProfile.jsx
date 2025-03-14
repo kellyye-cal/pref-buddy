@@ -13,6 +13,7 @@ import JudgeNotes from './JudgeNotes';
 import ReactMarkdown from 'react-markdown';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
+import RoundHistory from './RoundHistory';
 
 
 function JudgeProfile() {
@@ -136,6 +137,10 @@ function JudgeProfile() {
                                     <h3> Paradigm </h3>
                                     <div className="v-scroll"> <ReactMarkdown children={paradigm}/> </div> 
                                 </div>
+
+                                <RoundHistory j_id={id}/>
+
+    
                             </div>
                         ))
                     ) : (

@@ -80,7 +80,18 @@ const saveNote = async(req, res) => {
         res.sendStatus(204)
     } catch (error) {
         res.status(500).json({message: "Error updating rating", error})
+    }
+}
 
+const getRoundsByJudge = async(req, res) => {
+    const j_id = req.params.id;
+    const u_id = req.query.u_id;
+
+    try {
+        const rounds = await judgeServices.getRoundsByJudge({j_id});
+        return res.json(rounds)
+    } catch (error) {
+        res.status(500).json({message: `Error getting rounds for judge ${j_id}: `, error})
     }
 }
 
@@ -90,4 +101,5 @@ module.exports = {
     setRating,
     getNotes,
     saveNote,
+    getRoundsByJudge,
 }
