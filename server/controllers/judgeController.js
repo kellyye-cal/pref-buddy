@@ -13,6 +13,7 @@ const getJudgeById = async(req, res) => {
     var judgeInfo;
     var paradigm = ""
     var avg_speaks;
+    var stats;
 
     try {
         judgeInfo = await judgeServices.getJudgeById({j_id, u_id});
@@ -32,7 +33,13 @@ const getJudgeById = async(req, res) => {
         res.status(500).json({message: "Error getting average speaks", error})
     }
 
-    return res.json({judgeInfo, paradigm, avg_speaks})
+    try {
+        stats = await judgeServices.getJudgeStats({j_id})
+    } catch (error) {
+        res.status(500).json({message: "Error getting stats", error})
+    }
+
+    return res.json({judgeInfo, paradigm, avg_speaks, stats})
 
 }
 

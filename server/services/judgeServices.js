@@ -146,6 +146,35 @@ const getParadigm = async({j_id}) => {
     }
 }
 
+const getJudgeStats = async ({j_id}) => {
+    const sql = "SELECT round_type, decision FROM rounds WHERE judge_id = ?"
+    const [results] = await db.query(sql, j_id)
+
+    stats = {
+        PvP: {Aff: 0, Neg: 0},
+        PvK: {Aff: 0, Neg: 0},
+        KvP: {Aff: 0, Neg: 0},
+        KvK: {Aff: 0, Neg: 0},
+        T: {Aff: 0, Neg: 0},
+    }
+    
+    results.map(round => {
+        if (round.round_type === "Policy v. Policy") {
+            stats.PvP[round.decision] = stats.PvP[round.decision] + 1
+        } else if (round.round_type === "Policy v. K") {
+            stats.PvK[round.decision] = stats.PvK[round.decision] + 1
+        } else if (round.round_type === "K v. Policy") {
+            stats.KvP[round.decision] = stats.KvP[round.decision] + 1
+        } else if (round.round_type === "K v. K") {
+            stats.KvK[round.decision] = stats.KvK[round.decision] + 1
+        } else if (round.round_type === "T") {
+            stats.T[round.decision] = stats.T[round.decision] + 1
+        }
+    })
+
+    return stats;
+}
+
 module.exports = {
     getJudgeById,
     getSpeaksById,
@@ -155,4 +184,5 @@ module.exports = {
     saveNote,
     getNotes,
     getRoundsByJudge,
+    getJudgeStats
 }
