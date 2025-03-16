@@ -12,11 +12,15 @@ import Home from './elements/Home/Home'
 import JudgeProfile from './elements/Judges/JudgeProfile'
 // import Judges from './elements/Judges/Judges'
 import Tournaments from './elements/Tournaments/Tournaments'
+
 import TournPage from './elements/Tournaments/TournPage'
 import CreateAccount from './elements/Auth/CreateAccounts'
-import RoundHistory from './elements/Judges/RoundHistory'
 import JudgeHistory from './elements/Judges/JudgeHistory'
+import Public from './elements/Public/Public'
 
+import PublicTournaments from './elements/Public/PublicTournaments'
+import PublicJudges from "./elements/Public/PublicJudges"
+import PublicTournPage from './elements/Public/PublicTournPage'
 function AppRoutes() {
     useAxiosInterceptors();
 
@@ -101,11 +105,16 @@ function AppRoutes() {
                 </ProtectedRoute>
             } />
 
+            <Route path="/public" element={<Public />} />
+            <Route path="/public/tournaments" element={<PublicTournaments />} />
+            <Route path="/public/tournaments/:id" element={<PublicTournPage />} />
+            <Route path="/public/judges" element={<PublicJudges />} />
+
             <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
             <Route path='/register' element={(auth.accessToken && auth.admin === 1) ? <ProtectedRoute> <CreateAccount /> </ProtectedRoute> : <Navigate to="/login" />}/>
             <Route path='logout' element={<Logout />} />
 
-            <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/login" />} />
+            <Route exact path='/' element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Navigate to="/public" />} />
 
             {/* <Route path="/judges" element={auth.accessToken ? <ProtectedRoute> <Judges />  </ProtectedRoute> : <Navigate to="/login" />}/> */}
             <Route path='/judges/JudgeProfile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />

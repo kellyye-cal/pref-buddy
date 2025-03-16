@@ -1,0 +1,16 @@
+.top-nav {
+    font-weight: 600;
+    margin: 20px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-nav>div>*{
+    margin: 2px 12px;
+}
+
+.public-main {
+    margin: 20px 60px;
+}

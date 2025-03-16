@@ -144,8 +144,6 @@ function JudgeProfile() {
                                 </div>
 
                                 <RoundHistory j_id={id}/>
-
-    
                             </div>
                         ))
                     ) : (
