@@ -1,6 +1,6 @@
 .top-nav {
     font-weight: 600;
-    margin: 20px 40px;
+    margin: 20px 60px;
 
     display: flex;
     align-items: center;
@@ -14,3 +14,8 @@
 .public-main {
     margin: 20px 60px;
 }
+
+.top-nav *.active {
+    color: #2680FF;
+    font-weight: 800;
+  }

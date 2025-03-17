@@ -165,11 +165,10 @@ function RoundDisplay({rounds, displayTournament, displayJudge, publicView, judg
         <tbody>
           {groupedRounds.map((round, index) => (
             <tr key={index} className="round">
-                {displayTournament ? <td> {round.name} </td> : <> </>}
+                {displayTournament ? <td className="hover-link"> <NavLink to={`/public/tournaments/${round.tournament_id}`}> {round.name} </NavLink></td> : <> </>}
                 <td> {round.number}</td>
                 <td> {round.decision === "Aff" ? <b> {round.aff} </b> : <span> {round.aff} </span>}</td>
                 <td> {round.decision === "Neg" ? <b> {round.neg} </b> : <span> {round.neg} </span> } </td>
-                {console.log(round)}
                 {displayJudge ? 
                   <td>
                     {round.judges.map((judge, judge_index) =>
