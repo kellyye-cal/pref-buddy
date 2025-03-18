@@ -11,12 +11,7 @@ const getAllTournaments = async() => {
 }
 
 const getRoundsSpecified = async(id) => {
-    const sql = `
-    SELECT
-        COUNT(*) AS total_entries,
-        COUNT(CASE WHEN round_type IS NULL OR round_type = '' THEN 1 END) AS empty
-    FROM rounds
-    WHERE rounds.tournament_id = ?;`
+    const sql = "SELECT COUNT(*) AS total_entries, COUNT(CASE WHEN round_type IS NULL OR round_type = '' THEN 1 END) AS `empty` FROM rounds WHERE rounds.tournament_id = ?"
 
     const [roundsSpecified] = await db.query(sql, [id])
     return roundsSpecified;
