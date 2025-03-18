@@ -915,3 +915,40 @@ input#filename {
 .judge-search-results:hover>:nth-child(1) {
   text-decoration: underline #333 solid 1px;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 200px;
+
+  padding: 4px 8px;
+  background-color: #F3F3F3;
+  border-radius: 4px;
+
+
+  position: absolute;
+  z-index: 1;
+
+  right: 120%;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 0.3s;
+
+  font-size: 10pt;
+
+}
+
+
+.tooltip-container:hover .tooltip-text {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
+

@@ -10,6 +10,7 @@ function TopNav() {
             <div>
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/public/tournaments"> Tournaments </NavLink>
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/public/judges"> Judges </NavLink>
+                <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/contributions"> Contribute </NavLink>
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/login"> Login </NavLink>
             </div>
         </div>

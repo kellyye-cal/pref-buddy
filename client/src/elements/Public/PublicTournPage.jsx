@@ -5,6 +5,7 @@ import RoundDisplay from "../Tournaments/RoundDisplay";
 import TopNav from "./TopNav"
 import Dropdown from "../Dropdown";
 
+import { NavLink } from "react-router-dom";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons'
@@ -55,7 +56,13 @@ function PublicTournPage() {
         <div>
             <TopNav />
             <div className="public-main">
-            <h3> {tournament.name} </h3>
+                <h3> {tournament.name} </h3>
+                <div className="disclaimer">
+                    <div> ❓ </div>
+                    Rounds for this tournament were scraped from Tabroom. The round type
+                    is specified by members of the community. If you would like to contribute information
+                    about a round, please see this <NavLink to="/contributions" target="_blank" rel="noopener noreferrer" style={{textDecoration: "underline #333 solid 1px"}}> page</NavLink>.
+                </div>
                 <div style={{marginBottom: 12}}>
                     <button className="pill sort" ref={roundSelectorRef} onClick={reverseRoundSelector}>
                         {parseInt(selectedRound.substring(1)) ? "Round" : ""} {selectedRound.substring(1)}

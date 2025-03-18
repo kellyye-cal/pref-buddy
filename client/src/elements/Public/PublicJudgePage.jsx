@@ -5,7 +5,8 @@ import ReactMarkdown from 'react-markdown';
 
 import TopNav from "./TopNav";
 import RoundDisplay from "../Tournaments/RoundDisplay";
-
+import { FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faQuestionCircle} from '@fortawesome/free-regular-svg-icons'
 
 
 function PublicJudgePage() {
@@ -27,21 +28,32 @@ function PublicJudgePage() {
         });
     }, []) 
 
-    console.log(stats)
 
     return (
         <div>
             <TopNav />
-            
-            
+        
             <div class="public-main">
                 <div>
-                    <h1> {judgeInfo.f_name + ' ' + judgeInfo.l_name} </h1>
+                    <a className="hover-link" target="_blank" rel="noopener noreferrer" href={`https://www.tabroom.com/index/paradigm.mhtml?judge_person_id=${id}`}>
+                        <h1 style={{marginBottom: 0}}> {judgeInfo.f_name + ' ' + judgeInfo.l_name} </h1>
+                    </a>
                     <h4> {judgeInfo.affiliation}</h4>
                 </div>
 
                 <div className="container-spacing container">
-                    <h3 style={{margin: 0}}> Stats </h3>
+                    <div className="h-between align-center">
+                        <h3 style={{margin: 0}}> Stats </h3>
+                        <div className="tooltip-container">
+                            <span className="tooltip-text">
+                                The speaker point average is calculated from rounds at bid tournaments during the 2024-2025 season.
+                                <br />
+                                <br />
+                                The stats are calculated based on round reports submitted by the community. To contribute, see the "Contribute" page.
+                            </span>
+                            <FontAwesomeIcon icon={faQuestionCircle}/>
+                        </div>
+                    </div>
 
                     <div className="h-between" style={{marginTop: 8, marginBottom: 8, flexWrap: "wrap", gap: 8}}>
                         <div className="stat-instance">
@@ -67,7 +79,18 @@ function PublicJudgePage() {
                 </div>
 
                 <div className="container container-spacing">
-                    <h3> Round History</h3>
+                    <div className="h-between align-center">
+                        <h3 style={{margin: 0}}> Stats </h3>
+                        <div className="tooltip-container">
+                            <span className="tooltip-text">
+                                Rounds are scraped from tabroom.com for the 2024-2025 school year.
+                                <br />
+                                <br />
+                                Round reports are submitted by the community. See the "Contribute" page if you want to help out.
+                            </span>
+                            <FontAwesomeIcon icon={faQuestionCircle}/>
+                        </div>
+                    </div>
                     <RoundDisplay rounds={rounds} displayTournament={true} displayJudge={false} publicView={true} judgeLink={""} groupElims={false} />
                 </div>
 

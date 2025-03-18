@@ -22,6 +22,7 @@ import PublicTournaments from './elements/Public/PublicTournaments'
 import PublicJudges from "./elements/Public/PublicJudges"
 import PublicTournPage from './elements/Public/PublicTournPage'
 import PublicJudgePage from './elements/Public/PublicJudgePage'
+import Contributions from './elements/Public/Contributions'
 
 function AppRoutes() {
     useAxiosInterceptors();
@@ -112,6 +113,7 @@ function AppRoutes() {
             <Route path="/public/tournaments/:id" element={<PublicTournPage />} />
             <Route path="/public/judges" element={<PublicJudges />} />
             <Route path="/public/judges/:id" element={<PublicJudgePage />} />
+            <Route path="/contributions" element={<Contributions />} />
 
             <Route path="/login" element={auth.accessToken ? <Navigate to={`/home/${auth.userId}`} /> : <Login />} />
             <Route path='/register' element={(auth.accessToken && auth.admin === 1) ? <ProtectedRoute> <CreateAccount /> </ProtectedRoute> : <Navigate to="/login" />}/>

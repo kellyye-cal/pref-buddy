@@ -165,7 +165,14 @@ function RoundDisplay({rounds, displayTournament, displayJudge, publicView, judg
         <tbody>
           {groupedRounds.map((round, index) => (
             <tr key={index} className="round">
-                {displayTournament ? <td className="hover-link"> <NavLink to={`/public/tournaments/${round.tournament_id}`}> {round.name} </NavLink></td> : <> </>}
+                {displayTournament ? 
+                  <td className="hover-link">
+                    <NavLink target="_blank" rel="noopener noreferrer"
+                      to={publicView ? `/public/tournaments/${round.tournament_id}` : `/tournaments/${round.tournament_id}`}>
+                        {round.name}
+                    </NavLink>
+                    </td>
+                : <> </>}
                 <td> {round.number}</td>
                 <td> {round.decision === "Aff" ? <b> {round.aff} </b> : <span> {round.aff} </span>}</td>
                 <td> {round.decision === "Neg" ? <b> {round.neg} </b> : <span> {round.neg} </span> } </td>
@@ -173,7 +180,7 @@ function RoundDisplay({rounds, displayTournament, displayJudge, publicView, judg
                   <td>
                     {round.judges.map((judge, judge_index) =>
                       <span key={judge_index}>
-                        <NavLink className="hover-link" to={`${judgeLink}/${judge[1]}`}> {judge[0]} </NavLink>
+                        <NavLink target="_blank" and rel="noopener noreferrer" className="hover-link" to={`${judgeLink}/${judge[1]}`}> {judge[0]} </NavLink>
                         {judge_index < round.judges.length - 1 && ", "}
                       </span>
                     )}
