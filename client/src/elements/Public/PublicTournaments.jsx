@@ -13,7 +13,10 @@ function PublicTournaments() {
         axios.get(`/api/public/alltournaments`,
             {headers: {'Content-Type': 'application/json'}, withCredentials: true}
         ).then((res) => {
-            setTournaments(res.data);
+            const sortedTournaments = res.data.sort((a, b) => {
+                return (new Date(a.start_date) - new Date(b.start_date))
+            })
+            setTournaments(sortedTournaments);
         }).catch((error) => {
             console.error("Error getting all tournaments: ", error)
         });

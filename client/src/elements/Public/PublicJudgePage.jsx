@@ -21,12 +21,18 @@ function PublicJudgePage() {
             {headers: {'Content-Type': 'application/json'}, withCredentials: true}
         ).then((res) => {
             setJudgeInfo(res.data.judgeInfo[0]);
-            setRounds(res.data.rounds);
+            const sortedRounds = res.data.rounds.sort((a, b) => {
+                return (new Date(a.start_date) - new Date(b.start_date))
+            })
+            setRounds(sortedRounds);
             setStats(res.data.stats);
         }).catch((error) => {
             console.error("Error getting all tournaments: ", error)
         });
     }, []) 
+
+    console.log(rounds)
+
 
 
     return (

@@ -59,9 +59,11 @@ function PublicTournPage() {
                 <h3> {tournament.name} </h3>
                 <div className="disclaimer">
                     <div> ❓ </div>
-                    Rounds for this tournament were scraped from Tabroom. The round type
-                    is specified by members of the community. If you would like to contribute information
-                    about a round, please see this <NavLink to="/contributions" target="_blank" rel="noopener noreferrer" style={{textDecoration: "underline #333 solid 1px"}}> page</NavLink>.
+                    <div>
+                        Rounds for this tournament were scraped from Tabroom. The round type
+                        is specified by members of the community. If you would like to contribute information
+                        about a round, please see this <NavLink to="/contributions" target="_blank" rel="noopener noreferrer" style={{textDecoration: "underline #333 solid 1px"}}> page</NavLink>.
+                    </div>
                 </div>
                 <div style={{marginBottom: 12}}>
                     <button className="pill sort" ref={roundSelectorRef} onClick={reverseRoundSelector}>

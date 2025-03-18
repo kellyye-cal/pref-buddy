@@ -47,7 +47,7 @@ function Public() {
                         My ultimate goal is allow people to log in and rate judges. I want each user to be able to track
                         judges across all tournaments that they have attended or plan on attending, and set ratings with ease.
 
-                        Here is my <a target="_blank" href="https://www.figma.com/design/NzjAgbv99iADlHR8EHuFBn/PrefBuddy?node-id=0-1&t=3BJBC34riiYBB2bf-1"> Figma file</a> as a proof of concept.
+                        Here is my <a target="_blank" rel="noreferrer" href="https://www.figma.com/design/NzjAgbv99iADlHR8EHuFBn/PrefBuddy?node-id=0-1&t=3BJBC34riiYBB2bf-1"> Figma file</a> as a proof of concept.
                     </p>
 
                     <p>

@@ -3,7 +3,7 @@
 const {db} = require('./utils');
 
 const getAllTournaments = async() => {
-    const sql = "SELECT * FROM tournaments"
+    const sql = "SELECT * FROM tournaments WHERE id != 34410"
     
     const [tournaments] = await db.query(sql)
     return tournaments;
@@ -37,9 +37,9 @@ const getTournamentById = async(id) => {
 
 const searchJudges = async(searchTerm) => {
     
-    const sql = "SELECT id, CONCAT(f_name, ' ', l_name) AS name, affiliation FROM users WHERE LOWER(CONCAT(f_name, ' ', l_name)) LIKE ?"
+    const sql = "SELECT id, CONCAT(f_name, ' ', l_name) AS name, affiliation FROM users WHERE LOWER(CONCAT(f_name, ' ', l_name)) LIKE ? AND `id` != ?"
 
-    const [results] = await db.query(sql, [`%${searchTerm}%`])
+    const [results] = await db.query(sql, [`%${searchTerm}%`, 0])
 
     return results;
 }

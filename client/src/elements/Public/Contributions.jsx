@@ -5,7 +5,7 @@ function Contributions() {
     return (
         <div>
             <TopNav />
-            <div className="public-main">
+            <div className="public-main public-home">
                 <h1> 🤝 Contribute to PrefBuddy </h1>
 
                 <div>
@@ -30,9 +30,9 @@ function Contributions() {
                 <div>
                     <h2> ☕️ Buy me a Coffee </h2>
                     <p> I am volunteering my time & paying for services like Vercel, Heroku, JawsDB to host this web application.
-                        My ultimate goal is to build more features, as outlined here. However, to scale such features to more members of the 
+                        My ultimate goal is to build <a target="_blank" rel="noreferrer" href="https://www.figma.com/design/NzjAgbv99iADlHR8EHuFBn/PrefBuddy?node-id=0-1&t=5xjiVACiO01CRNZO-1"> more features</a>. However, to scale such features to more members of the 
                         community, I need to pay for higher tiers on deployment services. If you want to continue to support this project, please
-                        continue contributing on my Buy me a Coffee.
+                        consider contributing by buying me a <a target="_blank" rel="noreferrer" href="https://buymeacoffee.com/kellyye"> coffee</a>.
                     </p>
                 </div>
 

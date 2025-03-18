@@ -7,6 +7,7 @@ import { sanitizeInput } from '../Utils';
 import './Auth.css';
 
 import axios from '../../api/axios';
+import TopNav from '../Public/TopNav';
 
 function Login() {
     const {auth, setAuth} = useContext(AuthContext);
@@ -77,44 +78,49 @@ function Login() {
     return (
         <>
         {!loggingIn ?
-            <div className="auth-page">
-                <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
-                <h1> Welcome to PrefBuddy! </h1>
+            <div>
+                <TopNav />
+                <div className="auth-page">
+                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
+                    <h1> Welcome to PrefBuddy! </h1>
 
-                <form className="auth-form" onSubmit={handleSubmit}>
-                    <h3> Log In</h3>
+                    <form className="auth-form" onSubmit={handleSubmit}>
+                        <h3> Log In</h3>
 
-                    <div className="form-field">
-                        <label htmlFor="email"> Email address<span>*</span> </label>
-                        <input
-                            type="email"
-                            id="email"
-                            ref={userRef}
-                            onChange={(e) => setUser(sanitizeInput(e.target.value))}
-                            value={email}
-                            required
-                        />
-                    </div>
+                        <div className="form-field">
+                            <label htmlFor="email"> Email address<span>*</span> </label>
+                            <input
+                                type="email"
+                                id="email"
+                                ref={userRef}
+                                onChange={(e) => setUser(sanitizeInput(e.target.value))}
+                                value={email}
+                                required
+                            />
+                        </div>
 
-                    <div className="form-field">
-                        <label htmlFor="password"> Password<span>*</span> </label>
-                        <input
-                            type="password"
-                            id="password"
-                            onChange={(e) => setPwd(sanitizeInput(e.target.value))}
-                            value={pwd}
-                            required
-                        />
-                    </div>
+                        <div className="form-field">
+                            <label htmlFor="password"> Password<span>*</span> </label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={(e) => setPwd(sanitizeInput(e.target.value))}
+                                value={pwd}
+                                required
+                            />
+                        </div>
 
-                    <button className="cta"> Sign In </button>
-                    {/* <p> Don't have an account?
-                    <span style={{paddingLeft: 2}}>
-                        <Link to="/register"> Sign up instead! </Link>
-                    </span> </p> */}
-                </form>
+                        <button className="cta"> Sign In </button>
+                        {/* <p> Don't have an account?
+                        <span style={{paddingLeft: 2}}>
+                            <Link to="/register"> Sign up instead! </Link>
+                        </span> </p> */}
+                    </form>
+                </div>
             </div>
         : 
+        <div>
+            <TopNav />
             <div className="auth-page">
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive"> {errMsg} </p>
                 <h1> Welcome to PrefBuddy! </h1>
@@ -123,6 +129,7 @@ function Login() {
                         <h3> Logging in... </h3>
                 </form>
             </div>
+        </div>
         }
         </>
     )
