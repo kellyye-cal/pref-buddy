@@ -36,6 +36,11 @@ function Contributions() {
                     </p>
                 </div>
 
+                <div>
+                    <h2> 🐞 Report a Bug </h2>
+                    <iframe title="bug-report" src="https://kellyye.notion.site/ebd/1ba08fc0dee1809cb1ddd4ace4a203c0" width="100%" height="400" frameborder="0" allowfullscreen />
+                </div>
+
                 <h2> 🫶🏻 Thank you so much for your help! </h2>
             </div>
         </div>
