@@ -1,4 +1,4 @@
-require('dotenv').config({path: '../../.env.development'});
+// require('dotenv').config({path: '../../.env.development'});
 
 const {db} = require('./utils');
 

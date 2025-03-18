@@ -10,6 +10,7 @@ const getAllTournaments = async(req, res) => {
         }
         return res.json(tournaments)
     } catch (error) {
+        console.error(error)
         return res.status(500).json({error: "Error fetching all tournaments"});
     }
 }
