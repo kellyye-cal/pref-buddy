@@ -55,8 +55,6 @@ function TournamentCard({userID, tourn}) {
         .catch((err)=>console.log("Error getting all judges: ", err))
     }, []);
 
-    // for each tournament, get number of judges attending and number of judges ranked using tourn.i
-
     return (
         <Link className="container-hover" to={`/tournaments/${tourn.tournament_id}`} style={styles.container}>
             <ProgressRing progress={prefData.numRated} full={prefData.numTotal}/>

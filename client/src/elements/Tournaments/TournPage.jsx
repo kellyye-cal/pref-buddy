@@ -33,7 +33,7 @@ function TournPage() {
     const [category, setCategory] = useState("Rating")
     const [asc, setAsc] = useState(true)
 
-    const [filters, setFilters] = useState([])
+    // const [filters, setFilters] = useState([])
 
     useEffect(()=>{
         // Get the tournament information

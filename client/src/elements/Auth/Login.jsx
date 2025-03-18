@@ -1,7 +1,7 @@
 import React from 'react'
 import {useRef, useState, useEffect, useContext} from 'react';
 import AuthContext from "../../context/AuthProvider"
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { sanitizeInput } from '../Utils';
 
 import './Auth.css';

@@ -19,6 +19,7 @@ if (env === 'development') {
 const authRoutes = require('./routes/authRoutes')
 const tournRoutes = require('./routes/tournRoutes')
 const judgeRoutes = require('./routes/judgeRoutes')
+const publicRoutes = require('./routes/publicRoutes')
 
 // create instance of express application, backbone of the server
 const app = express()
@@ -61,6 +62,7 @@ const db = mysql.createConnection({
 app.use('/api/auth', authRoutes)
 app.use('/api/tournaments', tournRoutes)
 app.use('/api/judges', judgeRoutes)
+app.use('/api/public', publicRoutes)
 app.use("/exports", express.static("public/exports"));
 
 

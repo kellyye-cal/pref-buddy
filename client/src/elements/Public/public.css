@@ -1,0 +1,39 @@
+.top-nav {
+    font-weight: 600;
+    margin: 20px 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-nav>div>*{
+    margin: 2px 12px;
+}
+
+.public-main {
+    margin: 20px 60px;
+}
+
+.top-nav *.active {
+    color: #2680FF;
+    font-weight: 800;
+}
+
+.disclaimer {
+    font-weight: 600;
+    margin: 8px 0px 28px 0px;
+
+    display: flex;
+    gap: 4px;
+}
+
+.disclaimer > div {
+    font-weight: 500;
+}
+
+.public-home > div > p > a {
+    color: #2680FF;
+    font-weight: 500;
+    text-decoration: solid underline #2680FF;
+}

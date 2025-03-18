@@ -54,7 +54,7 @@ function TournPreview({tournament, index, view}) {
                     status === "pending" ? <FontAwesomeIcon style={{color: "#f3a72d"}} icon={faSpinner} /> :
                     <FontAwesomeIcon style={{color: "#ff2c2c"}} icon={faBan} />
                         }
-                 </td>
+                </td>
         </tr>
     )
 }
