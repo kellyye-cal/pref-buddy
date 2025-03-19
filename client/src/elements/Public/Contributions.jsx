@@ -12,11 +12,10 @@ function Contributions() {
                     <h2> 🔍 Identifying Rounds </h2>
                     <p>
                         I'm scraping rounds from the 2024-2025 bid tournaments right now. From Tabroom, I am able to
-                        gather win results & speaker points, but I need help identifying round types (Policy vs. Policy, K vs. K, etc). 
+                        gather win results & speaker points, but I need help identifying round types. 
                     </p>
 
-                    <p> You can visit this spreadsheet and add a comment in the "Round Type" field for your round(s).
-                        I am identifying the round type as one of five categories:
+                    <p> The round type categories are as follows:
                         <div style={{marginLeft: 12, marginTop: 8, fontWeight: 500}}>
                             <p> 1️⃣ Policy vs. Policy</p>
                             <p> 2️⃣ Policy vs. K</p>
@@ -25,6 +24,18 @@ function Contributions() {
                             <p> 5️⃣ T / Theory </p>
                         </div>
                     </p>
+
+                    <p> If you want to help, please <a target="_blank" rel="noreferrer" href="https://kellyye.notion.site/1bb08fc0dee18002857ff253afa9b41b?pvs=105"> submit</a> a spreadsheet with the following format:
+                        <div style={{marginLeft: 12, marginTop: 8, fontWeight: 500}}>
+                                <p> 1️⃣ Tournament Name</p>
+                                <p> 2️⃣ Round Number</p>
+                                <p> 3️⃣ Judge Name(s) </p>
+                                <p> 4️⃣ Round Type (1 of the 5 categories above) </p>
+                        </div>
+                    </p>
+
+                    <iframe title="contribute-form" src="https://kellyye.notion.site/ebd/1bb08fc0dee18002857ff253afa9b41b" width="100%" height="400" frameborder="0" allowfullscreen style={{marginBottom: 20}}/>
+
                 </div>
 
                 <div>
@@ -41,7 +52,7 @@ function Contributions() {
                     <iframe title="bug-report" src="https://kellyye.notion.site/ebd/1ba08fc0dee1809cb1ddd4ace4a203c0" width="100%" height="400" frameborder="0" allowfullscreen />
                 </div>
 
-                <h2> 🫶🏻 Thank you so much for your help! </h2>
+                <h2 style={{margin: "20px 0px"}}> 🫶🏻 Thank you so much for your help! </h2>
             </div>
         </div>
     )
