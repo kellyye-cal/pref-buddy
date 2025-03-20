@@ -32,8 +32,13 @@ function PublicTournaments() {
 
                     <div>
                 
-                        I'm in the process of scraping rounds for all bid tournaments from the 2024-2025 school year.
-                        The status is denoted as follows:
+                        I'm in the process of scraping rounds for all bid tournaments from the 2024-2025 school year. Please note that not
+                        all bid tournaments will be listed yet.
+
+                        <br />
+                        <br />
+
+                        The status for scraping a tournament is denoted as follows:
 
                         <div> <FontAwesomeIcon icon={faCheck} style={{color: "#148943"}}/> : All rounds scraped & all round reports finished </div>
                         <div> <FontAwesomeIcon icon={faSpinner} style={{color: "#f3a72d"}}/> : All rounds scraped but missing round reports </div>

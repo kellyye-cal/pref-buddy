@@ -9,8 +9,8 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Kelly Ye",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2"
   }
