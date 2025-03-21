@@ -36,6 +36,8 @@ function RoundDisplay({rounds, displayTournament, displayJudge, publicView, judg
 
         if (grouped[key].votes.aff > grouped[key].votes.neg) {
           grouped[key].decision = "Aff"
+        } else {
+          grouped[key].decision = "Neg"
         }
 
         if (round.round_type) {
