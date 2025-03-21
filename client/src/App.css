@@ -123,11 +123,22 @@ h5 {
   font-weight: 900;
 
   line-height: 90%;
+  margin: 12px 0;
 
+}
+
+#big-logo {
   margin: 12px 0;
 }
 
-#logo:hover {
+#big-logo * {
+  font-size: 26pt;
+  font-weight: 900;
+
+  line-height: 90%;
+}
+
+#big-logo>*:hover {
   font-weight: 900;
 }
 

@@ -1,7 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import { NavLink } from "react-router-dom";
 
+import AuthContext from '../../context/AuthProvider';
+
+
 function TopNav() {
+    const {auth} = useContext(AuthContext);
+
     return (
 
         <div className="top-nav">
@@ -11,7 +16,13 @@ function TopNav() {
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/public/tournaments"> Tournaments </NavLink>
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/public/judges"> Judges </NavLink>
                 <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/contributions"> Contribute </NavLink>
-                <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/login"> Login </NavLink>
+                {auth.loggedOut ?
+                    <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/login"> Login </NavLink>
+                : auth.userId && !auth.loggedOut ?
+                    <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/myprofile/${auth.userId}`}> Dashboard </NavLink>
+                :
+                    <></>
+                }
             </div>
         </div>
 

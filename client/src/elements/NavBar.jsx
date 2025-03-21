@@ -18,8 +18,11 @@ function NavBar() {
 
     return (
         <div id="navbar">
-            <div id="logo"> Pref Buddy </div>
-            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/home/${auth.userId}`}> Home </NavLink>
+            <NavLink to="/public" id="big-logo">
+                <span style={{color: "#373C58"}}>Pref</span>
+                <span style={{color: "#729AF0"}}><br/> Buddy</span>
+            </NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/home/${auth.userId}`}> Dashboard </NavLink>
             {/* <NavLink activeClassName='active'> Settings </NavLink> */}
 
             <hr className="nav-line" style={{padding: 0}}/>
