@@ -51,7 +51,7 @@ I am volunteering my time & paying for services like Vercel, Heroku, JawsDB to h
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white) ![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=for-the-badge&logo=numpy&logoColor=white)
 
 - 🌀 Version Control, Documentation & Project Management
-![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) - ⚙️ ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
+![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
 
 - 🎨 Design
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
@@ -59,7 +59,7 @@ I am volunteering my time & paying for services like Vercel, Heroku, JawsDB to h
 # 🛠️ Release Notes
 🍾 [1.0: Initial Release](/release-notes/release-1.0.md)
 
-# 🔗 Releavnt Links
+# 🔗 Relevant Links
 - [Buy Me a Coffee](https://buymeacoffee.com/kellyye)
 - [Round Report Contributions](https://kellyye.notion.site/1bb08fc0dee18002857ff253afa9b41b?pvs=105)
 - [Report Bugs + Give Feedback](https://kellyye.notion.site/1ba08fc0dee1809cb1ddd4ace4a203c0?pvs=105)
