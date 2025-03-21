@@ -42,7 +42,6 @@ function JudgeProfile() {
             setJudgeNotes(res.data.judgeInfo[0].notes)
 
             setStats(res.data.stats);
-            console.log(res.data.stats)
         })
         .catch((err)=>console.log(err))
     }, []);
@@ -75,7 +74,7 @@ function JudgeProfile() {
                 <div>
                     {judgeInfo && judgeInfo.length > 0 ? (
                         judgeInfo.map((judge, index) => (
-                            <div>
+                            <div key={index}>
                                 <div className="judgeProfTitle">
                                     <div>
                                         <h1> {judge.name} </h1>

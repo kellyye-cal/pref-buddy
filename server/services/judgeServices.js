@@ -61,7 +61,12 @@ const getNotes = async({u_id, j_id}) => {
     const sql = "SELECT notes FROM ranks WHERE judge_id = ? AND ranker_id = ?"
 
     const [notes] = await db.query(sql, [j_id, u_id])
-    return {notes}
+
+    if (notes.length == 0) {
+        db.query("INSERT INTO ranks (judge_id, ranker_id) VALUES (?, ?)", [j_id, u_id])
+        return ({notes: ""})
+    }
+    return (notes[0])
 
 }
 

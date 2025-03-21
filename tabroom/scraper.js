@@ -42,6 +42,10 @@ async function scrapeTournInfo({tournURL, judgesURL}) {
 }
 
 async function scrapeJudges({url}) {
+    if (!url) {
+        return
+    }
+
     const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
 

@@ -51,7 +51,7 @@ function Login() {
             sessionStorage.setItem('userId', response?.data.userId);
             sessionStorage.setItem('name', name)
 
-            setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin});
+            setAuth({accessToken, userId: userID, loggedOut: false, name, admin: response?.data?.admin, judge: response?.data?.judge});
 
             setUser('');
             setPwd('');

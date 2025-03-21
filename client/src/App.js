@@ -23,7 +23,7 @@ function App() {
             loggedOut: false,
             name: storedName
         });
-        console.log('setting auth by retrieving from session storage', storedAccessToken)
+        // console.log('setting auth by retrieving from session storage', storedAccessToken)
     } else if (auth?.loggedOut || !auth?.accessToken) {
       return
     } else if (!auth?.loggedOut && auth.accessToken) {
@@ -46,7 +46,7 @@ function App() {
 
         if (newAccessToken !== auth.accessToken) {
           setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
-          console.log("access token being refreshed", auth, newAccessToken)
+          // console.log("access token being refreshed", auth, newAccessToken)
 
           sessionStorage.setItem('accessToken', newAccessToken);
         }

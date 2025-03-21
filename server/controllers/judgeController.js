@@ -73,7 +73,7 @@ const getNotes = async(req, res) => {
     const {u_id, j_id} = req.query;    
     try {
         const result = await judgeServices.getNotes({u_id, j_id});
-        return res.json(result.notes)
+        return res.json({notes: result.notes})
     } catch (error) {
         res.status(500).json({message: "Error fetching notes", error})
     }

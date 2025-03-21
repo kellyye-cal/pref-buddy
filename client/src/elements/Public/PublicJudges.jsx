@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import TopNav from "./TopNav";
+import Spinner from "../Spinner"
 
 import axios from '../../api/axios'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
+import {faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 
 
 function PublicJudges() {
@@ -14,6 +15,7 @@ function PublicJudges() {
 
     const handleSearch = (e) => {
         e.preventDefault();
+        setJudges([])
         setSubmittedTerm(searchTerm)
         setSearchTerm("")
         axios.post(`/api/public/search_judges`, {searchTerm},
@@ -47,12 +49,14 @@ function PublicJudges() {
                 {submittedTerm ? 
                     <div style={{marginTop: 20}}>
                         <h3> Results for "{submittedTerm}": </h3>
-                        {judges.map((judge, index) => (
+                        {judges.length > 0 ? judges.map((judge, index) => (
                             <NavLink to={`/public/judges/${judge.id}`} key={index} className="judge-search-results" target="_blank" and rel="noopener noreferrer">
                                 <div style={{fontWeight: 600}}> {judge.name} </div>
                                 <div style={{}}> {judge.affiliation} </div>
                             </NavLink>
-                        ))}
+                        )) :
+                        <Spinner style={{justifyContent: "start"}}/>
+                        }
                     </div>
                 :
                 <></>}

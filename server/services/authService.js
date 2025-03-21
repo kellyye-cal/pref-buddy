@@ -30,7 +30,7 @@ const registerUser = async({email, fname, lname, pwd}) => {
 
 const login = async({email, pwd}) => {
     // Query database for login credentials    
-    const sql = "SELECT id, password, f_name, l_name, admin FROM users WHERE `email` = ?"
+    const sql = "SELECT id, password, f_name, l_name, admin, judge FROM users WHERE `email` = ?"
 
     try {
         const [result] = await db.execute(sql, [email]);
@@ -60,7 +60,7 @@ const login = async({email, pwd}) => {
             const [insertResult] = await db.execute(refreshTokenSQL, [refreshToken, email])
             const name = result[0].f_name + " " + result[0].l_name
             // Send cookie with refreshToken and return accessToken & userId
-            return {refreshToken, accessToken, userId, name: name, admin: result[0].admin};
+            return {refreshToken, accessToken, userId, name: name, admin: result[0].admin, judge: result[0].judge};
         }
     } catch (error) {
         console.log(error)

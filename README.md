@@ -56,12 +56,6 @@ I am volunteering my time & paying for services like Vercel, Heroku, JawsDB to h
 - 🎨 Design
 ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white)
 
-
-
-
-
-
-
 # 🛠️ Release Notes
 🍾 [1.0: Initial Release](/release-notes/release-1.0.md)
 

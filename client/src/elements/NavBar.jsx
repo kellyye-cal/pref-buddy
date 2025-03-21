@@ -15,6 +15,7 @@ function NavBar() {
             "marginBottom": 0
         }
     }
+
     return (
         <div id="navbar">
             <div id="logo"> Pref Buddy </div>
@@ -29,12 +30,15 @@ function NavBar() {
 
             <hr className="nav-line" style={{padding: 0}}/>
 
-            <p style={styles.menuSection}> Judging </p>
-            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/myprofile/${auth.userId}`}> My Profile </NavLink>
-            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/judgehistory/${auth.userId}`}> Past Judging </NavLink>
-
-            <hr className="nav-line" style={{padding: 0}}/>
-
+            {auth.judge ?
+                <div>
+                    <p style={styles.menuSection}> Judging </p>
+                    <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/myprofile/${auth.userId}`}> My Profile </NavLink>
+                    <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/judgehistory/${auth.userId}`}> Past Judging </NavLink>
+                    <hr className="nav-line" style={{padding: 0}}/>
+                </div>
+            :   <></>
+            }
             <p style={styles.menuSection}> Settings </p>
             {(auth.admin === 1) ? <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/register"> Create Accounts </NavLink> : <div />}
             <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/logout"> Logout </NavLink>

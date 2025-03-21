@@ -42,7 +42,6 @@ const createUser = async(req, res) => {
 }
 
 const loginUser = async(req, res) => {
-    console.log("inside the login controller")
     //Verify Input
     const {email, pwd} = req.body;
     if (!email || !pwd) return res.status(400).json({'message': 'Email and password are required.'})
@@ -51,7 +50,7 @@ const loginUser = async(req, res) => {
         const user = await authService.login({email, pwd})
 
         res.cookie('jwt', user.refreshToken, {httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000})
-        return res.json({accessToken: user.accessToken, userId: user.userId, name: user.name, admin: user.admin})
+        return res.json({accessToken: user.accessToken, userId: user.userId, name: user.name, admin: user.admin, judge: user.judge})
     } catch (error) {
         res.status(500).json({message: "Error logging in", error})
     }

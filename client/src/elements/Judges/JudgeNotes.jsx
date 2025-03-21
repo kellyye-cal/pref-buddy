@@ -20,8 +20,8 @@ function JudgeNotes({judgeId, editing, setEditing}) {
         axios.get('/api/judges/get_notes', {params:{u_id: auth.userId, j_id: judgeId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setNote(res.data[0].notes)
-            setNewNote(res.data[0].notes)
+            setNote(res.data.notes)
+            setNewNote(res.data.notes)
         })
         .catch((err)=>console.error(err))
     }, [judgeId]);
