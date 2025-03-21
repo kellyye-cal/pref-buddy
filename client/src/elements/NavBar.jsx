@@ -34,12 +34,12 @@ function NavBar() {
             <hr className="nav-line" style={{padding: 0}}/>
 
             {auth.judge ?
-                <div>
+                <>
                     <p style={styles.menuSection}> Judging </p>
                     <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/myprofile/${auth.userId}`}> My Profile </NavLink>
                     <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to={`/judgehistory/${auth.userId}`}> Past Judging </NavLink>
                     <hr className="nav-line" style={{padding: 0}}/>
-                </div>
+                </>
             :   <></>
             }
             <p style={styles.menuSection}> Settings </p>
