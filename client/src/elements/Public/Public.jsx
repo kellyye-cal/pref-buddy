@@ -26,22 +26,6 @@ function Public() {
                 </div>
 
                 <div>
-                    <h2> 📚 Background</h2>
-                    <p> This project was inspired by my students at College Prep. They manually collected data from Tabroom
-                        on judges, spending hours downloading speaker points results for judges to tiebreak on their pref sheets.
-                    </p>
-
-                    <p> I wanted to create a tool that would help them scrape this data automatically, in addition to providing
-                        concrete measures of judge philosophies. As a flex team, they have to find judges who are receptive to arguments
-                        they read from across the spectrum, so I wanted to help them visualize how judges have voted in the past on various arguments.
-                    </p>
-
-                    <p> I already include these stats on my own paradigm, inspired by Debnil Sur. Since not every judge takes the time to calculate
-                        this, I thought it would make sense for members of the community to contribute to these stats, similar to round reports on the wiki.
-                    </p>
-                </div>
-
-                <div>
                     <h2> 👩🏻‍💻 Future Improvements </h2>
                     <p>
                         My ultimate goal is allow people to log in and rate judges. I want each user to be able to track
