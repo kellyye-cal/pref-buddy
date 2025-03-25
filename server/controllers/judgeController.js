@@ -102,6 +102,19 @@ const getRoundsByJudge = async(req, res) => {
     }
 }
 
+const getUpcomingTournaments = async(req, res) => {
+    const j_id = req.params.id;
+
+    try {
+        const tournaments = await judgeServices.getUpcomingTournaments({j_id});
+        return res.json(tournaments)
+    } catch (err) {
+        console.error(err)
+
+        return res.status(500).json({message: `Error getting upcoming tournaments for judge ${j_id}: `, err})
+    }
+}
+
 module.exports = {
     getJudgeById,
     getAllJudges,
@@ -109,4 +122,5 @@ module.exports = {
     getNotes,
     saveNote,
     getRoundsByJudge,
+    getUpcomingTournaments
 }

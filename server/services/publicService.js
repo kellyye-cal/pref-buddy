@@ -51,11 +51,50 @@ const getJudgeById = async(id) => {
     return judgeInfo;
 }
 
+const getCommunitySpeaks = async() => {
+    const avg_sql = `SELECT 
+    ROUND(
+        (SUM(CASE WHEN s1 IS NOT NULL THEN s1 END) + 
+         SUM(CASE WHEN s2 IS NOT NULL THEN s2 END) + 
+         SUM(CASE WHEN s3 IS NOT NULL THEN s3 END) + 
+         SUM(CASE WHEN s4 IS NOT NULL THEN s4 END)
+        ) / 
+        (COUNT(CASE WHEN s1 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s2 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s3 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s4 IS NOT NULL THEN 1 END)
+        ), 
+    1) AS avg FROM rounds`
+
+    const sd_sql = `SELECT
+    ROUND(
+        STDDEV_POP(value), 
+    1) AS sd
+        FROM (
+        SELECT s1 AS value FROM rounds WHERE s1 IS NOT NULL
+        UNION ALL
+        SELECT s2 FROM rounds WHERE s2 IS NOT NULL
+        UNION ALL
+        SELECT s3 FROM rounds WHERE s3 IS NOT NULL
+        UNION ALL
+        SELECT s4 FROM rounds WHERE s4 IS NOT NULL
+    ) AS combined_values;`
+    const [avgRes] = await db.query(avg_sql)
+    const [sdRes] = await db.query(sd_sql)
+
+    const avg = avgRes[0].avg;
+    const sd = sdRes[0].sd;
+
+    const stats = {avg, sd}
+
+    return stats
+}
 module.exports = {
     getAllTournaments,
     getRoundsByTournId,
     getTournamentById,
     getRoundsSpecified,
     searchJudges,
-    getJudgeById
+    getJudgeById,
+    getCommunitySpeaks,
 };
