@@ -6,21 +6,6 @@ const { format } = require('fast-csv');
 const {db, getPrefs} = require('./utils');
 const scraper = require('../../tabroom/scraper')
 
-// const db = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: '',
-//     database: "pref-buddy",
-//     port: 3306
-// })
-// const db = mysql.createPool({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASS,
-//     database: process.env.DB_NAME,
-//     port: process.env.DB_PORT,
-// })
-
 const getMyTournaments = async({id}) => {
     const sql = "SELECT *, 1 AS attending FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
 

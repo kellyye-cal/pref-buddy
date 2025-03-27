@@ -92,11 +92,12 @@ function PublicJudgePage() {
                             <div className="stat-instance">
                                 <h5> Speaks Avg </h5>
                                 <p className="stat-text">
-                                    {stats.avgSpeaks}
-                                    {pointDifference >= 0 ?
+                                    {stats.avgSpeaks ? (`${stats.avgSpeaks}`) : ("--")}
+                                    {stats.avgSpeaks && pointDifference >= 0 ?
                                         <span style={{color: "#148943", fontWeight: 500}}> +{pointDifference} community μ</span>
-                                    :
+                                    : stats.avgSpeaks ?
                                         <span style={{color: "#FF3737", fontWeight: 500}}> {pointDifference} community μ</span>
+                                    : <span> </span>
                                 }
                                 </p>
                             </div>
@@ -104,7 +105,7 @@ function PublicJudgePage() {
                             <div className="stat-instance">
                                 <h5> SD </h5>
                                 <p className="stat-text">
-                                    {stats.speaksSD}
+                                    {stats.speaksSD ? (`${stats.speaksSD}`) : ("--")}
                                 </p>
                             </div>
 
@@ -121,7 +122,7 @@ function PublicJudgePage() {
                                 <p className="stat-text">
                                     {elimsStats.numElims}
                                     <span 
-                                        style={{color: `${elimsStats.timeSat < 3 ? "#148943" : "#FF3737"}`}}
+                                        style={{color: `${elimsStats.timeSat < (elimsStats.numElims / 2) ? "#148943" : "#FF3737"}`}}
                                         > sat {elimsStats.timeSat}x
                                     </span>
                                 </p>

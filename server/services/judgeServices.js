@@ -1,6 +1,20 @@
 const {db, isOlderThanWeek, client} = require('./utils');
 const scraper = require('../../tabroom/scraper')
 
+/**
+ * Fetches a judge by their ID from the database for a given user.
+ * @param {Integer} j_id - the ID of the judge you are requesting info for
+ * @param {Integer} u_id - the ID of the user making the request
+ * @returns {Object} An object representing a judge with fields
+ *                   (judge_id) - ID of the judge
+ *                   (rating) - rating of judge with j_id by user with u_id
+ *                   (email) - the judge's email
+ *                   (affiliation) - the judge's school affiliation
+ *                   (paradigm) - the judge's paradigm
+ *                   (name) - the judge's first and last name
+ *                   (yrs_dbt) - the number of years that a judge has been in debate
+ *                   (yrs_judge) - the number of years that a judge has been judging
+ */
 const getJudgeById = async({j_id, u_id}) => {
     const sql = "SELECT judge_id, rating, email, affiliation, paradigm,  CONCAT(u.f_name, ' ', u.l_name) AS name, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
     const [judge] = await db.query(sql, [j_id, u_id]);
