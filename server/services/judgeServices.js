@@ -1,16 +1,20 @@
-const {db, isOlderThanWeek} = require('./utils');
+const {db, isOlderThanWeek, client} = require('./utils');
 const scraper = require('../../tabroom/scraper')
 
-
-// const dbPool = mysql.createPool({
-//     host: process.env.DB_HOST || "localhost",
-//     user: process.env.DB_USER || "root",
-//     password: process.env.DB_PASS || "",
-//     database: process.env.DB_NAME || "pref-buddy",
-//     port: process.env.DB_PORT || 3306,
-//     connectionLimit: 5
-// })
-
+/**
+ * Fetches a judge by their ID from the database for a given user.
+ * @param {Integer} j_id - the ID of the judge you are requesting info for
+ * @param {Integer} u_id - the ID of the user making the request
+ * @returns {Object} An object representing a judge with fields
+ *                   (judge_id) - ID of the judge
+ *                   (rating) - rating of judge with j_id by user with u_id
+ *                   (email) - the judge's email
+ *                   (affiliation) - the judge's school affiliation
+ *                   (paradigm) - the judge's paradigm
+ *                   (name) - the judge's first and last name
+ *                   (yrs_dbt) - the number of years that a judge has been in debate
+ *                   (yrs_judge) - the number of years that a judge has been judging
+ */
 const getJudgeById = async({j_id, u_id}) => {
     const sql = "SELECT judge_id, rating, email, affiliation, paradigm,  CONCAT(u.f_name, ' ', u.l_name) AS name, (year(curdate()) - start_year) AS yrs_dbt, (year(curdate()) - judge_start_year) AS yrs_judge FROM users AS u JOIN (SELECT * FROM judge_info WHERE `id` = ?) AS j on u.id = j.id LEFT JOIN ranks on ranks.judge_id = j.id AND `ranker_id` = ?";
     const [judge] = await db.query(sql, [j_id, u_id]);
@@ -19,26 +23,44 @@ const getJudgeById = async({j_id, u_id}) => {
 }
 
 const getSpeaksById = async ({j_id}) => {
-    const sql = "SELECT s1, s2, s3, s4 FROM rounds WHERE judge_id = ?"
-    const [rounds] = await db.query(sql, [j_id])
+    const mean_sql = `SELECT 
+    ROUND(
+        (SUM(CASE WHEN s1 IS NOT NULL THEN s1 END) + 
+         SUM(CASE WHEN s2 IS NOT NULL THEN s2 END) + 
+         SUM(CASE WHEN s3 IS NOT NULL THEN s3 END) + 
+         SUM(CASE WHEN s4 IS NOT NULL THEN s4 END)
+        ) / 
+        (COUNT(CASE WHEN s1 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s2 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s3 IS NOT NULL THEN 1 END) + 
+         COUNT(CASE WHEN s4 IS NOT NULL THEN 1 END)
+        ), 
+    1) AS avg
+    FROM rounds
+    WHERE judge_id = ?`
 
-    let total = 0;
-    let num = 0;
+    const sd_sql = `SELECT
+    ROUND(
+        STDDEV_POP(value), 
+    1) AS sd
+    FROM (
+        SELECT s1 AS value FROM rounds WHERE s1 IS NOT NULL AND judge_id = ?
+        UNION ALL
+        SELECT s2 FROM rounds WHERE s2 IS NOT NULL AND judge_id = ?
+        UNION ALL
+        SELECT s3 FROM rounds WHERE s3 IS NOT NULL AND judge_id = ?
+        UNION ALL
+        SELECT s4 FROM rounds WHERE s4 IS NOT NULL AND judge_id = ?
+    ) AS combined_values;`
+     
+    const [avgRes] = await db.query(mean_sql, [j_id])
+    const [sdRes] = await db.query(sd_sql, [j_id, j_id, j_id, j_id])
 
-    for (let round = 0; round < rounds.length; round++) {
-        Object.values(rounds[round]).map(speak => {
-            if (speak) {
-                total += speak;
-                num += 1
-            }
-        })
-    }
+    const avg = avgRes[0].avg;
+    const sd = sdRes[0].sd;
 
-    if (num == 0) {
-        return "--";
-    }
-
-    return Math.round((total / num) * 10) / 10;
+    const stats = {avg, sd}
+    return stats;
 
 }
 
@@ -180,6 +202,14 @@ const getJudgeStats = async ({j_id}) => {
     return stats;
 }
 
+const getUpcomingTournaments = async({j_id}) => {
+    const sql = "SELECT * FROM tournaments AS t INNER JOIN judging_at AS j on j.tournament_id = t.id WHERE `user_id` = ? AND start_date > NOW()"
+
+    const [tournaments] = await db.query(sql, [j_id])
+    return tournaments
+}
+
+
 module.exports = {
     getJudgeById,
     getSpeaksById,
@@ -189,5 +219,6 @@ module.exports = {
     saveNote,
     getNotes,
     getRoundsByJudge,
-    getJudgeStats
+    getJudgeStats,
+    getUpcomingTournaments
 }

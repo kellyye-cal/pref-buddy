@@ -149,7 +149,7 @@ async function updateTournament({t_id, j_url}) {
     await tabroomUtils.updateTournTimestamp({t_id});
 
     const judges = await scrapeJudges(j_url);
-    const numJudges = judges.length;
+    const numJudges = judges?.length;
     const numJudgesInDB = tabroomUtils.getNumJudges(t_id);
 
     if (numJudges !== numJudgesInDB) {

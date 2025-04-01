@@ -12,6 +12,7 @@
   "author": "Kelly Ye",
   "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^3.0.2"
+    "bcryptjs": "^3.0.2",
+    "redis": "^4.7.0"
   }
 }

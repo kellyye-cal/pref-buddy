@@ -33,7 +33,7 @@ function JudgeProfile() {
         axios.get(`/api/judges/${id}`, {params:{u_id: auth.userId}, headers: {
             Authorization: `Bearer ${auth?.accessToken}`,
         }}).then((res) => {
-            setJudgeData(res.data)
+            setJudgeData(res.data.avg_speaks)
 
             setJudgeInfo(res.data.judgeInfo);
 
@@ -106,7 +106,7 @@ function JudgeProfile() {
 
                                             <div className="stat-instance">
                                                 <h5> Speaker Pt Avg </h5>
-                                                <p className="stat-text"> {judgeData.avg_speaks} </p>
+                                                <p className="stat-text"> {judgeData.avg} </p>
                                             </div>
                                         </div>
 

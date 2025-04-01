@@ -10,6 +10,7 @@ router.get('/get_notes', verifyJWT, judgeController.getNotes);
 router.post('/save_note', verifyJWT, judgeController.saveNote);
 router.get('/:id', verifyJWT, judgeController.getJudgeById);
 router.get('/:id/rounds', verifyJWT, judgeController.getRoundsByJudge)
+router.get('/:id/upcomingTournaments', judgeController.getUpcomingTournaments)
 
 
 module.exports = router;
