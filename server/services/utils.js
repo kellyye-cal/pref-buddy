@@ -7,11 +7,15 @@ const client = redis.createClient({
     socket: process.env.NODE_ENV === "production" ? {
         tls: true,
         rejectUnauthorized: false
-    } : {}
+    } : {
+        tls: true,
+        rejectUnauthorized: false,
+        secureOptions: require('tls').constants.SSL_OP_NO_TLSv1_1,
+    }
 });
 
 
-client.connect();
+client.connect().catch(console.error);
 
 const db = mysql.createPool({
     host: process.env.DB_HOST || "localhost",
