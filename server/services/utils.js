@@ -1,5 +1,16 @@
 const mysql = require('mysql2/promise')
-// require('dotenv').config({path: '../../.env.development'});
+const redis = require("redis");
+require('dotenv').config({path: '../../.env.development'});
+
+const client = redis.createClient({
+    url: process.env.REDIS_URL,
+    socket: process.env.NODE_ENV === "production" ? {
+        tls: true,
+        rejectUnauthorized: false
+    } : {}
+});
+
+client.connect();
 
 const db = mysql.createPool({
     host: process.env.DB_HOST || "localhost",
@@ -28,5 +39,6 @@ async function getPrefs({t_id, u_id}) {
 module.exports = {
     isOlderThanWeek,
     getPrefs,
-    db
+    db,
+    client
 }

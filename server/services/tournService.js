@@ -5,21 +5,7 @@ const { format } = require('fast-csv');
 
 const {db, getPrefs} = require('./utils');
 const scraper = require('../../tabroom/scraper')
-
-// const db = mysql.createPool({
-//     host: "localhost",
-//     user: "root",
-//     password: '',
-//     database: "pref-buddy",
-//     port: 3306
-// })
-// const db = mysql.createPool({
-//     host: process.env.DB_HOST,
-//     user: process.env.DB_USER,
-//     password: process.env.DB_PASS,
-//     database: process.env.DB_NAME,
-//     port: process.env.DB_PORT,
-// })
+const judgeServices = require('./judgeServices');
 
 const getMyTournaments = async({id}) => {
     const sql = "SELECT *, 1 AS attending FROM attending AS a INNER JOIN tournaments AS t ON a.tournament_id = t.id WHERE `user_id` = ?"
@@ -131,6 +117,17 @@ const getJudges = async({u_id, t_id}) => {
     const sql = "SELECT ja.user_id AS j_id, CONCAT(u.f_name, ' ', u.l_name) AS name, u.affiliation, ji.paradigm, (year(curdate()) - ji.start_year) AS yrs_dbt, (year(curdate()) - ji.judge_start_year) AS yrs_judge, r.rating FROM `judging_at` AS ja INNER JOIN users as u ON ja.user_id = u.id INNER JOIN judge_info AS ji ON ja.user_id = ji.id LEFT JOIN (SELECT * FROM ranks WHERE `ranker_id` = ?) AS r ON ja.user_id = r.judge_id WHERE `tournament_id` = ?";
     
     const [judges] = await db.query(sql, [u_id, t_id])
+
+    for (let i = 0; i < judges.length; i++) {
+        const judge = judges[i]
+
+        const speaks = await judgeServices.getSpeaksById({j_id: judge.j_id});
+        judges[i].speaks = speaks;
+
+        const numRounds = await judgeServices.getRoundsByJudge({j_id: judge.j_id});
+        judges[i].numRounds = numRounds.length;
+    }
+    
     return judges;
 }
 

@@ -281,6 +281,8 @@ h5 {
   width: 100%;
   height: 100%;
   z-index: -1;
+
+  border-radius: 8px;
 }
 
 button {
@@ -365,11 +367,12 @@ button {
   color: #333;
 
   background-color: white;
-  padding: 12px 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
 
   border-radius: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin-top: 6px;
+  margin-bottom: 6px;
 
   width: 100%;
 }
@@ -392,7 +395,7 @@ button {
 }
 
 .judgePrevAffiliation {
-  font-size: 12pt;
+  font-size: 11pt;
   color: #6a6a6a;
   margin-bottom: 0;
 }
@@ -784,6 +787,12 @@ input#filename {
   display: flex;
   align-items: center;
   gap: 6px;
+
+  max-width: 200px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .filter.pill.selected {
@@ -793,6 +802,11 @@ input#filename {
 
 .filter-display {
   color: #2680FF;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
 }
 
 .sort-filter-option {
@@ -960,6 +974,30 @@ input#filename {
   visibility: visible;
 }
 
+.badges {
+  margin: 8px 0px;
+  display: flex;
+  gap: 8px 4px;
+  flex-wrap: wrap;
+}
+
+.badges > div {
+  display: inline-block;
+
+  padding: 2px 12px;
+  border-radius: 20px;
+
+  font-weight: 500;
+}
+
+.badges.mini {
+  margin: 2px 0px;
+  font-size: 10pt;
+}
+
+.badges.mini > div {
+  padding: 1px 10px;
+}
 
 
 

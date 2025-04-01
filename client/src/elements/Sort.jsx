@@ -22,6 +22,11 @@ function Sort({category, setCategory, asc, setAsc}) {
         closeDropdown();
     }
 
+    const setCategorySpeaks = () => {
+        setCategory("Speaks");
+        closeDropdown();
+    }
+
     return (
         <div style={{display: "flex", gap: 4, alignItems: "center", margin: "4px 0"}}>
             <div className="sort-filter-option"> Sort: </div>
@@ -38,8 +43,12 @@ function Sort({category, setCategory, asc, setAsc}) {
                     <button 
                         className={`dropdown-item ${category === "Rating" ? "selected" : ""}`}
                         onClick={setCategoryRating}> Rating </button>
-                    <button className={`dropdown-item ${category === "Name" ? "selected" : ""}`}
+                    <button
+                        className={`dropdown-item ${category === "Name" ? "selected" : ""}`}
                         onClick={setCategoryName}> Name </button>
+                    <button
+                    className={`dropdown-item ${category === "Speaks" ? "selected" : ""}`}
+                    onClick={setCategorySpeaks}> Speaks </button>
                 </Dropdown>
             </div>
         </div>

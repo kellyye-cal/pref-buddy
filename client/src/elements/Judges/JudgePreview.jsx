@@ -21,11 +21,13 @@ function JudgePreview({judge, userID, updateFunc}) {
                         <div style={{marginLeft: 20}}>
                             <Link to={`/judges/JudgeProfile/${judge.id}`} className="judgePrevName"> {judge.name} </Link>
                             <p className="judgePrevAffiliation"> {judge.affiliation}</p>
+
+
                         </div>
                     </div>
                 </div>
             ) : (
-                <div></div>
+                <></>
             )}
             
         </div>
