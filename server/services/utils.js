@@ -8,7 +8,7 @@ const client = redis.createClient({
     url: process.env.REDISCLOUD_URL,
     socket: process.env.NODE_ENV === "production" ? {
         tls: true,
-        secureOptions: tls.constants.SSL_OP_NO_TLSv1_1,
+        secureProtocol: 'TLS_method',
         rejectUnauthorized: false
     } : {}
 });
