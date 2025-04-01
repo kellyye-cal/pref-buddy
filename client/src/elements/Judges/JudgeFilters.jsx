@@ -1,7 +1,8 @@
 import React, {useState, useRef, useEffect} from "react";
 import Filter from "../Filter";
 
-function JudgeFilters({setFilteredJudges, allJudges}) {
+function JudgeFilters({setFilteredJudges, allJudges, commStats}) {
+    // Rating Filters
     const [ratingDisplay, setRatingDisplay] = useState("")
     const [ratingFilters, setRatingFilters] = useState({
         Unrated: false,
@@ -12,12 +13,6 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
         Rated4: false,
         Rated5: false,
         Strike: false,
-    });
-
-    const [paradigmDisplay, setParadigmDisplay] = useState("")
-    const [paradigmFilters, setParadigmFilters] = useState({
-        HasParadigm: false,
-        NoParadigm: false
     });
 
     const updateRatingFilters = (event) => {
@@ -33,8 +28,7 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
     const filterFours = (judge) => {return (judge.rating && judge.rating === 4)}
     const filterFives = (judge) => {return (judge.rating && judge.rating === 5)}
     const filterStrikes = (judge) => {return (judge.rating && judge.rating === 6)}
-
-
+    
     useEffect(() => {
         const displayFormat = (key) => key.replace(/([A-Z0-9])/g, " $1").trim();
 
@@ -103,6 +97,13 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
         setRatingDisplay("");
     }
 
+    // Paradigm Filters
+    const [paradigmDisplay, setParadigmDisplay] = useState("")
+    const [paradigmFilters, setParadigmFilters] = useState({
+        HasParadigm: false,
+        NoParadigm: false
+    });
+
     const updateParadigmFilters = (event) => {
         const {id, checked} = event.target;
         setParadigmFilters(prev => ({...prev, [id]: checked}))
@@ -154,9 +155,173 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
         setParadigmDisplay("");
     }
 
+    // Speaks Filters
+    const [speaksDisplay, setspeaksDisplay] = useState("")
+    const [speaksFilters, setSpeaksFilters] = useState({
+        PointFairy: false,
+        AverageSpeaks: false,
+        LowSpeaks: false
+    });
+
+    const updateSpeaksFilters = (event) => {
+        const {id, checked} = event.target;
+        setSpeaksFilters(prev => ({...prev, [id]: checked}))
+    }
+
+    const filterSpeaks = (judge, code) => {
+
+        if (!judge.speaks.avg) {
+            return false;
+        }
+
+        if (code === 1) {
+            if (judge.speaks.avg >= commStats.avg + commStats.sd) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (code === 0) {
+            if (commStats.avg - commStats.sd < judge.speaks.avg && judge.speaks.avg < commStats.avg + commStats.sd) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (judge.speaks.avg <= commStats.avg - commStats.sd) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    const resetSpeaksFilters = () => {
+        setSpeaksFilters({
+            PointFairy: false,
+            AverageSpeaks: false,
+            LowSpeaks: false
+        })
+
+        setspeaksDisplay("");
+    }
+
+    useEffect(() => {
+        const displayFormat = (key) => key.replace(/([A-Z0-9])/g, " $1").trim();
+
+        const selectedFilters = Object.keys(speaksFilters).filter(key => speaksFilters[key]).map(displayFormat);
+        setspeaksDisplay(selectedFilters.join(", "));
+
+        if (selectedFilters.length === 0) {
+            setFilteredJudges(allJudges);
+            return
+        }
+
+        let filteredSet = new Set();
+
+        Object.keys(speaksFilters).forEach((key) => {
+            if (speaksFilters[key]) {
+                let filtered;
+                switch (key) {
+                    case "PointFairy":
+                        filtered = allJudges.filter(judge => filterSpeaks(judge, 1));
+                        break;
+                    case "AverageSpeaks":
+                        filtered = allJudges.filter(judge => filterSpeaks(judge, 0));
+                        break;
+                    case "LowSpeaks":
+                        filtered = allJudges.filter(judge => filterSpeaks(judge, -1));
+                        break;
+                    default:
+                        return;
+                }
+                filtered.forEach(judge => filteredSet.add(judge));
+            }
+        })
+
+        const finalFiltered = Array.from(filteredSet)
+        setFilteredJudges(finalFiltered)
+
+    }, [speaksFilters, allJudges]);
+
+    // Judge Freq Filters
+    const [freqDisplay, setFreqDisplay] = useState("")
+    const [freqFilters, setFreqFilters] = useState({
+        JudgesALot: false
+    });
+
+    const updateFreqFilters = (event) => {
+        const {id, checked} = event.target;
+        setFreqFilters(prev => ({...prev, [id]: checked}))
+    }
+
+    const filterFreq = (judge) => {return judge.numRounds > 24}
+
+    const resetFreqFilters = () => {
+        setSpeaksFilters({
+            JudgesALot: false
+        })
+
+        setFreqDisplay("");
+    }
+
+    useEffect(() => {
+        const displayFormat = (key) => key.replace(/([A-Z0-9])/g, " $1").trim();
+
+        const selectedFilters = Object.keys(freqFilters).filter(key => freqFilters[key]).map(displayFormat);
+        setFreqDisplay(selectedFilters.join(", "));
+
+        if (selectedFilters.length === 0) {
+            setFilteredJudges(allJudges);
+            return
+        }
+
+        let filteredSet = new Set();
+
+        Object.keys(freqFilters).forEach((key) => {
+            if (freqFilters[key]) {
+                let filtered;
+                switch (key) {
+                    case "JudgesALot":
+                        filtered = allJudges.filter(judge => filterFreq(judge));
+                        break;
+                    default:
+                        return;
+                }
+                filtered.forEach(judge => filteredSet.add(judge));
+            }
+        })
+
+        const finalFiltered = Array.from(filteredSet)
+        setFilteredJudges(finalFiltered)
+
+    }, [freqFilters, allJudges, setFilteredJudges]);
+
+    const resetAllFilters = () => {
+        resetSpeaksFilters();
+        resetRatingFilters();
+        resetFreqFilters();
+        resetParadigmFilters();
+    }
+
     return (
-        <div style={{display: "flex", alignItems: "center", gap: 8}}>
+        <div style={{display: "flex", alignItems: "center", gap: 8, overflowX: "scroll", scrollbarWidth: "none"}}>
             <div className="sort-filter-option" style={{marginLeft: 6}}> Filter:  </div>
+
+            <Filter categoryName={"Speaks"} resetFunc={resetSpeaksFilters} applyFunc={updateSpeaksFilters} display={speaksDisplay}>
+                <div className="dropdown-filter">
+                    {Object.keys(speaksFilters).map((key) => (
+                        <label key={key} htmlFor={key}>
+                            <input
+                                type="checkbox"
+                                id={key}
+                                checked={speaksFilters[key]}
+                                onChange={updateSpeaksFilters}
+                            />
+                            {key.replace(/([A-Z])/g, " $1").trim()}
+                        </label>
+                    ))}
+                </div>
+            </Filter>
 
             <Filter categoryName={"Rating"} resetFunc={resetRatingFilters} applyFunc={updateRatingFilters} display={ratingDisplay}>
                 <div className="dropdown-filter">
@@ -169,6 +334,22 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
                                 onChange={updateRatingFilters}
                             />
                             {key.replace(/([0-9])/g, " $1").trim()}
+                        </label>
+                    ))}
+                </div>
+            </Filter>
+
+            <Filter categoryName={"Frequency"} resetFunc={resetFreqFilters} applyFunc={updateFreqFilters} display={freqDisplay}>
+                <div className="dropdown-filter">
+                    {Object.keys(freqFilters).map((key) => (
+                        <label key={key} htmlFor={key}>
+                            <input
+                                type="checkbox"
+                                id={key}
+                                checked={freqFilters[key]}
+                                onChange={updateFreqFilters}
+                            />
+                            {key.replace(/([A-Z])/g, " $1").trim()}
                         </label>
                     ))}
                 </div>
@@ -189,6 +370,13 @@ function JudgeFilters({setFilteredJudges, allJudges}) {
                     ))}
                 </div>
             </Filter>
+
+            <button 
+                style={{whiteSpace: "nowrap", fontSize: 12}}
+                className="hover-link"
+                onClick={resetAllFilters}> 
+                Clear All 
+            </button>
         </div>
     )
 }

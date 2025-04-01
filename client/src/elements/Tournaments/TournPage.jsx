@@ -33,6 +33,8 @@ function TournPage() {
     const [category, setCategory] = useState("Rating")
     const [asc, setAsc] = useState(true)
 
+    const [commStats, setCommStats] = useState([])
+
     // const [filters, setFilters] = useState([])
 
     useEffect(()=>{
@@ -53,7 +55,13 @@ function TournPage() {
         ).then((res) => {
             setJudgeData(res.data)
             setFilteredJudges(res.data)
-        }).catch((err) => console.log(err))
+        }).catch((err) => console.error(err))
+
+        axios.get(`/api/public/community_stats`).then((res) => {
+            setCommStats(res.data);
+        }).catch((err) => {
+            console.error(err);
+        })
     }, []);
 
     useEffect(() => {
@@ -111,6 +119,16 @@ function TournPage() {
 
         if (category === "Name") {
             sort = (a.name).localeCompare(b.name)
+        }
+
+        if (category === "Speaks") {
+            const aSpeaks = a.speaks.avg || 0;
+            const bSpeaks = b.speaks.avg || 0;
+
+            if (aSpeaks === bSpeaks) {
+                sort = (a.name).localeCompare(b.name);
+            }
+            sort = aSpeaks - bSpeaks;
         }
 
         if (asc) {
@@ -175,12 +193,12 @@ function TournPage() {
                     <div style={{display: "flex", alignItems: "center", gap: 4}}>
                         <Sort category={category} setCategory={setCategory} asc={asc} setAsc={setAsc} />
                         <div className="sort-filter-option"> | </div>
-                        <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData}/>
+                        <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData} commStats={commStats}/>
                     </div>    
                     <div className="v-scroll" style={{height: 460}}>
                         {sortedJudges.map((judge, index) => (
                             <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
-                            isSelected={selectedJudge?.j_id === judge.j_id}/>
+                            isSelected={selectedJudge?.j_id === judge.j_id} commStats={commStats}/>
                         ))}
                     </div>
 

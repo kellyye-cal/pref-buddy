@@ -29,9 +29,10 @@ const saveTourn = async({tournament}) => {
 }
 
 const saveJudgesToUsers = async ({judges}) => {
-    if (!judges) {
+    if (!judges || judges.length === 0) {
         return
     }
+    
     const sql = `INSERT INTO users (f_name, l_name, affiliation, id, judge)
         VALUES ${judges.map(() => '(?, ?, ?, ?, 1)').join(", ")}
         ON DUPLICATE KEY UPDATE

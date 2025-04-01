@@ -72,7 +72,7 @@ function Badges({j_id, rounds}) {
             setFlex("Flex")
         }
 
-        if (rounds.length > 40) {
+        if (rounds.length > 24) {
             setJudgesALot("Judges a Lot")
         }
     }
