@@ -59,6 +59,7 @@ I am volunteering my time & paying for services like Vercel, Heroku, JawsDB to h
 
 # 🛠️ Release Notes
 🍾 [1.0: Initial Release](/release-notes/release-1.0.md)
+🎉 [1.1: Judge Profile Update](/release-notes/release-1.1.md)
 
 # 🔗 Relevant Links
 - [Buy Me a Coffee](https://buymeacoffee.com/kellyye)
