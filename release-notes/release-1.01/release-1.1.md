@@ -1,4 +1,4 @@
-<img src="../client/public/Pref-Buddy-Icon.png" width="100" height="100">
+<img src="../../client/public/Pref-Buddy-Icon.png" width="100" height="100">
 
 # PrefBuddy 1.1
 #### 🗓️ 4/1/25 | Judge Profiles Update
