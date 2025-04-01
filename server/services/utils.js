@@ -1,17 +1,16 @@
 const mysql = require('mysql2/promise')
 const redis = require("redis");
 require('dotenv').config({path: '../../.env.development'});
+const tls = require("tls");
+
 
 const client = redis.createClient({
     url: process.env.REDISCLOUD_URL,
     socket: process.env.NODE_ENV === "production" ? {
         tls: true,
+        secureOptions: tls.constants.SSL_OP_NO_TLSv1_1,
         rejectUnauthorized: false
-    } : {
-        tls: true,
-        rejectUnauthorized: false,
-        secureOptions: require('tls').constants.SSL_OP_NO_TLSv1_1,
-    }
+    } : {}
 });
 
 
