@@ -54,7 +54,9 @@ function PublicJudges() {
                                 <div style={{fontWeight: 600}}> {judge.name} </div>
                                 <div style={{}}> {judge.affiliation} </div>
                             </NavLink>
-                        )) :
+                        )) : judges.length === 0 ?
+                        <div> No results found. </div>
+                        :
                         <Spinner style={{justifyContent: "start"}}/>
                         }
                     </div>

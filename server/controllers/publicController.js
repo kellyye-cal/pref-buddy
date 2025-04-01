@@ -64,15 +64,11 @@ const getTournamentById = async(req, res) => {
 
 const searchJudges = async(req, res) => {
     const searchTerm = req.body.searchTerm
-    const cacheKey = `public:search_judges:${searchTerm}`;
+
 
     try {
-        const cachedResults = await client.get(cacheKey)
-        if (cachedResults) {return res.json(JSON.parse(cachedResults))};
-
         const judges = await publicService.searchJudges(searchTerm);
-
-        await client.set(cacheKey, JSON.stringify(judges), {EX: 6 * 60 * 60});
+        
         return res.json(judges);
     } catch (error) {
         console.error(error)

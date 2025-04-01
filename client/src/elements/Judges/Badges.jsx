@@ -68,7 +68,7 @@ function Badges({j_id, rounds}) {
         const percentPolicy = policyCount / rounds.length;
         const percentK = kCount / rounds.length;
 
-        if (Math.abs(percentPolicy - percentK) <= 0.3) {
+        if (Math.abs(percentPolicy - percentK) <= 0.3 && (percentPolicy > 0 || percentK > 0)) {
             setFlex("Flex")
         }
 
@@ -90,14 +90,15 @@ function Badges({j_id, rounds}) {
                 const communitySpeaks = communitySpeaksRes.data
 
                 handlePointDisplay({judgeSpeaks, communitySpeaks})
+                handleRoundTypes();
             } catch (err) {
                 console.error(err)
             }
         }
 
         fetchData();
-        handleRoundTypes();
-    }, [])
+
+    })
 
     const handlePointDisplay = ({judgeSpeaks, communitySpeaks}) => {
         if (communitySpeaks.avg - communitySpeaks.sd < judgeSpeaks.avg && judgeSpeaks.avg < communitySpeaks.avg + communitySpeaks.sd) {
