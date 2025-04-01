@@ -3,12 +3,13 @@ const redis = require("redis");
 require('dotenv').config({path: '../../.env.development'});
 
 const client = redis.createClient({
-    url: process.env.REDIS_URL,
+    url: process.env.REDISCLOUD_URL,
     socket: process.env.NODE_ENV === "production" ? {
         tls: true,
         rejectUnauthorized: false
     } : {}
 });
+
 
 client.connect();
 
