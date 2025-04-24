@@ -1,0 +1,13 @@
+2025-02-27 17:00:09,541 - DEBUG - Starting authorization phase
+2025-02-27 17:00:09,541 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-27 17:00:09,541 - DEBUG - mysql_native_password completed succesfully
+2025-02-27 17:00:09,544 - DEBUG - Starting authorization phase
+2025-02-27 17:00:09,544 - DEBUG - The provided initial strategy is mysql_native_password
+2025-02-27 17:00:09,545 - DEBUG - mysql_native_password completed succesfully
+2025-02-27 17:00:09,546 - DEBUG - True
+2025-02-27 17:00:09,552 - DEBUG - Starting new HTTPS connection (1): www.tabroom.com:443
+2025-02-27 17:00:09,812 - DEBUG - https://www.tabroom.com:443 "POST /user/login/login_save.mhtml HTTP/1.1" 302 281
+2025-02-27 17:00:10,249 - DEBUG - https://www.tabroom.com:443 "GET /user/home.mhtml HTTP/1.1" 302 302
+2025-02-27 17:00:10,367 - DEBUG - https://www.tabroom.com:443 "GET /user/judge/index.mhtml?err=&msg= HTTP/1.1" 200 None
+2025-02-27 17:00:10,659 - DEBUG - https://www.tabroom.com:443 "GET /index/paradigm.mhtml?judge_person_id=-8 HTTP/1.1" 200 None
+2025-02-27 17:00:10,671 - ERROR - 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`pref-buddy`.`judge_info`, CONSTRAINT `judge_info_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`))

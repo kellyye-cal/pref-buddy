@@ -29,11 +29,16 @@ const saveTourn = async({tournament}) => {
 }
 
 const saveJudgesToUsers = async ({judges}) => {
+    
     if (!judges || judges.length === 0) {
         return
     }
     
-    const sql = `INSERT INTO users (f_name, l_name, affiliation, id, judge)
+
+    console.log(judges)
+
+    try {
+        const sql = `INSERT INTO users (f_name, l_name, affiliation, id, judge)
         VALUES ${judges.map(() => '(?, ?, ?, ?, 1)').join(", ")}
         ON DUPLICATE KEY UPDATE
             f_name = VALUES(f_name),
@@ -41,14 +46,13 @@ const saveJudgesToUsers = async ({judges}) => {
             affiliation = VALUES(affiliation),
             judge = 1`;
 
-    const queryParameters = judges.flatMap(judge => [
-        judge.f_name,
-        judge.l_name,
-        judge.affiliation,
-        judge.tab_id
-    ]);
+        const queryParameters = judges.flatMap(judge => [
+            judge.f_name,
+            judge.l_name,
+            judge.affiliation,
+            judge.tab_id
+        ]);
 
-    try {
         await db.query(sql, queryParameters);
     } catch (error) {
         console.error(error)

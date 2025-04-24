@@ -87,7 +87,7 @@ function EditRating({userID, judgeID, currRating, updateFunc}) {
     }
 
     function saveRating() {
-        //send new post request to server
+        console.log(rating)
         axios.post('/api/judges/set_rating', {
             u_id: userID,
             j_id: judgeID,

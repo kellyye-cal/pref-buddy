@@ -72,11 +72,10 @@ const getAllJudges = async({u_id}) => {
 }
 
 const updateRating = async({u_id, j_id, rating}) => {
-
     const sql = "INSERT INTO ranks (judge_id, ranker_id, rating) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE rating = VALUES(rating)"
-    const [postResult] = await db.query(sql, [j_id, u_id, rating])
+    const [postResult] = await db.query(sql, [j_id, u_id, rating]);
 
-    return;
+    return
 }
 
 const getNotes = async({u_id, j_id}) => {

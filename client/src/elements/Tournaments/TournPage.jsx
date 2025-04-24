@@ -195,7 +195,7 @@ function TournPage() {
                         <div className="sort-filter-option"> | </div>
                         <JudgeFilters filteredJudges={filteredJudges} setFilteredJudges={setFilteredJudges} allJudges={judgeData} commStats={commStats}/>
                     </div>    
-                    <div className="v-scroll" style={{height: 460}}>
+                    <div className="v-scroll" style={{maxHeight: 560}}>
                         {sortedJudges.map((judge, index) => (
                             <PrefPreview key={index} judgeData={judge} updateFunc={updateRating} onSelect={handleSelectJudge}
                             isSelected={selectedJudge?.j_id === judge.j_id} commStats={commStats}/>

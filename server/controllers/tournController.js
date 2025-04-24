@@ -63,15 +63,6 @@ const getTournamentById = async (req, res) => {
     }
 
     try {
-        const cacheKey = `tournaments:${t_id}:${u_id}`;
-
-        const cachedTournament = await client.get(cacheKey);
-
-        if (cachedTournament) {
-            const {attending, judging} = JSON.parse(cachedTournament);
-            return res.json({attending, judging});
-        }
-
         var attending = await tournService.getTournamentById({t_id})
         const numRated = await tournService.getNumRated({t_id, u_id})
         const numTotal = await tournService.getNumJudges({t_id})
@@ -80,8 +71,7 @@ const getTournamentById = async (req, res) => {
 
         var judging = await tournService.getTournamentByIdJudging({t_id, j_id: u_id});
 
-        await client.set(cacheKey, JSON.stringify({attending, judging}), {EX: 2 * 60 * 60});
-        res.json({attending, judging})
+        return res.status(200).json({attending, judging})
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: `Error getting tournament ${t_id}: `, error});
@@ -96,15 +86,9 @@ const getJudgesAtTourn = async (req, res) => {
         return res.status(400).json({ error: "Invalid tournament ID" });
     }
 
-    const cacheKey = `tournaments:${t_id}:${u_id}:judges`;
-
     try {
-        const cachedJudges = await client.get(cacheKey);
-        if (cachedJudges) {return res.json(JSON.parse(cachedJudges))};
-
         const judges = await tournService.getJudges({u_id, t_id});
-        await client.set(cacheKey, JSON.stringify(judges), {EX: 6 * 60 * 60});
-        return res.json(judges)
+        return res.status(200).json(judges)
     } catch (error) {
         console.error(error);
         return res.status(500).json({error: `Error getting judges for tournament ${t_id}: `, error});

@@ -85,12 +85,9 @@ const setRating = async(req, res) => {
     const allJudgesCacheKey = `judges:all:${u_id}`;
     const getJudgeByIdCacheKey = `judges:${j_id}:${u_id}`;
 
-    try {
-        await client.del(allJudgesCacheKey);
-        await client.del(getJudgeByIdCacheKey);
-                
-        judgeServices.updateRating({u_id, j_id, rating})
-        res.sendStatus(204)
+    try {       
+        await judgeServices.updateRating({u_id, j_id, rating});
+        res.sendStatus(200)
     } catch (error) {
         res.status(500).json({message: "Error updating rating", error})
 
