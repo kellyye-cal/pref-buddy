@@ -33,6 +33,11 @@ function NavBar() {
 
             <hr className="nav-line" style={{padding: 0}}/>
 
+            <p style={styles.menuSection}> Prep </p>
+            <NavLink className={({ isActive }) => (isActive ? 'active' : '')} to="/card-bot"> CardBot </NavLink>
+
+            <hr className="nav-line" style={{padding: 0}}/>
+
             {auth.judge ?
                 <>
                     <p style={styles.menuSection}> Judging </p>

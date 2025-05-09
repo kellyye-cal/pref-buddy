@@ -18,11 +18,14 @@ import CreateAccount from './elements/Auth/CreateAccounts'
 import JudgeHistory from './elements/Judges/JudgeHistory'
 import Public from './elements/Public/Public'
 
+import CardBot from './elements/CardBot/CardBot'
+
 import PublicTournaments from './elements/Public/PublicTournaments'
 import PublicJudges from "./elements/Public/PublicJudges"
 import PublicTournPage from './elements/Public/PublicTournPage'
 import PublicJudgePage from './elements/Public/PublicJudgePage'
 import Contributions from './elements/Public/Contributions'
+import Topic from './elements/CardBot/Topic'
 
 function AppRoutes() {
     useAxiosInterceptors();
@@ -126,6 +129,9 @@ function AppRoutes() {
 
             <Route path="/tournaments" element={auth.accessToken ? <ProtectedRoute> <Tournaments />  </ProtectedRoute> : <Navigate to="/login" />}/>
             <Route path='/tournaments/:tournId' element={auth.accessToken ? <ProtectedRoute> <TournPage /> </ProtectedRoute> : <Navigate to="/login" />} />
+
+            <Route path="/card-bot" element={auth.accessToken ? <ProtectedRoute> <CardBot />  </ProtectedRoute> : <Navigate to="/login" />}/>
+            <Route path="/card-bot/:topicID" element={auth.accessToken ? <ProtectedRoute> <Topic />  </ProtectedRoute> : <Navigate to="/login" />}/>
 
             <Route path='/myprofile/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeProfile /> </ProtectedRoute> : <Navigate to="/login" />} />
             <Route path='/judgehistory/:id' element={auth.accessToken ? <ProtectedRoute> <JudgeHistory j_id={auth.userId}/> </ProtectedRoute> : <Navigate to="/login" />} />

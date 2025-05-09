@@ -34,9 +34,6 @@ const saveJudgesToUsers = async ({judges}) => {
         return
     }
     
-
-    console.log(judges)
-
     try {
         const sql = `INSERT INTO users (f_name, l_name, affiliation, id, judge)
         VALUES ${judges.map(() => '(?, ?, ?, ?, 1)').join(", ")}

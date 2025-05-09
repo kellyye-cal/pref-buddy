@@ -64,7 +64,7 @@ const refresh = async(req, res) => {
 
     try {
         const accessToken = await authService.refreshAccessToken({refreshToken})
-        return res.json({accessToken: accessToken.accessToken, admin: accessToken.admin})
+        return res.json({accessToken: accessToken.accessToken, admin: accessToken.admin, judge: accessToken.judge})
     } catch (error) {
         res.status(500).json({message: "Error authenticating user", error})
     }
