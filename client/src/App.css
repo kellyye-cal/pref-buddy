@@ -996,5 +996,172 @@ input#filename {
   padding: 1px 10px;
 }
 
+.cardbot-page {
+  flex: 1;
+  display: flex;
+  width: calc(100vw - 160px);
 
+  overflow: hidden;
+  flex-grow: 1;
+}
 
+.cardbot-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  padding: 40px 40px 0px 40px;
+  width: 100%;
+  
+  overflow: hidden;
+}
+
+.active-card-bot-nav {
+  background-color: #E2E6F3;
+}
+
+.topic-card {
+  background-color: #ECEFF6;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 13pt;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topic-card > p {
+  margin: 0;
+}
+
+.topic-card-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.topic-card > button {
+  border: 1.5px solid #333;
+  border-radius: 200%;
+  font-size: 9pt;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  align-items: center
+}
+
+.topic-card > button:hover {
+  background-color: #2680FF;
+  border: 1.5px solid #2680FF;
+
+  color: #fff;
+}
+
+.topic-card:hover > button {
+  background-color: #2680FF;
+  border: 1.5px solid #2680FF;
+
+  color: #fff;
+}
+
+.topic-card:hover {
+  background-color: #E4ECFF;
+}
+
+.card-preview {
+  max-width: 260px;
+  background-color: #fff;
+  border: rgba(118, 118, 128, 0.12) 1px solid;
+  border-radius: 4px;
+  margin: 8px 0px;
+  padding: 12px 8px;
+}
+
+.card-preview > .title {
+  font-size: 14pt;
+  font-weight: 600;
+  line-height: 120%;
+  margin: 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.card-preview > .cite {
+  display: flex;
+  gap: 4px;
+  margin: 4px 0px;
+  
+  font-weight: 600;
+  color: var(--text-gray);
+
+  line-height: 120%;
+}
+
+.card-preview > .body {
+  margin-top: 0px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.debate-card {
+  background-color: #fff;
+  padding: 20px;
+
+  border: rgba(118, 118, 128, 0.12) 1px solid;
+  border-radius: 4px;
+
+  margin-top: 8px;
+
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-preview:hover {
+  cursor: pointer;
+  background-color: rgba(106, 106, 106, 0.1);
+}
+
+.debate-card > .title {
+  font-size: 16pt;
+  font-weight: 600;
+}
+
+.debate-card > .source {
+  font-weight: 500;
+  color: var(--text-gray);
+  display: flex;
+  column-gap: 8px;
+  flex-wrap: wrap;
+}
+
+.card-content {
+  font-family: 'Carlito', sans-serif;
+  font-size: 11pt;
+}
+
+.card-content > .tag {
+  font-weight: 600;
+  font-size: 13pt;
+}
+
+.card-content > .cite {
+  font-size: 13pt;
+}

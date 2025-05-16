@@ -17,12 +17,13 @@ function App() {
     const storedName = sessionStorage.getItem('name');
 
     if (storedAccessToken && storedUserId) {
-        setAuth({
+        setAuth((prev) => ({
+            ...prev,
             accessToken: storedAccessToken,
             userId: storedUserId,
             loggedOut: false,
             name: storedName
-        });
+        }));
         // console.log('setting auth by retrieving from session storage', storedAccessToken)
     } else if (auth?.loggedOut || !auth?.accessToken) {
       return
@@ -45,8 +46,7 @@ function App() {
         const newAccessToken = response.data.accessToken;
 
         if (newAccessToken !== auth.accessToken) {
-          setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin }));
-          // console.log("access token being refreshed", auth, newAccessToken)
+          setAuth((prev) => ({ ...prev, accessToken: newAccessToken, loggedOut: false, admin: response.data.admin, judge: response.data.judge }));
 
           sessionStorage.setItem('accessToken', newAccessToken);
         }

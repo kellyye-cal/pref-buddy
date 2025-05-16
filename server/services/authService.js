@@ -120,7 +120,7 @@ const refreshAccessToken = async({refreshToken}) => {
             {expiresIn: "1h"}
         );
 
-        return {accessToken: accessToken, admin: user[0].admin}
+        return {accessToken: accessToken, admin: user[0].admin, judge: user[0].judge}
     } catch (error) {
         throw new Error(error.message)
     }
